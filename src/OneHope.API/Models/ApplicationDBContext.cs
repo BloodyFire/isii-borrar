@@ -11,6 +11,9 @@ namespace OneHope.API.Models
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Portatil> Portatiles { get; set; }
     }
+
 }
 
