@@ -15,11 +15,13 @@ namespace OneHope.API.Models
             builder.Entity<Procesador>().HasAlternateKey(p => new { p.Nombre });
             builder.Entity<RAM>().HasAlternateKey(r => new { r.Nombre });
             builder.Entity<Marca>().HasAlternateKey(m => new { m.Nombre });
+            builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
         }
 
         public DbSet<Procesador> Procesadores { get; set; }
         public DbSet<RAM> RAMs { get; set; }
         public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Portatil> Portatiles { get; set; }
     }
 }
 

@@ -13,6 +13,7 @@
         [Required]
         [StringLength(20, ErrorMessage = "La RAM no puede ser superior a 20 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
+        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
 
         public override bool Equals(object? obj)
         {
