@@ -11,6 +11,8 @@ namespace OneHope.API.Models
         {
             base.OnModelCreating(builder);
         }
+
+        public DbSet<Compra> Compras { get; set; }
     }
 }
 
