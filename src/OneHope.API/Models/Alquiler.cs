@@ -20,7 +20,7 @@
         public int Total { get; set; }
 
         [Required, StringLength(75, ErrorMessage = "La calle no puede ser mayor de 75 caracteres.")]
-        [RegularExpression(@"[a-ZA-Z] + [a-zA-Z\s]*$")]
+        [RegularExpression(@"[a-zA-Z\s]*$")]
         public string DireccionEnvio { get; set; }
     }
 }
