@@ -36,6 +36,8 @@ namespace OneHope.API.Models
         public String Direccion { get; set; }
 
         public IList<Linea_Compra> Lista_Compras { get; set; }
+        public IList<Linea_Pedido> Lista_Pedidos { get; set; }
+
 
         [Display(Name = "Metodo Pago")]
         [Required()]

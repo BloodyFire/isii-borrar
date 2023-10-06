@@ -17,6 +17,7 @@ namespace OneHope.API.Models
 
         public DbSet<Compra> Compras { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
     }
 }
 
