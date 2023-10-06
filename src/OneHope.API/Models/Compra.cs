@@ -28,10 +28,7 @@ namespace OneHope.API.Models
         {
             return obj is Compra compra &&
                    Id_Compra == compra.Id_Compra &&
-                   Customer_Id == compra.Customer_Id &&
-                   Fecha == compra.Fecha &&
-                   Total == compra.Total &&
-                   Direccion == compra.Direccion;
+                   Customer_Id == compra.Customer_Id;
         }
 
         public override int GetHashCode()
