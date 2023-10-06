@@ -3,7 +3,7 @@ namespace OneHope.API.Models
 {
     public class ApplicationDBContext : DbContext
     {
-        public DbSet<Linea_Compra> linea_Compras { get; set; }
+        public DbSet<Linea_Compra> Linea_Compras { get; set; }
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
                 : base(options)
         {

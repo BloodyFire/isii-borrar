@@ -1,4 +1,6 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace OneHope.API.Models
 {
     public class Linea_Compra
     {
@@ -13,13 +15,20 @@
             Precio_Unitario = precio_Unitario;
         }
 
+        [ForeignKey("Id_Prod")]
+        public Portatil Portatil { get; set; }
+
+        public int Id_Prod { get; set; }
+
+        [ForeignKey("Id_Compra")]
+        public Compra Compra { get; set; }
+
+        public int Id_Compra { get; set; }
+
         [Key]
         public int Id_Linea {  get; set; }
 
-        public int Id_Prod {  get; set; }
-
-        public int Id_Compra {  get; set; }
-
+        [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
         public int Cantidad {  get; set; }
 
         public double Precio_Unitario {  get; set; }
