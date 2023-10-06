@@ -36,7 +36,6 @@ namespace OneHope.API.Models
         public String Direccion { get; set; }
 
         public IList<Linea_Compra> Lista_Compras { get; set; }
-        public IList<Linea_Pedido> Lista_Pedidos { get; set; }
 
 
         [Display(Name = "Metodo Pago")]
@@ -45,25 +44,30 @@ namespace OneHope.API.Models
 
         [Required]
         public int Total {  get; set; }
-
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Compra compra &&
-                   Id_Compra == compra.Id_Compra &&
-                   Customer_Id == compra.Customer_Id;
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Id_Compra, Customer_Id, Fecha_Compra, Total, Direccion);
-        }
+        
 
         public enum Metodo_Pago
         {
             TarjetaCredito,
             PayPal,
             Transferencia
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Compra compra &&
+                   Id_Compra == compra.Id_Compra &&
+                   Customer_Id == compra.Customer_Id &&
+                   Fecha_Compra == compra.Fecha_Compra &&
+                   Direccion == compra.Direccion &&
+                   EqualityComparer<IList<Linea_Compra>>.Default.Equals(Lista_Compras, compra.Lista_Compras) &&
+                   Metodos_Pagos == compra.Metodos_Pagos &&
+                   Total == compra.Total;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id_Compra, Customer_Id, Fecha_Compra, Direccion, Lista_Compras, Metodos_Pagos, Total);
         }
     }
 }

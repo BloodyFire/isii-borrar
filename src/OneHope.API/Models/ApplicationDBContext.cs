@@ -13,6 +13,8 @@ namespace OneHope.API.Models
             base.OnModelCreating(builder);
 
             builder.Entity<Linea_Compra>().HasAlternateKey(pi => new { pi.Id_Prod, pi.Id_Compra });
+
+            builder.Entity<Linea_Pedido>().HasAlternateKey(pi => new { pi.Id_Prod, pi.Id_Linea });
         }
 
         public DbSet<Compra> Compras { get; set; }

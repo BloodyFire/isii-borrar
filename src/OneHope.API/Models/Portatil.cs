@@ -6,7 +6,7 @@
         { 
         }
 
-        public Portatil(int id, string nombre, double precio_Compra, double precio_Alquiler, int cantidad_Compra, int cantidad_Alquiler)
+        public Portatil(int id, string nombre, double precio_Compra, double precio_Alquiler, int cantidad_Compra, int cantidad_Alquiler, int id_Proveedor)
         {
             Id = id;
             Nombre = nombre;
@@ -14,6 +14,7 @@
             Precio_Alquiler = precio_Alquiler;
             Cantidad_Compra = cantidad_Compra;
             Cantidad_Alquiler = cantidad_Alquiler;
+            Id_Proveedor = id_Proveedor;
         }
 
         [Key]
@@ -46,6 +47,8 @@
         [Display(Name = "Portátiles A Alquilar")]
         public int Cantidad_Alquiler { get; set; }
 
+        public int Id_Proveedor {  get; set; }
+
         public override bool Equals(object? obj)
         {
             return obj is Portatil portatil &&
@@ -54,12 +57,13 @@
                    Precio_Compra == portatil.Precio_Compra &&
                    Precio_Alquiler == portatil.Precio_Alquiler &&
                    Cantidad_Compra == portatil.Cantidad_Compra &&
-                   Cantidad_Alquiler == portatil.Cantidad_Alquiler;
+                   Cantidad_Alquiler == portatil.Cantidad_Alquiler &&
+                   Id_Proveedor == portatil.Id_Proveedor;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre, Precio_Compra, Precio_Alquiler, Cantidad_Compra, Cantidad_Alquiler);
+            return HashCode.Combine(Id, Nombre, Precio_Compra, Precio_Alquiler, Cantidad_Compra, Cantidad_Alquiler, Id_Proveedor);
         }
     }
 }
