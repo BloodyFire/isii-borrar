@@ -40,17 +40,13 @@ namespace OneHope.API.Models
             return obj is Linea_Compra compra &&
                    EqualityComparer<Portatil>.Default.Equals(Portatil, compra.Portatil) &&
                    Id_Prod == compra.Id_Prod &&
-                   EqualityComparer<Compra>.Default.Equals(Compra, compra.Compra) &&
-                   Id_Compra == compra.Id_Compra &&
                    Id_Linea == compra.Id_Linea &&
-                   Cantidad == compra.Cantidad &&
-                   Precio_Unitario == compra.Precio_Unitario &&
-                   EqualityComparer<List<Linea_Compra>>.Default.Equals(Lista_Compra, compra.Lista_Compra);
+                   Cantidad == compra.Cantidad;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Portatil, Id_Prod, Compra, Id_Compra, Id_Linea, Cantidad, Precio_Unitario, Lista_Compra);
+            return HashCode.Combine(Id_Prod, Id_Linea);
         }
     }
 }

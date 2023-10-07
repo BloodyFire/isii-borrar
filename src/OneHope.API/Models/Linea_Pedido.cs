@@ -45,19 +45,15 @@ namespace OneHope.API.Models
         public override bool Equals(object? obj)
         {
             return obj is Linea_Pedido pedido &&
-                   Id_Linea == pedido.Id_Linea &&
                    EqualityComparer<Portatil>.Default.Equals(Portatil, pedido.Portatil) &&
                    Id_Prod == pedido.Id_Prod &&
-                   EqualityComparer<Pedido>.Default.Equals(Pedido, pedido.Pedido) &&
                    Id_Pedido == pedido.Id_Pedido &&
-                   Cantidad == pedido.Cantidad &&
-                   Id_Proveedor == pedido.Id_Proveedor &&
-                   Precio_U == pedido.Precio_U;
+                   Cantidad == pedido.Cantidad;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id_Linea, Portatil, Id_Prod, Pedido, Id_Pedido, Cantidad, Id_Proveedor, Precio_U);
+            return HashCode.Combine(Id_Prod, Id_Pedido);
         }
     }
 }
