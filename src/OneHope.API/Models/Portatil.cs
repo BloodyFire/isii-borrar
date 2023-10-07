@@ -6,7 +6,7 @@
         { 
         }
 
-        public Portatil(int id, string nombre, double precio_Compra, double precio_Alquiler, int cantidad_Compra, int cantidad_Alquiler, int id_Proveedor)
+        public Portatil(int id, string nombre, double precio_Compra, double precio_Alquiler, int cantidad_Compra, int cantidad_Alquiler, int id_Proveedor, Procesador procesador, Ram ram, Marca marca)
         {
             Id = id;
             Nombre = nombre;
@@ -15,6 +15,9 @@
             Cantidad_Compra = cantidad_Compra;
             Cantidad_Alquiler = cantidad_Alquiler;
             Id_Proveedor = id_Proveedor;
+            Procesador = procesador;
+            Ram = ram;
+            Marca = marca;
         }
 
         [Key]
@@ -49,6 +52,13 @@
 
         public int Id_Proveedor {  get; set; }
 
+        [Required]
+        public Procesador Procesador { get; set; }
+        [Required]
+        public Ram Ram { get; set; }
+        [Required]
+        public Marca Marca { get; set; }
+
         public override bool Equals(object? obj)
         {
             return obj is Portatil portatil &&
@@ -58,12 +68,15 @@
                    Precio_Alquiler == portatil.Precio_Alquiler &&
                    Cantidad_Compra == portatil.Cantidad_Compra &&
                    Cantidad_Alquiler == portatil.Cantidad_Alquiler &&
-                   Id_Proveedor == portatil.Id_Proveedor;
+                   Id_Proveedor == portatil.Id_Proveedor &&
+                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
+                   EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
+                   EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre, Precio_Compra, Precio_Alquiler, Cantidad_Compra, Cantidad_Alquiler, Id_Proveedor);
+            return HashCode.Combine(Id, Nombre);
         }
     }
 }

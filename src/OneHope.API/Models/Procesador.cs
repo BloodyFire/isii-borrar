@@ -4,18 +4,16 @@
     {
         public Procesador() { }
 
-        public Procesador(int id, string nombre, IList<Portatil> portatiles)
+        public Procesador(string nombre):base()
         {
-            Id = id;
             Nombre = nombre;
-            Portatiles = portatiles;
         }
 
         [Key]
         public int Id { get; set; }
 
         [Required]
-        public virtual string Nombre { get; set; }
+        public virtual string Nombre { get; set; } = string.Empty;
 
         public IList<Portatil> Portatiles { get; set; }
 
@@ -23,13 +21,12 @@
         {
             return obj is Procesador procesador &&
                    Id == procesador.Id &&
-                   Nombre == procesador.Nombre &&
-                   EqualityComparer<IList<Portatil>>.Default.Equals(Portatiles, procesador.Portatiles);
+                   Nombre == procesador.Nombre;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre, Portatiles);
+            return HashCode.Combine(Id, Nombre);
         }
     }
 }
