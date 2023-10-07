@@ -21,6 +21,8 @@ namespace OneHope.API.Models
         public DbSet<Procesador> Procesador { get; set; }
 
         public DbSet<Ram> Ram { get; set; }
+
+        public DbSet<Marca> Marca { get; set; }
     }
 
 }
