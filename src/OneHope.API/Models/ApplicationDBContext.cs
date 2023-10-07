@@ -21,6 +21,8 @@ namespace OneHope.API.Models
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Ram> Rams { get; set; }
+        public DbSet<Procesador> Procesadores { get; set; }
+
     }
 }
 
