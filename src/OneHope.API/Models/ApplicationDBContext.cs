@@ -15,6 +15,8 @@ namespace OneHope.API.Models
         public DbSet<Portatil> Portatiles { get; set; }
 
         public DbSet<Devolucion> Devolucion { get; set; }
+
+        public DbSet<LineaDevolucion> LineaDevolucion { get; set; }
     }
 
 }
