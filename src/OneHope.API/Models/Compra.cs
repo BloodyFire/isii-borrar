@@ -45,7 +45,6 @@ namespace OneHope.API.Models
         [Required]
         public int Total {  get; set; }
         
-
         public enum Metodo_Pago
         {
             TarjetaCredito,
