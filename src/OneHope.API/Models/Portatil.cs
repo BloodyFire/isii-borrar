@@ -46,12 +46,18 @@
         [Display(Name = "Memoria RAM")]
         public RAM RAM { get; set; }
 
-        //Constructores
-        public Portatil() { }
+        public IList<LineaAlquiler> LineasAlquiler { get; set; }
 
-        public Portatil(int ID, string Modelo, float PrecioCompra, float PrecioAlq, float PrecioCoste, int Stock, int StockAlq, Procesador Procesador, RAM RAM, Marca Marca)
+        //Constructores
+        public Portatil() 
+        {
+            LineasAlquiler = new List<LineaAlquiler>();
+        }
+
+        public Portatil(int ID, IList<LineaAlquiler> LineasAlquiler, string Modelo, float PrecioCompra, float PrecioAlq, float PrecioCoste, int Stock, int StockAlq, Procesador Procesador, RAM RAM, Marca Marca)
         {
             this.ID = ID;
+            this.LineasAlquiler = LineasAlquiler;
             this.Modelo = Modelo;
             this.PrecioCompra = PrecioCompra;
             this.PrecioAlq = PrecioAlq;
@@ -74,6 +80,7 @@
                    EqualityComparer<Marca>.Default.Equals(Marca, port.Marca) &&
                    PrecioCompra == port.PrecioCompra &&
                    PrecioAlq == port.PrecioAlq &&
+                   EqualityComparer<IList<LineaAlquiler>>.Default.Equals(LineasAlquiler, port.LineasAlquiler) &&
                    PrecioCoste == port.PrecioCoste &&
                    Stock == port.Stock &&
                    StockAlq == port.StockAlq;

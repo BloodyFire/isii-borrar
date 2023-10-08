@@ -30,13 +30,15 @@
         [Display(Name = "Metodo de Pago")]
         public MetodoPago MetodoPago { get; set; }
 
+        public IList<LineaAlquiler> LineasAlquiler { get; set; }
+
         //Constructores
         public Alquiler() 
         {
-
+            LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Alquiler(int ID, DateTime FechaAlquiler, DateTime FechaInAlquiler, DateTime FechaFinAlquiler, float Total, string DireccionEnvio, MetodoPago MetodoPago)
+        public Alquiler(int ID, DateTime FechaAlquiler, DateTime FechaInAlquiler, DateTime FechaFinAlquiler, float Total, string DireccionEnvio, MetodoPago MetodoPago, IList<LineaAlquiler> LineasAlquiler)
         {
             this.ID = ID;
             this.FechaAlquiler = FechaAlquiler;
@@ -45,6 +47,7 @@
             this.Total = Total;
             this.DireccionEnvio = DireccionEnvio;
             this.MetodoPago = MetodoPago;
+            this.LineasAlquiler = LineasAlquiler;
 
         }
 
@@ -58,12 +61,13 @@
                    FechaInAlquiler == alq.FechaInAlquiler &&
                    FechaFinAlquiler == alq.FechaFinAlquiler &&
                    DireccionEnvio == alq.DireccionEnvio &&
+                   EqualityComparer<IList<LineaAlquiler>>.Default.Equals(LineasAlquiler, alq.LineasAlquiler) &&
                    EqualityComparer<MetodoPago>.Default.Equals(MetodoPago, alq.MetodoPago);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ID, Total, FechaAlquiler, FechaInAlquiler, FechaFinAlquiler, DireccionEnvio, MetodoPago);
+            return HashCode.Combine(ID, Total, FechaAlquiler, FechaInAlquiler, FechaFinAlquiler, DireccionEnvio, MetodoPago, LineasAlquiler);
         }
     }
 }

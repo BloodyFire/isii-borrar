@@ -6,10 +6,11 @@
         [Key]
         public int ID { get; set; }
 
+        public Portatil Portatil { get; set; }
         public int PortatilID { get; set; }
-        public float PortatilPrecioAlquiler { get; set; }
+        public float PortatilPrecioAlq { get; set; }
 
-
+        public Alquiler Alquiler { get; set; }
         public int AlquilerID { get; set; }
 
         [Required]
@@ -19,11 +20,15 @@
         //Constructores
         public LineaAlquiler() { }
 
-        public LineaAlquiler(int ID, int Cantidad, float PortatilPrecioAlquiler)
+        public LineaAlquiler(int ID, int Cantidad, Portatil Portatil, Alquiler Alquiler)
         {
             this.ID = ID;
+            this.Portatil = Portatil;
+            this.Alquiler = Alquiler;
+            this.PortatilID = Portatil.ID;
+            this.AlquilerID = Alquiler.ID;
             this.Cantidad = Cantidad;
-            this.PortatilPrecioAlquiler = PortatilPrecioAlquiler;
+            this.PortatilPrecioAlq = Portatil.PrecioAlq;
         }
 
         //Metodos
@@ -33,12 +38,12 @@
                    PortatilID == item.PortatilID &&
                    AlquilerID == item.AlquilerID &&
                    Cantidad == item.Cantidad &&
-                   PortatilPrecioAlquiler == item.PortatilPrecioAlquiler;
+                   PortatilPrecioAlq == item.PortatilPrecioAlq;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PortatilID, AlquilerID, Cantidad, PortatilPrecioAlquiler);
+            return HashCode.Combine(PortatilID, AlquilerID, Cantidad, PortatilPrecioAlq);
         }
     }
 }
