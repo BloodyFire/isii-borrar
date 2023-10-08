@@ -18,6 +18,13 @@ namespace OneHope.API.Models
             builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
             //Clave compuesta para las lineas de pedido.
             builder.Entity<LineaPedido>().HasKey(lp => new { lp.PortatilId, lp.PedidoId });
+
+            builder.Entity<MetodoPago>().
+                HasDiscriminator<string>("TipoMetodoPago")
+                .HasValue<MetodoPago>("MetodoPago")
+                .HasValue<TarjetaCredito>("MetodoPago_Tarjeta")
+                .HasValue<PayPal>("MetodoPago_PayPal")
+                .HasValue<Transferencia>("MetodoPago_Transferencia");
         }
 
         public DbSet<Procesador> Procesadores { get; set; }
