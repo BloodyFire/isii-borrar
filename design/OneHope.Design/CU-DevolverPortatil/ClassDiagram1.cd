@@ -1,2 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram /> 
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OneHope.API.Models.Devolucion">
+    <Position X="1.75" Y="1" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAIAEAgAAAAAAAAAAAQIIAAAAAAAAAAAA=</HashCode>
+      <FileName>CU-DevolverPortatil\Devolucion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineaDevolucion" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.API.Models.Portatil">
+    <Position X="7.5" Y="1" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAABAQAAgAiAgAgAAAAAAAgAAgAIAAAAgAAAAIEAA=</HashCode>
+      <FileName>CU-DevolverPortatil\Portatil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ram" />
+      <Property Name="Marca" />
+      <Property Name="Procesador" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineasDevolucion" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.API.Models.LineaDevolucion">
+    <Position X="4.75" Y="1" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>ABAAAAGAAAAQIAAAgAAAAAAIAAAAAKAAAAAAAACAAAA=</HashCode>
+      <FileName>CU-DevolverPortatil\LineaDevolucion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portatil" />
+      <Property Name="Devolucion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OneHope.API.Models.Marca">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-DevolverPortatil\Marca.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.API.Models.Procesador">
+    <Position X="10" Y="2.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-DevolverPortatil\Procesador.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.API.Models.Ram">
+    <Position X="10" Y="4.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-DevolverPortatil\Ram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
