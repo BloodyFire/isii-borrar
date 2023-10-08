@@ -12,7 +12,7 @@ namespace OneHope.API.Models
             IdProd = idProd;
             IdCompra = idCompra;
             Cantidad = cantidad;
-            Precio_Unitario = precioUnitario;
+            PrecioUnitario = precioUnitario;
         }
 
         [Required]
@@ -31,7 +31,7 @@ namespace OneHope.API.Models
         [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
         public int Cantidad {  get; set; }
 
-        public double Precio_Unitario {  get; set; }
+        public double PrecioUnitario {  get; set; }
 
         public List<LineaCompra> Lista_Compra { get; set; }
 
@@ -41,7 +41,8 @@ namespace OneHope.API.Models
                    EqualityComparer<Portatil>.Default.Equals(Portatil, compra.Portatil) &&
                    IdProd == compra.IdProd &&
                    IdLinea == compra.IdLinea &&
-                   Cantidad == compra.Cantidad;
+                   Cantidad == compra.Cantidad &&
+                   PrecioUnitario == compra.PrecioUnitario;
         }
 
         public override int GetHashCode()
