@@ -19,6 +19,8 @@
         [StringLength(30, ErrorMessage = "El procesador no puede tener mas de 30 caracteres.")]
         public string Nombre { get; set;}
 
+        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+
         //Metodos
         public override bool Equals(object? obj)
         {

@@ -18,6 +18,8 @@
         [StringLength(25, ErrorMessage = "La RAM no puede ser mayor a 25 caracteres.")]
         public string Nombre { get; set;}
 
+        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+
         //Metodos
         public override bool Equals(object? obj)
         {

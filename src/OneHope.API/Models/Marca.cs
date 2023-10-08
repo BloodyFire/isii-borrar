@@ -19,6 +19,8 @@
         [StringLength(75, ErrorMessage = "La marca no puede tener mas de 75 caracteres.")]
         public string Nombre { get; set;}
 
+        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+
         //Metodos
         public override bool Equals(object? obj)
         {
