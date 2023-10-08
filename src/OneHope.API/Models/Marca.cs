@@ -7,6 +7,8 @@
 
         public Marca(int ID, string Nombre) 
         {
+            this.ID = ID;
+            this.Nombre = Nombre;
         }
 
         //Atributos
