@@ -16,12 +16,15 @@ namespace OneHope.API.Models
             builder.Entity<RAM>().HasAlternateKey(r => new { r.Nombre });
             builder.Entity<Marca>().HasAlternateKey(m => new { m.Nombre });
             builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
+            //Clave compuesta para las lineas de pedido.
+            builder.Entity<LineaPedido>().HasKey(lp => new { lp.PortatilId, lp.PedidoId });
         }
 
         public DbSet<Procesador> Procesadores { get; set; }
         public DbSet<RAM> RAMs { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
+        public DbSet<Pedido> Pedidos { get; set; }
     }
 }
 
