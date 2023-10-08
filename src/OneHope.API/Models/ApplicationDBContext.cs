@@ -15,10 +15,11 @@ namespace OneHope.API.Models
             builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdProd, pi.IdCompra });
             
             builder.Entity<MetodoPago>().
-                HasDiscriminator<string>("Tipo_Metodo_Pago")
+                HasDiscriminator<string>("TipoMetodoPago")
                 .HasValue<MetodoPago>("MetodoPago")
-                .HasValue<TarjetaCredito>("MetodoPago_Tarjeta")
-                .HasValue<PayPal>("MetodoPago_PayPal");
+                .HasValue<TarjetaCredito>("Tarjeta")
+                .HasValue<PayPal>("PayPal")
+                .HasValue<Transferencia>("Transferencia");
         }
 
         public DbSet<Compra> Compras { get; set; }
