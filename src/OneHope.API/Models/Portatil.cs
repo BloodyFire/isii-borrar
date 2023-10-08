@@ -4,6 +4,7 @@
     {
         public Portatil()
         {
+            LineasPedido = new List<LineaPedido>();
         }
 
         public Portatil(int id, string modelo, Procesador proceador, RAM rAM, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
@@ -19,6 +20,7 @@
             PrecioCoste = precioCoste;
             Stock = stock;
             StockAlquilar = stockAlquilar;
+            LineasPedido = new List<LineaPedido>();
         }
 
         [Key]
@@ -68,6 +70,8 @@
         [Required]
         [Display(Name = "Unidades disponibles")]
         public int StockAlquilar { get; set; } = 0;
+
+        public IList<LineaPedido> LineasPedido { get; set; }
 
         public override bool Equals(object? obj)
         {
