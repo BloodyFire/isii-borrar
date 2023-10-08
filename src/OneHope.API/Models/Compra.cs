@@ -5,47 +5,47 @@ namespace OneHope.API.Models
     public class Compra
     {
 
-        public Compra(int id_Compra, int customer_Id, DateTime fecha_Compra, string direccion, Metodo_Pago metodos_Pagos, int total)
+        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, MetodoPago metodosPagos, int total)
         {
-            Id_Compra = id_Compra;
-            Customer_Id = customer_Id;
-            Fecha_Compra = fecha_Compra;
+            Id = id;
+            CustomerId = customerId;
+            FechaCompra = fechaCompra;
             Direccion = direccion;
-            Metodos_Pagos = metodos_Pagos;
+            MetodosPagos = metodosPagos;
             Total = total;
         }
 
         public Compra()
         {
-            Lista_Compras = new List<Linea_Compra>();
+            ListaCompras = new List<LineaCompra>();
         }
 
         [Key]
-        public int Id_Compra {  get; set; }
+        public int Id {  get; set; }
 
         
-        public int Customer_Id {  get; set; }
+        public int CustomerId {  get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Fecha_Compra{  get; set; }
+        public DateTime FechaCompra{  get; set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Direccion")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, escribe tu direccion de envio")]
         public String Direccion { get; set; }
 
-        public IList<Linea_Compra> Lista_Compras { get; set; }
+        public IList<LineaCompra> ListaCompras { get; set; }
 
 
         [Display(Name = "Metodo Pago")]
         [Required()]
-        public Metodo_Pago Metodos_Pagos { get; set; }
+        public MetodoPago MetodosPagos { get; set; }
 
         [Required]
         public int Total {  get; set; }
         
-        public enum Metodo_Pago
+        public enum MetodoPago
         {
             TarjetaCredito,
             PayPal,
@@ -55,18 +55,18 @@ namespace OneHope.API.Models
         public override bool Equals(object? obj)
         {
             return obj is Compra compra &&
-                   Id_Compra == compra.Id_Compra &&
-                   Customer_Id == compra.Customer_Id &&
-                   Fecha_Compra == compra.Fecha_Compra &&
+                   Id == compra.Id &&
+                   CustomerId == compra.CustomerId &&
+                   FechaCompra == compra.FechaCompra &&
                    Direccion == compra.Direccion &&
-                   EqualityComparer<IList<Linea_Compra>>.Default.Equals(Lista_Compras, compra.Lista_Compras) &&
-                   Metodos_Pagos == compra.Metodos_Pagos &&
+                   EqualityComparer<IList<LineaCompra>>.Default.Equals(ListaCompras, compra.ListaCompras) &&
+                   MetodosPagos == compra.MetodosPagos &&
                    Total == compra.Total;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id_Compra, Customer_Id, Fecha_Compra, Direccion, Lista_Compras, Metodos_Pagos, Total);
+            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, ListaCompras, MetodosPagos, Total);
         }
     }
 }
