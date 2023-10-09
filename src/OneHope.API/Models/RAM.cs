@@ -1,10 +1,10 @@
 ﻿namespace OneHope.API.Models
 {
-    public class RAM
+    public class Ram
     {
-        public RAM() {}
+        public Ram() {}
 
-        public RAM(string nombre) {
+        public Ram(string nombre) {
             Nombre = nombre;
         }
 
@@ -17,9 +17,9 @@
 
         public override bool Equals(object? obj)
         {
-            return obj is RAM rAM &&
-                   Id == rAM.Id &&
-                   Nombre == rAM.Nombre;
+            return obj is Ram ram &&
+                   Id == ram.Id &&
+                   Nombre == ram.Nombre;
         }
 
         public override int GetHashCode()

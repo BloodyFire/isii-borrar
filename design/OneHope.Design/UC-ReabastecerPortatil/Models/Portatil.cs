@@ -9,12 +9,12 @@ namespace OneHope.Design.Models
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Portatil(int id, string modelo, Procesador proceador, RAM rAM, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
+        public Portatil(int id, string modelo, Procesador proceador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
         {
             Id = id;
             Modelo = modelo;
             Proceador = proceador;
-            RAM = rAM;
+            Ram = ram;
             Marca = marca;
             Nombre = nombre;
             PrecioCompra = precioCompra;
@@ -37,7 +37,7 @@ namespace OneHope.Design.Models
 
         [Required]
         [Display(Name = "Memoria RAM")]
-        public RAM RAM {  get; set; }
+        public Ram Ram { get; set; }
 
         [Required]
         public Marca Marca { get; set; }
@@ -84,7 +84,7 @@ namespace OneHope.Design.Models
                    Id == portatil.Id &&
                    Modelo == portatil.Modelo &&
                    EqualityComparer<Procesador>.Default.Equals(Proceador, portatil.Proceador) &&
-                   EqualityComparer<RAM>.Default.Equals(RAM, portatil.RAM) &&
+                   EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
                    EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca) &&
                    Nombre == portatil.Nombre &&
                    PrecioCompra == portatil.PrecioCompra &&
@@ -100,7 +100,7 @@ namespace OneHope.Design.Models
             hash.Add(Id);
             hash.Add(Modelo);
             hash.Add(Proceador);
-            hash.Add(RAM);
+            hash.Add(Ram);
             hash.Add(Marca);
             hash.Add(Nombre);
             hash.Add(PrecioCompra);

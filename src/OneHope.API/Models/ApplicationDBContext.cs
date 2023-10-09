@@ -13,7 +13,7 @@ namespace OneHope.API.Models
 
             //Claves alternativas de los atributos multievaluados. No se pueden repetir en nombre.
             builder.Entity<Procesador>().HasAlternateKey(p => new { p.Nombre });
-            builder.Entity<RAM>().HasAlternateKey(r => new { r.Nombre });
+            builder.Entity<Ram>().HasAlternateKey(r => new { r.Nombre });
             builder.Entity<Marca>().HasAlternateKey(m => new { m.Nombre });
             builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
             //Clave compuesta para las lineas de pedido.
@@ -30,7 +30,7 @@ namespace OneHope.API.Models
         }
 
         public DbSet<Procesador> Procesadores { get; set; }
-        public DbSet<RAM> RAMs { get; set; }
+        public DbSet<Ram> Rams { get; set; }
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
