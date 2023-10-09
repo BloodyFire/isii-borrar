@@ -1,7 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace OneHope.Design
+﻿namespace OneHope.API.Models
 {
     public class Transferencia : MetodoPago
     {
