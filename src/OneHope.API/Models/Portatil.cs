@@ -33,6 +33,8 @@ namespace OneHope.API.Models
 
         public IList<LineaDevolucion> LineasDevolucion { get; set; }
 
+        public IList<LineaCompra> LineasCompra { get; set; }
+
         [Required]
         public Ram Ram { get; set; }
 

@@ -17,7 +17,7 @@
         public float Total { get; set; }
 
         public IList<LineaDevolucion> LineaDevolucion
-        {
+        { 
             get; set;
         }
 
