@@ -22,7 +22,7 @@
         [DataType(DataType.MultilineText), Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
-        public IList<LineaPedido> LineasPedido { get; set; }
+        public IList<LineaPedido> LineasPedido { get; set; } = new List<LineaPedido>();
 
         [Required]
         [Display(Name = "Método de Pago")]

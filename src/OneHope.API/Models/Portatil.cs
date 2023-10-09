@@ -71,7 +71,7 @@
         [Display(Name = "Unidades disponibles")]
         public int StockAlquilar { get; set; } = 0;
 
-        public IList<LineaPedido> LineasPedido { get; set; }
+        public IList<LineaPedido> LineasPedido { get; set; } = new List<LineaPedido>();
 
         [Required]
         public Proveedor Proveedor { get; set; }
