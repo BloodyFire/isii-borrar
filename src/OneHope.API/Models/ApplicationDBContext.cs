@@ -16,19 +16,16 @@ namespace OneHope.API.Models
 
             builder.Entity<LineaAlquiler>().HasAlternateKey(la => new { la.AlquilerID, la.PortatilID });
 
-            //builder.Entity<MetodoPago>().
-             //   HasDiscriminator<string>("TipoMetodoPago")
-              //  .HasValue<MetodoPago>("MetodoPago")
-               // .HasValue<TarjetaCredito>("Tarjeta")
-                //.HasValue<PayPal>("PayPal")
-                //.HasValue<Transferencia>("Transferencia");
+            builder.Entity<MetodoPago>().
+                HasDiscriminator<string>("TipoMetodoPago")
+                .HasValue<MetodoPago>("MetodoPago")
+                .HasValue<TarjetaCredito>("Tarjeta")
+                .HasValue<PayPal>("PayPal")
+                .HasValue<Transferencia>("Transferencia");
         }
 
         public DbSet<LineaAlquiler> LineasAlquiler { get; set; }
         public DbSet<MetodoPago> MetodoPagos { get; set; }
-        public DbSet<TarjetaCredito> TarjetasCredito { get; set; }
-        public DbSet<Transferencia> Transferencias { get; set; }
-        public DbSet<PayPal> PayPals { get; set; }
         public DbSet<Alquiler> Alquilers { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<RAM> RAMs { get; set; }

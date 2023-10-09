@@ -80,7 +80,6 @@
                    EqualityComparer<Marca>.Default.Equals(Marca, port.Marca) &&
                    PrecioCompra == port.PrecioCompra &&
                    PrecioAlq == port.PrecioAlq &&
-                   EqualityComparer<IList<LineaAlquiler>>.Default.Equals(LineasAlquiler, port.LineasAlquiler) &&
                    PrecioCoste == port.PrecioCoste &&
                    Stock == port.Stock &&
                    StockAlq == port.StockAlq;

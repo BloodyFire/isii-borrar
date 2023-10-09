@@ -81,7 +81,6 @@ namespace OneHope.API.Models
                    FechaInAlquiler == alq.FechaInAlquiler &&
                    FechaFinAlquiler == alq.FechaFinAlquiler &&
                    DireccionEnvio == alq.DireccionEnvio &&
-                   EqualityComparer<IList<LineaAlquiler>>.Default.Equals(LineasAlquiler, alq.LineasAlquiler) &&
                    EqualityComparer<MetodoPago>.Default.Equals(MetodoPago, alq.MetodoPago);
         }
 
@@ -91,13 +90,11 @@ namespace OneHope.API.Models
         }
 
         //Tipo de metodo de pago
-        /*
         public enum MetodPago
         {
             TarjetaCredito,
             PayPal,
             Transferencia
         }
-        */
     }
 }
