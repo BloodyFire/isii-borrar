@@ -1,4 +1,7 @@
-﻿namespace OneHope.API.Models
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design
 {
     public class Ram
     {
