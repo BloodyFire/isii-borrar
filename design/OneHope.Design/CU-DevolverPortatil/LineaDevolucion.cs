@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OneHope.API.Models
+namespace OneHope.Design
 {
     public class LineaDevolucion
     {
@@ -11,32 +12,38 @@ namespace OneHope.API.Models
         [Key]
         public int IdLinea { get; set; }
 
-        [Required]
-        public int IdDevolucion { get; set; }
+        
 
         [Required]
         public int Cantidad { get; set; }
 
         [Required]
-        public int IdLineaCompra { get; set; }
+        public LineaCompra LineaCompra { get; set; }
 
-        [ForeignKey("PortatilId")]
+       
         public Portatil Portatil { get; set; }
         public int PortatilId { get; set; }
 
-        [ForeignKey("DevolucionId")]
+        
         public Devolucion Devolucion { get; set; }
-        public int PedidoId { get; set; }
+
+        public int IdDevolucion { get; set; }
 
         public override bool Equals(object? obj)
         {
             return obj is LineaDevolucion devolucion &&
-                   IdLineaCompra == devolucion.IdLineaCompra;
+                   IdLinea == devolucion.IdLinea &&
+                   Cantidad == devolucion.Cantidad &&
+                   EqualityComparer<LineaCompra>.Default.Equals(LineaCompra, devolucion.LineaCompra) &&
+                   EqualityComparer<Portatil>.Default.Equals(Portatil, devolucion.Portatil) &&
+                   PortatilId == devolucion.PortatilId &&
+                   EqualityComparer<Devolucion>.Default.Equals(Devolucion, devolucion.Devolucion) &&
+                   IdDevolucion == devolucion.IdDevolucion;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdLineaCompra);
+            return HashCode.Combine(IdLinea, Cantidad, LineaCompra, Portatil, PortatilId, Devolucion, IdDevolucion);
         }
     }
 }
