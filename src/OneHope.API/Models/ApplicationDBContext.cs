@@ -18,7 +18,9 @@ namespace OneHope.API.Models
             builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
             //Clave compuesta para las lineas de pedido.
             builder.Entity<LineaPedido>().HasKey(lp => new { lp.PortatilId, lp.PedidoId });
-
+            //Clave alternativa para los proveedores
+            builder.Entity<Proveedor>().HasAlternateKey(p => new { p.CIF });
+            
             builder.Entity<MetodoPago>().
                 HasDiscriminator<string>("TipoMetodoPago")
                 .HasValue<MetodoPago>("MetodoPago")
@@ -32,6 +34,7 @@ namespace OneHope.API.Models
         public DbSet<Marca> Marcas { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<Proveedor> Proveedores { get; set; }
     }
 }
 
