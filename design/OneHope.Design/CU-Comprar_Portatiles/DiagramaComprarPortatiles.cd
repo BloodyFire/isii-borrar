@@ -2,6 +2,9 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OneHope.Design.Compra">
     <Position X="9" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
     <NestedTypes>
       <Enum Name="OneHope.Design.Compra.MetodPago" Collapsed="true">
         <TypeIdentifier>
@@ -27,8 +30,8 @@
       <FileName>CU-Comprar_Portatiles\LineaCompra.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Portatil" />
       <Property Name="Compra" />
+      <Property Name="Portatil" />
     </ShowAsAssociation>
   </Class>
   <Class Name="OneHope.Design.Marca">
@@ -98,7 +101,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="OneHope.Design.Transferencia">
-    <Position X="14" Y="7.25" Width="1.5" />
+    <Position X="14" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>CU-Comprar_Portatiles\Transferencia.cs</FileName>
