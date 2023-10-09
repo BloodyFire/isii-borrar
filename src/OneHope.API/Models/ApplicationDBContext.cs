@@ -5,10 +5,8 @@ namespace OneHope.API.Models
 {
     public class ApplicationDBContext : DbContext
     {
-        public DbSet<MetodoPago> MetodoPagos { get; set; }
+        //public DbSet<MetodoPago> MetodoPagos { get; set; }
         
-        public DbSet<LineaAlquiler> LineasAlquiler { get; set; }
-
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
                 : base(options)
         {
@@ -27,6 +25,7 @@ namespace OneHope.API.Models
                 .HasValue<Transferencia>("Transferencia");
         }
 
+        public DbSet<LineaAlquiler> LineasAlquiler { get; set; }
         public DbSet<Alquiler> Alquilers { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<RAM> RAMs { get; set; }
