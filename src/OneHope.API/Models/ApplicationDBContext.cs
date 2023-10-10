@@ -3,7 +3,6 @@ namespace OneHope.API.Models
 {
     public class ApplicationDBContext : DbContext
     {
-        public DbSet<MetodoPago> MetodoPagos { get; set; }
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
                 : base(options)
         {
@@ -14,12 +13,6 @@ namespace OneHope.API.Models
 
             builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdProd, pi.IdCompra });
             
-            builder.Entity<MetodoPago>().
-                HasDiscriminator<string>("TipoMetodoPago")
-                .HasValue<MetodoPago>("MetodoPago")
-                .HasValue<TarjetaCredito>("Tarjeta")
-                .HasValue<PayPal>("PayPal")
-                .HasValue<Transferencia>("Transferencia");
         }
 
         public DbSet<Compra> Compras { get; set; }
