@@ -21,7 +21,7 @@ namespace OneHope.API.Models
         public DbSet<LineaAlquiler> LineasAlquiler { get; set; }
         public DbSet<Alquiler> Alquilers { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
-        public DbSet<RAM> RAMs { get; set; }
+        public DbSet<Ram> RAMs { get; set; }
         public DbSet<Procesador> Procesadores { get; set; }
         public DbSet<Marca> Marcas { get; set; }
     }
