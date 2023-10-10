@@ -1,10 +1,13 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design.Models
 {
     public class Ram
     {
         public Ram() { }
 
-        public Ram(string nombre) {
+        public Ram(string nombre)
+        {
             Nombre = nombre;
         }
 

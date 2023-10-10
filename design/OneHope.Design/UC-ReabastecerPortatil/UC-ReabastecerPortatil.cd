@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OneHope.Design.Models.LineaPedido">
+    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAQAAEAAAAAAAEAgAAAAAAIAAAAAKAAAAAAAACAAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\LineaPedido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portatil" />
+      <Property Name="Pedido" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Marca">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Marca.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.MetodoPago">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\MetodoPago.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneHope.Design.Models.PayPal">
+    <Position X="10" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAgAAAAAAAAAAAAIAAAAAAAgAAAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\PayPal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneHope.Design.Models.Portatil">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAiABCQAAgAAAAAgAAAgAABgAAgAIAAAAgAIAAAEAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Portatil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Marca" />
+      <Property Name="Proveedor" />
+      <Property Name="Proceador" />
+      <Property Name="RAM" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineasPedido" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Procesador">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Procesador.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Proveedor">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAAAAgCAAgAAAAAAAAIAAAAAAAgAAAEA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Proveedor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.RAM">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\RAM.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.TarjetaCredito">
+    <Position X="7.75" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAQgAAAAAAAAAAAAIAAAAAAAACAAQA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\TarjetaCredito.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneHope.Design.Models.Transferencia">
+    <Position X="12.25" Y="5.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Transferencia.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OneHope.Design.Models.Pedido">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAAAAAAgCAAAAACAAAQQIMAAAAAAAAAAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Pedido.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="TipoMetodoPago" />
+      <Property Name="MetodoPago" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineasPedido" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Enum Name="OneHope.Design.Models.TipoMetodoPago">
+    <Position X="13.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAABAAA=</HashCode>
+      <FileName>UC-ReabastecerPortatil\Models\Pedido.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -4,8 +4,7 @@
     {
         public Procesador() { }
 
-        public Procesador(string nombre):base()
-        {
+        public Procesador(string nombre) {
             Nombre = nombre;
         }
 
@@ -13,9 +12,9 @@
         public int Id { get; set; }
 
         [Required]
-        public virtual string Nombre { get; set; } = string.Empty;
-
-        public IList<Portatil> Portatiles { get; set; }
+        [StringLength(20, ErrorMessage = "El procesador no puede ser superior a 20 caracteres.")]
+        public string Nombre { get; set; } = string.Empty;
+        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
 
         public override bool Equals(object? obj)
         {
@@ -28,5 +27,6 @@
         {
             return HashCode.Combine(Id, Nombre);
         }
+
     }
 }
