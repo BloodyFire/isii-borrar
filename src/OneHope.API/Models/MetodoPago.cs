@@ -3,9 +3,9 @@
     public class MetodoPago
     {
         //Constructores
-        public MetodoPago(int ID)
+        public MetodoPago(int iD)
         {
-            this.ID = ID;
+            ID = iD;
         }
         //Atributos
         [Key]

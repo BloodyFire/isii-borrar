@@ -3,13 +3,13 @@
     public class TarjetaCredito : MetodoPago
     {
         //Constructores
-        public TarjetaCredito(int ID) : base(ID) { }
+        public TarjetaCredito(int iD) : base(iD) { }
 
-        public TarjetaCredito(int ID, int NumTC, int CCV, DateTime FechaCaducidad) : base(ID)
+        public TarjetaCredito(int iD, int numTC, int cCV, DateTime fechaCaducidad) : base(iD)
         {
-            this.NumTC = NumTC;
-            this.CCV = CCV;
-            this.FechaCaducidad = FechaCaducidad;
+            NumTC = numTC;
+            CCV = cCV;
+            FechaCaducidad = fechaCaducidad;
         }
 
         //Atributos

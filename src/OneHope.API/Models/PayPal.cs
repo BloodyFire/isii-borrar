@@ -3,12 +3,12 @@
     public class PayPal : MetodoPago
     {
         //Constructores
-        public PayPal(int ID) : base(ID) { }
+        public PayPal(int iD) : base(iD) { }
 
-        public PayPal(int ID, string Email, int Telefono) : base(ID)
+        public PayPal(int iD, string email, int telefono) : base(iD)
         {
-            this.Email = Email;
-            this.Telefono = Telefono;
+            Email = email;
+            Telefono = telefono;
         }
 
         //Atributos

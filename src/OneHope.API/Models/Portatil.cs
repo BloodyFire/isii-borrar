@@ -54,19 +54,19 @@
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Portatil(int ID, IList<LineaAlquiler> LineasAlquiler, string Modelo, float PrecioCompra, float PrecioAlq, float PrecioCoste, int Stock, int StockAlq, Procesador Procesador, RAM RAM, Marca Marca)
+        public Portatil(int iD, IList<LineaAlquiler> lineasAlquiler, string modelo, float precioCompra, float precioAlq, float precioCoste, int stock, int stockAlq, Procesador procesador, RAM rAM, Marca marca)
         {
-            this.ID = ID;
-            this.LineasAlquiler = LineasAlquiler;
-            this.Modelo = Modelo;
-            this.PrecioCompra = PrecioCompra;
-            this.PrecioAlq = PrecioAlq;
-            this.PrecioCoste = PrecioCoste;
-            this.Stock = Stock;
-            this.StockAlq = StockAlq;
-            this.Procesador = Procesador;
-            this.Marca = Marca;
-            this.RAM = RAM;
+            ID = iD;
+            LineasAlquiler = lineasAlquiler;
+            Modelo = modelo;
+            PrecioCompra = precioCompra;
+            PrecioAlq = precioAlq;
+            PrecioCoste = precioCoste;
+            Stock = stock;
+            StockAlq = stockAlq;
+            Procesador = procesador;
+            Marca = marca;
+            RAM = rAM;
         }
 
         //Metodos

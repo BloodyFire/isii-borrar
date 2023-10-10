@@ -3,7 +3,7 @@
     public class Transferencia : MetodoPago
     {
         //Constructores
-        public Transferencia(int ID) : base(ID) { }
+        public Transferencia(int iD) : base(iD) { }
 
         //Atributos
         [Required]

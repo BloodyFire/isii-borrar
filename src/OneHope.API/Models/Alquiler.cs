@@ -54,20 +54,20 @@ namespace OneHope.API.Models
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Alquiler(int ID, DateTime FechaAlquiler, DateTime FechaInAlquiler, DateTime FechaFinAlquiler, float Total, string NombreCliente, string ApellidosCliente, string DireccionEnvio, string EmailCliente, int TelefonoCliente, MetodoPago MetodoPago, IList<LineaAlquiler> LineasAlquiler)
+        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int telefonoCliente, MetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
         {
-            this.ID = ID;
-            this.FechaAlquiler = FechaAlquiler;
-            this.FechaInAlquiler = FechaInAlquiler;
-            this.FechaFinAlquiler = FechaFinAlquiler;
-            this.Total = Total;
-            this.DireccionEnvio = DireccionEnvio;
-            this.EmailCliente = EmailCliente;
-            this.NombreCliente = NombreCliente;
-            this.ApellidosCliente = ApellidosCliente;
-            this.TelefonoCliente = TelefonoCliente;
-            this.MetodoPago = MetodoPago;
-            this.LineasAlquiler = LineasAlquiler;
+            ID = iD;
+            FechaAlquiler = fechaAlquiler;
+            FechaInAlquiler = fechaInAlquiler;
+            FechaFinAlquiler = fechaFinAlquiler;
+            Total = total;
+            DireccionEnvio = direccionEnvio;
+            EmailCliente = emailCliente;
+            NombreCliente = nombreCliente;
+            ApellidosCliente = apellidosCliente;
+            TelefonoCliente = telefonoCliente;
+            MetodoPago = metodoPago;
+            LineasAlquiler = lineasAlquiler;
 
         }
 

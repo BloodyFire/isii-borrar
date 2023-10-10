@@ -4,10 +4,10 @@
     {
         //Constructores
         public RAM() { }
-        public RAM(int ID, string Nombre) 
+        public RAM(int iD, string nombre) 
         {
-            this.ID = ID;
-            this.Nombre = Nombre;
+            ID = iD;
+            Nombre = nombre;
         }
 
         //Atributos
