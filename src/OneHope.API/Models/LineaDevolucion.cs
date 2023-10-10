@@ -22,9 +22,7 @@ namespace OneHope.API.Models
 
         public int LineaCompraId { get; set; }
 
-       
-        public Portatil Portatil { get; set; }
-        public int? PortatilId { get; set; }
+
 
         
         public Devolucion Devolucion { get; set; }
@@ -38,15 +36,13 @@ namespace OneHope.API.Models
                    Cantidad == devolucion.Cantidad &&
                    EqualityComparer<LineaCompra>.Default.Equals(LineaCompra, devolucion.LineaCompra) &&
                    LineaCompraId == devolucion.LineaCompraId &&
-                   EqualityComparer<Portatil>.Default.Equals(Portatil, devolucion.Portatil) &&
-                   PortatilId == devolucion.PortatilId &&
                    EqualityComparer<Devolucion>.Default.Equals(Devolucion, devolucion.Devolucion) &&
                    IdDevolucion == devolucion.IdDevolucion;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdLinea, Cantidad, LineaCompra, LineaCompraId, Portatil, PortatilId, Devolucion, IdDevolucion);
+            return HashCode.Combine(IdLinea, Cantidad, LineaCompra, LineaCompraId, Devolucion, IdDevolucion);
         }
     }
 }

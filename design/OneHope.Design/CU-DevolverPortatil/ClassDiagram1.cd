@@ -19,7 +19,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAABAQAggAiAgAgAAAAAAAgAAgAIAAAAgAAAAIEAA=</HashCode>
+      <HashCode>AAAAABAQAggAiAgAgAAAAAAAgAAgAIAAAAgAAAAAEAA=</HashCode>
       <FileName>CU-DevolverPortatil\Portatil.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -28,7 +28,7 @@
       <Property Name="Marca" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="LineasDevolucion" />
+      <Property Name="LineasCompra" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.LineaDevolucion">
@@ -37,14 +37,9 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAGAAAAQJAAAgAAAAAAAAAAAAKAAAAAAAACAAAQ=</HashCode>
+      <HashCode>AAAAAAGAAAAQJAAAgAAAAAAAAAAAAIAAAAAAAAAAAAQ=</HashCode>
       <FileName>CU-DevolverPortatil\LineaDevolucion.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Portatil" />
-      <Property Name="LineaCompra" />
-      <Property Name="Devolucion" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="OneHope.Design.Marca">
     <Position X="10" Y="0.5" Width="1.5" />
@@ -86,16 +81,24 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.LineaCompra">
-    <Position X="3" Y="3.75" Width="1.5" />
+    <Position X="4.25" Y="4.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatil" Type="OneHope.Design.Portatil" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="6.5" />
+        <Point X="7.844" Y="6.5" />
+        <Point X="7.844" Y="3.517" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
       <FileName>CU-DevolverPortatil\LineaCompra.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="LineaDevolucion" />
+      <Property Name="Portatil" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

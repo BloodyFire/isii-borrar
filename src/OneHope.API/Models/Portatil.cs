@@ -6,7 +6,6 @@ namespace OneHope.API.Models
     {
 
         public Portatil() {
-            LineasDevolucion = new List<LineaDevolucion>();
             LineasCompra = new List<LineaCompra>();
         }
 
@@ -31,7 +30,7 @@ namespace OneHope.API.Models
         [Required]
         public int StockAlquiler { get; set; }
 
-        public IList<LineaDevolucion> LineasDevolucion { get; set; }
+    
 
         public IList<LineaCompra> LineasCompra { get; set; }
 

@@ -34,7 +34,7 @@ namespace OneHope.Design
 
         public double PrecioUnitario {  get; set; }
 
-        public List<LineaCompra> Lista_Compra { get; set; }
+        public List<LineaCompra> ListasCompra { get; set; }
 
         public LineaDevolucion? LineaDevolucion { get; set; }
 

@@ -10,7 +10,7 @@ namespace OneHope.API.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<LineaDevolucion>().HasAlternateKey(pi => new {pi.IdDevolucion, pi.PortatilId});
+            builder.Entity<LineaDevolucion>().HasAlternateKey(pi => new {pi.IdDevolucion, pi.LineaCompraId});
             builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdCompra, pi.IdProd });
         }
 
