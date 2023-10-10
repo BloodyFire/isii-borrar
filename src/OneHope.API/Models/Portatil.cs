@@ -1,77 +1,101 @@
-﻿using Microsoft.AspNetCore.Routing.Constraints;
-
-namespace OneHope.API.Models
+﻿namespace OneHope.API.Models
 {
     public class Portatil
     {
+        public Portatil()
+        {
+            LineasPedido = new List<LineaPedido>();
+        }
 
-        public Portatil() {
-            LineasCompra = new List<LineaCompra>();
+        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
+        {
+            Id = id;
+            Modelo = modelo;
+            Procesador = procesador;
+            Ram = ram;
+            Marca = marca;
+            Nombre = nombre;
+            PrecioCompra = precioCompra;
+            PrecioAlquiler = precioAlquiler;
+            PrecioCoste = precioCoste;
+            Stock = stock;
+            StockAlquilar = stockAlquilar;
+            LineasPedido = new List<LineaPedido>();
+            ListaCompra = new List<LineaCompra>();
         }
 
         [Key]
-        public int ID { get; set; }
-
-        [Required, StringLength(20, ErrorMessage = "Name of Genre cannot be longer than 20 characters", MinimumLength =1)]
-        public string Modelo { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public float PrecioCompra { get; set; }
+        [StringLength(50, ErrorMessage = "El modelo del portatil no puede tener más de 50 characters.")]
+        public string Modelo { get; set; } = string.Empty;
 
         [Required]
-        public float PrecioAlquiler { get; set; }
+        [DataType(DataType.Currency)]
+        [Range(1, float.MaxValue, ErrorMessage = "El precio mínimo es de 1€.")]
+        [Display(Name ="Precio De Compra")]
+        public double PrecioCompra {  get; set; }
 
         [Required]
-        public int PrecioCoste { get; set; }
-
-        [Required]
-        public int Stock { get; set; }
-
-        [Required]
-        public int StockAlquiler { get; set; }
-
-    
-
-        public IList<LineaCompra> LineasCompra { get; set; }
-
-        [Required]
-        public Ram Ram { get; set; }
-
-        [Required]
-        public Procesador Procesador { get; set; }
+        [Display(Name = "Memoria RAM")]
+        public Ram Ram {  get; set; }
+        [DataType(DataType.Currency)]
+        [Range(1, float.MaxValue, ErrorMessage = "El precio mínimo es de 1€.")]
+        [Display(Name = "Precio De Alquiler")]
+        public double PrecioAlquiler { get; set; }
 
         [Required]
         public Marca Marca { get; set; }
 
+        [Required]
+        [StringLength(100, ErrorMessage = "El nombre del portatil no puede tener más de 100 characters.")]
+        //it assigns a value by default
+        public string Nombre { get; set; } = string.Empty;
+
+
+
+
+        [Required]
+        [DataType(DataType.Currency)]
+        [Range(1, float.MaxValue, ErrorMessage = "Precio de coste mínimo es 1")]
+        [Display(Name = "Precio de coste")]
+        public double PrecioCoste { get; set; }
+        public IList<LineaCompra> ListaCompra { get; set; }
+
+        [Required]
+        public Procesador Procesador { get; set; }
+        [Display(Name = "Unidades disponibles")]
+        public int Stock { get; set; } = 0;
+
+        [Required]
+        [Display(Name = "Unidades disponibles")]
+        public int StockAlquilar { get; set; } = 0;
+
+        public IList<LineaPedido> LineasPedido { get; set; } = new List<LineaPedido>();
+
+        [Required]
+        public Proveedor Proveedor { get; set; }
+
         public override bool Equals(object? obj)
         {
             return obj is Portatil portatil &&
-                   ID == portatil.ID &&
+                   Id == portatil.Id &&
                    Modelo == portatil.Modelo &&
+                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
+                   EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
+                   EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca) &&
+                   Nombre == portatil.Nombre &&
                    PrecioCompra == portatil.PrecioCompra &&
                    PrecioAlquiler == portatil.PrecioAlquiler &&
                    PrecioCoste == portatil.PrecioCoste &&
                    Stock == portatil.Stock &&
-                   StockAlquiler == portatil.StockAlquiler &&
-                   EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
-                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
-                   EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca);
+                   StockAlquilar == portatil.StockAlquilar;
         }
 
         public override int GetHashCode()
         {
-            HashCode hash = new HashCode();
-            hash.Add(ID);
-            hash.Add(Modelo);
-            hash.Add(PrecioCompra);
-            hash.Add(PrecioAlquiler);
-            hash.Add(PrecioCoste);
-            hash.Add(Stock);
-            hash.Add(StockAlquiler);
-            hash.Add(Ram);
-            hash.Add(Procesador);
-            hash.Add(Marca);
-            return hash.ToHashCode();
+            return HashCode.Combine(Id, Modelo, Nombre);
         }
     }
 }

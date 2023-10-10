@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿
 
-namespace OneHope.API.Models
+using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design
 {
     public class LineaCompra
     {
@@ -34,9 +35,7 @@ namespace OneHope.API.Models
 
         public double PrecioUnitario {  get; set; }
 
-        public List<LineaCompra> ListasCompra { get; set; }
-
-        public LineaDevolucion? LineaDevolucion { get; set; }
+        public List<LineaCompra> Lista_Compra { get; set; }
 
         public override bool Equals(object? obj)
         {

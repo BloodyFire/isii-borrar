@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OneHope.Design
+namespace OneHope.API.Models
 {
     public class LineaDevolucion
     {
@@ -22,7 +22,7 @@ namespace OneHope.Design
 
         public int LineaCompraId { get; set; }
 
-       
+
 
         
         public Devolucion Devolucion { get; set; }

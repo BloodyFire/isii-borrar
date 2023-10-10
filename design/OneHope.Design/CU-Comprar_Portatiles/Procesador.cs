@@ -1,17 +1,23 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace OneHope.API.Models
+
+namespace OneHope.Design
 {
     public class Procesador
     {
-
         public Procesador() { }
+
+        public Procesador(string nombre):base()
+        {
+            Nombre = nombre;
+        }
 
         [Key]
         public int Id { get; set; }
 
-        [Required, StringLength(60, ErrorMessage = "First name cannot be longer than 50 characters.")]
-        public string Nombre { get; set; }
+        [Required]
+        public virtual string Nombre { get; set; } = string.Empty;
 
         public IList<Portatil> Portatiles { get; set; }
 

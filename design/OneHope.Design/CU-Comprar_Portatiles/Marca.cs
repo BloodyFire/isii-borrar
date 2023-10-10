@@ -1,12 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.ComponentModel.DataAnnotations;
 
-namespace OneHope.API.Models
+
+namespace OneHope.Design
 {
     public class Marca
     {
         public Marca() { }
 
-        public Marca(string nombre) {
+        public Marca(string nombre) : base()
+        {
             Nombre = nombre;
         }
 
@@ -14,9 +17,10 @@ namespace OneHope.API.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "La marca no puede ser superior a 50 caracteres.")]
-        public string Nombre { get; set; } = string.Empty;
-        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+        public virtual string Nombre { get; set; } = string.Empty;
+
+        public IList<Portatil> Portatiles { get; set; }
+
         public override bool Equals(object? obj)
         {
             return obj is Marca marca &&
@@ -28,6 +32,5 @@ namespace OneHope.API.Models
         {
             return HashCode.Combine(Id, Nombre);
         }
-
     }
 }
