@@ -31,14 +31,17 @@ namespace OneHope.Design.Models
         public TipoMetodoPago TipoMetodoPago { get; set; }
 
         [Required]
-        public MetodoPago MetodoPago {get; set; }
+        public MetodoPago MetodoPago { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string Comentarios { get; set; } = string.Empty;
 
         public Pedido()
         {
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Pedido(int id, double total, DateTime fechaPedido, string códigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, MetodoPago metodoPago)
+        public Pedido(int id, double total, DateTime fechaPedido, string códigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, MetodoPago metodoPago, string comentarios)
         {
             Id = id;
             Total = total;
@@ -48,6 +51,7 @@ namespace OneHope.Design.Models
             LineasPedido = lineasPedido;
             TipoMetodoPago = tipoMetodoPago;
             MetodoPago = metodoPago;
+            Comentarios = comentarios;
         }
 
         public override bool Equals(object? obj)
