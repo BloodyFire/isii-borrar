@@ -21,7 +21,7 @@
             Stock = stock;
             StockAlquilar = stockAlquilar;
             LineasPedido = new List<LineaPedido>();
-            LineasCompra = new List<LineaCompra>();
+            ListaCompra = new List<LineaCompra>();
         }
 
         [Key]
@@ -82,7 +82,7 @@
             return obj is Portatil portatil &&
                    Id == portatil.Id &&
                    Modelo == portatil.Modelo &&
-                   EqualityComparer<Procesador>.Default.Equals(Proceador, portatil.Proceador) &&
+                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
                    EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
                    EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca) &&
                    Nombre == portatil.Nombre &&
