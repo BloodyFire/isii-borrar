@@ -1,11 +1,12 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.API.Models
 {
-    public class Procesador
+    public class Marca
     {
+        public Marca() { }
 
-        public Procesador() { }
-
-        public Procesador(string nombre) {
+        public Marca(string nombre) {
             Nombre = nombre;
         }
 
@@ -13,15 +14,14 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(20, ErrorMessage = "El procesador no puede ser superior a 20 caracteres.")]
+        [StringLength(50, ErrorMessage = "La marca no puede ser superior a 50 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
         public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
-
         public override bool Equals(object? obj)
         {
-            return obj is Procesador procesador &&
-                   Id == procesador.Id &&
-                   Nombre == procesador.Nombre;
+            return obj is Marca marca &&
+                   Id == marca.Id &&
+                   Nombre == marca.Nombre;
         }
 
         public override int GetHashCode()

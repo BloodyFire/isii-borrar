@@ -1,4 +1,7 @@
-﻿namespace OneHope.API.Models
+﻿using OneHope.Design.Models;
+using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.API.Models
 {
     public class Portatil
     {
@@ -22,7 +25,6 @@
             StockAlquilar = stockAlquilar;
             LineasPedido = new List<LineaPedido>();
             ListaCompra = new List<LineaCompra>();
-            LineasAlquiler = new List<LineaAlquiler>();
         }
 
         [Key]
@@ -62,7 +64,6 @@
         [Range(1, float.MaxValue, ErrorMessage = "Precio de coste mínimo es 1")]
         [Display(Name = "Precio de coste")]
         public double PrecioCoste { get; set; }
-
         public IList<LineaCompra> ListaCompra { get; set; }
 
         [Required]
@@ -70,7 +71,6 @@
         [Display(Name = "Unidades disponibles")]
         public int Stock { get; set; } = 0;
 
-        public IList<LineaAlquiler> LineasAlquiler { get; set; }
         [Required]
         [Display(Name = "Unidades disponibles")]
         public int StockAlquilar { get; set; } = 0;

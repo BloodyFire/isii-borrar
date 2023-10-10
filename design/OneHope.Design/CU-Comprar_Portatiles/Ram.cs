@@ -1,20 +1,23 @@
-﻿namespace OneHope.API.Models
+﻿
+using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design
 {
     public class Ram
     {
-
         public Ram() { }
 
-        public Ram(string nombre) {
+        public Ram(string nombre):base()
+        {
             Nombre = nombre;
         }
 
         [Key]
         public int Id { get; set; }
         [Required]
-        [StringLength(20, ErrorMessage = "La RAM no puede ser superior a 20 caracteres.")]
         public string Nombre { get; set; } = string.Empty;
-        public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+        
+        public IList<Portatil> Portatiles { get; set; }
 
         public override bool Equals(object? obj)
         {

@@ -8,7 +8,7 @@
 
         public Portatil Portatil { get; set; }
         public int PortatilID { get; set; }
-        public float PortatilPrecioAlq { get; set; }
+        public double PortatilPrecioAlquiler { get; set; }
 
         public Alquiler Alquiler { get; set; }
         public int AlquilerID { get; set; }
@@ -25,10 +25,10 @@
             ID = iD;
             Portatil = portatil;
             Alquiler = alquiler;
-            PortatilID = Portatil.ID;
+            PortatilID = Portatil.Id;
             AlquilerID = Alquiler.ID;
             Cantidad = cantidad;
-            PortatilPrecioAlq = Portatil.PrecioAlq;
+            PortatilPrecioAlquiler = Portatil.PrecioAlquiler;
         }
 
         //Metodos
@@ -38,12 +38,12 @@
                    PortatilID == item.PortatilID &&
                    AlquilerID == item.AlquilerID &&
                    Cantidad == item.Cantidad &&
-                   PortatilPrecioAlq == item.PortatilPrecioAlq;
+                   PortatilPrecioAlquiler == item.PortatilPrecioAlquiler;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(PortatilID, AlquilerID, Cantidad, PortatilPrecioAlq);
+            return HashCode.Combine(PortatilID, AlquilerID, Cantidad, PortatilPrecioAlquiler);
         }
     }
 }

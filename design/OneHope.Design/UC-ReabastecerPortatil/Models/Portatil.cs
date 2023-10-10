@@ -1,4 +1,6 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design.Models
 {
     public class Portatil
     {
@@ -7,11 +9,11 @@
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
+        public Portatil(int id, string modelo, Procesador proceador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
         {
             Id = id;
             Modelo = modelo;
-            Procesador = procesador;
+            Proceador = proceador;
             Ram = ram;
             Marca = marca;
             Nombre = nombre;
@@ -21,8 +23,6 @@
             Stock = stock;
             StockAlquilar = stockAlquilar;
             LineasPedido = new List<LineaPedido>();
-            ListaCompra = new List<LineaCompra>();
-            LineasAlquiler = new List<LineaAlquiler>();
         }
 
         [Key]
@@ -33,18 +33,11 @@
         public string Modelo { get; set; } = string.Empty;
 
         [Required]
-        [DataType(DataType.Currency)]
-        [Range(1, float.MaxValue, ErrorMessage = "El precio mínimo es de 1€.")]
-        [Display(Name ="Precio De Compra")]
-        public double PrecioCompra {  get; set; }
+        public Procesador Proceador { get; set; }
 
         [Required]
         [Display(Name = "Memoria RAM")]
-        public Ram Ram {  get; set; }
-        [DataType(DataType.Currency)]
-        [Range(1, float.MaxValue, ErrorMessage = "El precio mínimo es de 1€.")]
-        [Display(Name = "Precio De Alquiler")]
-        public double PrecioAlquiler { get; set; }
+        public Ram Ram { get; set; }
 
         [Required]
         public Marca Marca { get; set; }
@@ -54,8 +47,17 @@
         //it assigns a value by default
         public string Nombre { get; set; } = string.Empty;
 
+        [Required]
+        [DataType(DataType.Currency)]
+        [Range(1, float.MaxValue, ErrorMessage = "Precio de compra mínimo es 1")]
+        [Display(Name = "Precio de compra")]
+        public double PrecioCompra { get; set; }
 
-
+        [Required]
+        [DataType(DataType.Currency)]
+        [Range(1, float.MaxValue, ErrorMessage = "Precio de alquiler mínimo es 1")]
+        [Display(Name = "Precio de alquiler")]
+        public double PrecioAlquiler { get; set; }
 
         [Required]
         [DataType(DataType.Currency)]
@@ -63,14 +65,10 @@
         [Display(Name = "Precio de coste")]
         public double PrecioCoste { get; set; }
 
-        public IList<LineaCompra> ListaCompra { get; set; }
-
         [Required]
-        public Procesador Procesador { get; set; }
         [Display(Name = "Unidades disponibles")]
         public int Stock { get; set; } = 0;
 
-        public IList<LineaAlquiler> LineasAlquiler { get; set; }
         [Required]
         [Display(Name = "Unidades disponibles")]
         public int StockAlquilar { get; set; } = 0;
@@ -85,7 +83,7 @@
             return obj is Portatil portatil &&
                    Id == portatil.Id &&
                    Modelo == portatil.Modelo &&
-                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
+                   EqualityComparer<Procesador>.Default.Equals(Proceador, portatil.Proceador) &&
                    EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
                    EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca) &&
                    Nombre == portatil.Nombre &&
@@ -98,7 +96,19 @@
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Modelo, Nombre);
+            HashCode hash = new HashCode();
+            hash.Add(Id);
+            hash.Add(Modelo);
+            hash.Add(Proceador);
+            hash.Add(Ram);
+            hash.Add(Marca);
+            hash.Add(Nombre);
+            hash.Add(PrecioCompra);
+            hash.Add(PrecioAlquiler);
+            hash.Add(PrecioCoste);
+            hash.Add(Stock);
+            hash.Add(StockAlquilar);
+            return hash.ToHashCode();
         }
     }
 }

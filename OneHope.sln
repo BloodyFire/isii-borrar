@@ -5,29 +5,26 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07EC404A-A477-41F0-8E2B-D3DA054E4A78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.API", "src\OneHope.API\OneHope.API.csproj", "{914B3699-3206-4F8E-B1AF-FF0462FE8849}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.API", "src\OneHope.API\OneHope.API.csproj", "{914B3699-3206-4F8E-B1AF-FF0462FE8849}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.Web", "src\OneHope.Web\OneHope.Web.csproj", "{DD790BEB-BC5B-4479-9011-681A1E241799}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.Web", "src\OneHope.Web\OneHope.Web.csproj", "{DD790BEB-BC5B-4479-9011-681A1E241799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.Shared", "src\OneHope.Shared\OneHope.Shared.csproj", "{53D58BCA-7612-447D-85FF-9A630AFAD25E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.Shared", "src\OneHope.Shared\OneHope.Shared.csproj", "{53D58BCA-7612-447D-85FF-9A630AFAD25E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{A4039901-03CE-4384-8D74-D50E7DAEFFB0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.UT", "test\OneHope.UT\OneHope.UT.csproj", "{8E6383E6-0951-49BC-9F8F-6B6F93A2DBFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.UT", "test\OneHope.UT\OneHope.UT.csproj", "{8E6383E6-0951-49BC-9F8F-6B6F93A2DBFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.UIT", "test\OneHope.UIT\OneHope.UIT.csproj", "{29B923C5-741D-4E37-A62B-D27BB2DC21ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.UIT", "test\OneHope.UIT\OneHope.UIT.csproj", "{29B923C5-741D-4E37-A62B-D27BB2DC21ED}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "design", "design", "{E12FC576-3FC4-484B-9779-25157E083FC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneHope.Design", "design\OneHope.Design\OneHope.Design.csproj", "{8A5F238A-3D18-42B7-91BE-4ED94F0BF58B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneHope.Design", "design\OneHope.Design\OneHope.Design.csproj", "{8A5F238A-3D18-42B7-91BE-4ED94F0BF58B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{914B3699-3206-4F8E-B1AF-FF0462FE8849}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -55,6 +52,9 @@ Global
 		{8A5F238A-3D18-42B7-91BE-4ED94F0BF58B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A5F238A-3D18-42B7-91BE-4ED94F0BF58B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{914B3699-3206-4F8E-B1AF-FF0462FE8849} = {07EC404A-A477-41F0-8E2B-D3DA054E4A78}
 		{DD790BEB-BC5B-4479-9011-681A1E241799} = {07EC404A-A477-41F0-8E2B-D3DA054E4A78}
@@ -62,5 +62,8 @@ Global
 		{8E6383E6-0951-49BC-9F8F-6B6F93A2DBFD} = {A4039901-03CE-4384-8D74-D50E7DAEFFB0}
 		{29B923C5-741D-4E37-A62B-D27BB2DC21ED} = {A4039901-03CE-4384-8D74-D50E7DAEFFB0}
 		{8A5F238A-3D18-42B7-91BE-4ED94F0BF58B} = {E12FC576-3FC4-484B-9779-25157E083FC7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30E6ED77-D41A-45B6-889D-C22BCC838404}
 	EndGlobalSection
 EndGlobal
