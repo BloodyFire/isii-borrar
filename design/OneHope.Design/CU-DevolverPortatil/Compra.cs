@@ -46,7 +46,7 @@ namespace OneHope.Design
         [Required]
         public int Total {  get; set; }
         
-        public enum MetodPago
+        public enum MetodoPago
         {
             TarjetaCredito,
             PayPal,
@@ -60,8 +60,6 @@ namespace OneHope.Design
                    CustomerId == compra.CustomerId &&
                    FechaCompra == compra.FechaCompra &&
                    Direccion == compra.Direccion &&
-                   EqualityComparer<IList<LineaCompra>>.Default.Equals(ListaCompras, compra.ListaCompras) &&
-                   MetodosPagos == compra.MetodosPagos &&
                    Total == compra.Total;
         }
 
@@ -69,5 +67,6 @@ namespace OneHope.Design
         {
             return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, ListaCompras, MetodosPagos, Total);
         }
+
     }
 }

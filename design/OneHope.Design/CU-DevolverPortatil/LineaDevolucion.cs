@@ -18,7 +18,9 @@ namespace OneHope.Design
         public int Cantidad { get; set; }
 
         [Required]
-        public LineaCompra LineaCompra { get; set; }
+        public LineaCompra LineaCompra { get; set; } = null!;
+
+        public int LineaCompraId { get; set; }
 
        
         public Portatil Portatil { get; set; }

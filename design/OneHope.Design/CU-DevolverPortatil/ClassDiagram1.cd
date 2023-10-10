@@ -37,12 +37,13 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAGAAAAQJAAAgAAAAAAAAAAAAKAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAGAAAAQJAAAgAAAAAAAAAAAAKAAAAAAAACAAAQ=</HashCode>
       <FileName>CU-DevolverPortatil\LineaDevolucion.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Portatil" />
       <Property Name="Devolucion" />
+      <Property Name="Portatil" />
+      <Property Name="LineaCompra" />
     </ShowAsAssociation>
   </Class>
   <Class Name="OneHope.Design.Marca">
@@ -83,6 +84,19 @@
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.LineaCompra">
+    <Position X="2.75" Y="4" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
+      <FileName>CU-DevolverPortatil\LineaCompra.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LineaDevolucion" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
