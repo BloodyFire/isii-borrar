@@ -7,10 +7,10 @@ namespace OneHope.Design
         //Constructores
         public Procesador() { }
 
-        public Procesador(int ID, string Nombre) 
+        public Procesador(int iD, string nombre) 
         {
-            this.ID = ID;
-            this.Nombre = Nombre;
+            ID = iD;
+            Nombre = nombre;
         }
 
         //Atributos

@@ -7,10 +7,10 @@ namespace OneHope.Design
         //Constructores
         public Marca() { }
 
-        public Marca(int ID, string Nombre) 
+        public Marca(int iD, string nombre) 
         {
-            this.ID = ID;
-            this.Nombre = Nombre;
+            ID = iD;
+            Nombre = nombre;
         }
 
         //Atributos

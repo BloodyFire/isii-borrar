@@ -45,7 +45,7 @@ namespace OneHope.Design
 
         [Required]
         [Display(Name = "Metodo de Pago")]
-        public MetodoPago MetodoPago { get; set; }
+        public TipoMetodoPago MetodoPago { get; set; }
 
         public IList<LineaAlquiler> LineasAlquiler { get; set; }
 
@@ -55,20 +55,20 @@ namespace OneHope.Design
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Alquiler(int ID, DateTime FechaAlquiler, DateTime FechaInAlquiler, DateTime FechaFinAlquiler, float Total, string NombreCliente, string ApellidosCliente, string DireccionEnvio, string EmailCliente, int TelefonoCliente, MetodoPago MetodoPago, IList<LineaAlquiler> LineasAlquiler)
+        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int telefonoCliente, TipoMetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
         {
-            this.ID = ID;
-            this.FechaAlquiler = FechaAlquiler;
-            this.FechaInAlquiler = FechaInAlquiler;
-            this.FechaFinAlquiler = FechaFinAlquiler;
-            this.Total = Total;
-            this.DireccionEnvio = DireccionEnvio;
-            this.EmailCliente = EmailCliente;
-            this.NombreCliente = NombreCliente;
-            this.ApellidosCliente = ApellidosCliente;
-            this.TelefonoCliente = TelefonoCliente;
-            this.MetodoPago = MetodoPago;
-            this.LineasAlquiler = LineasAlquiler;
+            ID = iD;
+            FechaAlquiler = fechaAlquiler;
+            FechaInAlquiler = fechaInAlquiler;
+            FechaFinAlquiler = fechaFinAlquiler;
+            Total = total;
+            DireccionEnvio = direccionEnvio;
+            EmailCliente = emailCliente;
+            NombreCliente = nombreCliente;
+            ApellidosCliente = apellidosCliente;
+            TelefonoCliente = telefonoCliente;
+            MetodoPago = metodoPago;
+            LineasAlquiler = lineasAlquiler;
 
         }
 
@@ -82,7 +82,7 @@ namespace OneHope.Design
                    FechaInAlquiler == alq.FechaInAlquiler &&
                    FechaFinAlquiler == alq.FechaFinAlquiler &&
                    DireccionEnvio == alq.DireccionEnvio &&
-                   EqualityComparer<MetodoPago>.Default.Equals(MetodoPago, alq.MetodoPago);
+                   MetodoPago == alq.MetodoPago;
         }
 
         public override int GetHashCode()
@@ -91,7 +91,7 @@ namespace OneHope.Design
         }
 
         //Tipo de metodo de pago
-        public enum MetodPago
+        public enum TipoMetodoPago
         {
             TarjetaCredito,
             PayPal,

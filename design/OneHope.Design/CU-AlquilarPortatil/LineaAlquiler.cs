@@ -22,15 +22,15 @@ namespace OneHope.Design
         //Constructores
         public LineaAlquiler() { }
 
-        public LineaAlquiler(int ID, int Cantidad, Portatil Portatil, Alquiler Alquiler)
+        public LineaAlquiler(int iD, int cantidad, Portatil portatil, Alquiler alquiler)
         {
-            this.ID = ID;
-            this.Portatil = Portatil;
-            this.Alquiler = Alquiler;
-            this.PortatilID = Portatil.ID;
-            this.AlquilerID = Alquiler.ID;
-            this.Cantidad = Cantidad;
-            this.PortatilPrecioAlq = Portatil.PrecioAlq;
+            ID = iD;
+            Portatil = portatil;
+            Alquiler = alquiler;
+            PortatilID = Portatil.ID;
+            AlquilerID = Alquiler.ID;
+            Cantidad = cantidad;
+            PortatilPrecioAlq = Portatil.PrecioAlq;
         }
 
         //Metodos
