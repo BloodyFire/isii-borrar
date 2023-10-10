@@ -28,9 +28,6 @@
         [Display(Name = "Método de Pago")]
         public TipoMetodoPago TipoMetodoPago { get; set; }
 
-        [Required]
-        public MetodoPago MetodoPago {get; set; }
-
         [DataType(DataType.MultilineText)]
         public string Comentarios { get; set; } = string.Empty;
 
@@ -39,7 +36,7 @@
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Pedido(int id, double total, DateTime fechaPedido, string códigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, MetodoPago metodoPago, string comentarios)
+        public Pedido(int id, double total, DateTime fechaPedido, string códigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
         {
             Id = id;
             Total = total;
@@ -48,7 +45,6 @@
             Direccion = direccion;
             LineasPedido = lineasPedido;
             TipoMetodoPago = tipoMetodoPago;
-            MetodoPago = metodoPago;
             Comentarios = comentarios;
         }
 
@@ -61,13 +57,12 @@
                    CódigoEmpleado == pedido.CódigoEmpleado &&
                    Direccion == pedido.Direccion &&
                    EqualityComparer<IList<LineaPedido>>.Default.Equals(LineasPedido, pedido.LineasPedido) &&
-                   TipoMetodoPago == pedido.TipoMetodoPago &&
-                   EqualityComparer<MetodoPago>.Default.Equals(MetodoPago, pedido.MetodoPago);
+                   TipoMetodoPago == pedido.TipoMetodoPago;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Total, FechaPedido, CódigoEmpleado, Direccion, LineasPedido, TipoMetodoPago, MetodoPago);
+            return HashCode.Combine(Id, Total, FechaPedido, CódigoEmpleado, Direccion, LineasPedido, TipoMetodoPago);
         }
     }
     public enum TipoMetodoPago

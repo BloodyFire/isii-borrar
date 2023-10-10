@@ -21,12 +21,6 @@ namespace OneHope.API.Models
             //Clave alternativa para los proveedores
             builder.Entity<Proveedor>().HasAlternateKey(p => new { p.CIF });
             
-            builder.Entity<MetodoPago>().
-                HasDiscriminator<string>("TipoMetodoPago")
-                .HasValue<MetodoPago>("MetodoPago")
-                .HasValue<TarjetaCredito>("MetodoPago_Tarjeta")
-                .HasValue<PayPal>("MetodoPago_PayPal")
-                .HasValue<Transferencia>("MetodoPago_Transferencia");
         }
 
         public DbSet<Procesador> Procesadores { get; set; }
