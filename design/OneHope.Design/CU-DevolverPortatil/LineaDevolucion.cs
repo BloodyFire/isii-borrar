@@ -24,7 +24,7 @@ namespace OneHope.Design
 
        
         public Portatil Portatil { get; set; }
-        public int PortatilId { get; set; }
+        public int? PortatilId { get; set; }
 
         
         public Devolucion Devolucion { get; set; }
