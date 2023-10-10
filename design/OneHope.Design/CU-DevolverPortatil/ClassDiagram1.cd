@@ -41,9 +41,9 @@
       <FileName>CU-DevolverPortatil\LineaDevolucion.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Devolucion" />
       <Property Name="Portatil" />
       <Property Name="LineaCompra" />
+      <Property Name="Devolucion" />
     </ShowAsAssociation>
   </Class>
   <Class Name="OneHope.Design.Marca">
@@ -86,7 +86,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.LineaCompra">
-    <Position X="2.75" Y="4" Width="1.5" />
+    <Position X="3" Y="3.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>

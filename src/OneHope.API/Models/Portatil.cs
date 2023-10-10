@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Routing.Constraints;
 
-
 namespace OneHope.API.Models
 {
     public class Portatil
@@ -8,6 +7,7 @@ namespace OneHope.API.Models
 
         public Portatil() {
             LineasDevolucion = new List<LineaDevolucion>();
+            LineasCompra = new List<LineaCompra>();
         }
 
         [Key]
@@ -44,7 +44,6 @@ namespace OneHope.API.Models
         [Required]
         public Marca Marca { get; set; }
 
-
         public override bool Equals(object? obj)
         {
             return obj is Portatil portatil &&
@@ -54,12 +53,26 @@ namespace OneHope.API.Models
                    PrecioAlquiler == portatil.PrecioAlquiler &&
                    PrecioCoste == portatil.PrecioCoste &&
                    Stock == portatil.Stock &&
-                   StockAlquiler == portatil.StockAlquiler;
+                   StockAlquiler == portatil.StockAlquiler &&
+                   EqualityComparer<Ram>.Default.Equals(Ram, portatil.Ram) &&
+                   EqualityComparer<Procesador>.Default.Equals(Procesador, portatil.Procesador) &&
+                   EqualityComparer<Marca>.Default.Equals(Marca, portatil.Marca);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ID, Modelo, PrecioCompra, PrecioAlquiler, PrecioCoste, Stock, StockAlquiler);
+            HashCode hash = new HashCode();
+            hash.Add(ID);
+            hash.Add(Modelo);
+            hash.Add(PrecioCompra);
+            hash.Add(PrecioAlquiler);
+            hash.Add(PrecioCoste);
+            hash.Add(Stock);
+            hash.Add(StockAlquiler);
+            hash.Add(Ram);
+            hash.Add(Procesador);
+            hash.Add(Marca);
+            return hash.ToHashCode();
         }
     }
 }
