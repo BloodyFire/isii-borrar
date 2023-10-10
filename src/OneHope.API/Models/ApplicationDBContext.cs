@@ -19,7 +19,6 @@ namespace OneHope.API.Models
         }
 
         public DbSet<LineaAlquiler> LineasAlquiler { get; set; }
-        public DbSet<MetodoPago> MetodoPagos { get; set; }
         public DbSet<Alquiler> Alquilers { get; set; }
         public DbSet<Portatil> Portatiles { get; set; }
         public DbSet<RAM> RAMs { get; set; }
