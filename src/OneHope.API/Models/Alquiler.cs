@@ -81,7 +81,7 @@ namespace OneHope.API.Models
                    FechaInAlquiler == alq.FechaInAlquiler &&
                    FechaFinAlquiler == alq.FechaFinAlquiler &&
                    DireccionEnvio == alq.DireccionEnvio &&
-                   EqualityComparer<MetodoPago>.Default.Equals(MetodoPago, alq.MetodoPago);
+                   MetodoPago == alq.MetodoPago;
         }
 
         public override int GetHashCode()
