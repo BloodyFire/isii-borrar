@@ -1,37 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="OneHope.Design.MetodoPago">
-    <Position X="11.75" Y="4" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CU-AlquilarPortatil\MetodoPago.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OneHope.Design.TarjetaCredito">
-    <Position X="11.75" Y="6.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
-      <FileName>CU-AlquilarPortatil\TarjetaCredito.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OneHope.Design.Transferencia">
-    <Position X="14" Y="6.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>CU-AlquilarPortatil\Transferencia.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="OneHope.Design.Alquiler">
-    <Position X="8.5" Y="2" Width="1.5" />
+    <Position X="8.5" Y="1.25" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -46,12 +16,9 @@
       <HashCode>AKAAAQAAAAEAgAAAkAEAAEAAAAACQIIAAAAAAAAAEAA=</HashCode>
       <FileName>CU-AlquilarPortatil\Alquiler.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="LineasAlquiler" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.LineaAlquiler">
-    <Position X="5.75" Y="2.5" Width="1.5" />
+    <Position X="5.75" Y="1.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -59,13 +26,9 @@
       <HashCode>AIQAAAEABAAAgAAAgAAAAAAIAAAAAKAAAAAAAAAAAAA=</HashCode>
       <FileName>CU-AlquilarPortatil\LineaAlquiler.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Portatil" />
-      <Property Name="Alquiler" />
-    </ShowAsAssociation>
   </Class>
   <Class Name="OneHope.Design.Marca">
-    <Position X="0.5" Y="1" Width="1.5" />
+    <Position X="0.5" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -77,8 +40,18 @@
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
+  <Class Name="OneHope.Design.Portatil">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAiAgAgAAAAACAgQAiAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Portatil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Marca" />
+    </ShowAsAssociation>
+  </Class>
   <Class Name="OneHope.Design.Procesador">
-    <Position X="0.5" Y="3" Width="1.5" />
+    <Position X="0.5" Y="2.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
@@ -90,36 +63,15 @@
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.Portatil">
-    <Position X="3.25" Y="2.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAgABAAAAAAgAgAgAAAAACAgQAiAIAAAAgAAAAAEAA=</HashCode>
-      <FileName>CU-AlquilarPortatil\Portatil.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="Procesador" />
-      <Property Name="Marca" />
-      <Property Name="RAM" />
-    </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="LineasAlquiler" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="OneHope.Design.RAM">
+  <Class Name="OneHope.Design.Ram">
     <Position X="0.5" Y="5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAgAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>CU-AlquilarPortatil\RAM.cs</FileName>
+      <FileName>CU-AlquilarPortatil\Ram.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Portatiles" />
-    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

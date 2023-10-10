@@ -46,7 +46,7 @@ namespace OneHope.Design
 
         [Required]
         [Display(Name = "Memoria RAM")]
-        public RAM RAM { get; set; }
+        public Ram Ram { get; set; }
 
         public IList<LineaAlquiler> LineasAlquiler { get; set; }
 
@@ -56,7 +56,7 @@ namespace OneHope.Design
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Portatil(int iD, IList<LineaAlquiler> lineasAlquiler, string modelo, float precioCompra, float precioAlq, float precioCoste, int stock, int stockAlq, Procesador procesador, RAM rAM, Marca marca)
+        public Portatil(int iD, IList<LineaAlquiler> lineasAlquiler, string modelo, float precioCompra, float precioAlq, float precioCoste, int stock, int stockAlq, Procesador procesador, Ram ram, Marca marca)
         {
             ID = iD;
             LineasAlquiler = lineasAlquiler;
@@ -68,7 +68,7 @@ namespace OneHope.Design
             StockAlq = stockAlq;
             Procesador = procesador;
             Marca = marca;
-            RAM = rAM;
+            Ram = ram;
         }
 
         //Metodos
@@ -78,7 +78,7 @@ namespace OneHope.Design
                    ID == port.ID &&
                    Modelo == port.Modelo &&
                    EqualityComparer<Procesador>.Default.Equals(Procesador, port.Procesador) &&
-                   EqualityComparer<RAM>.Default.Equals(RAM, port.RAM) &&
+                   EqualityComparer<Ram>.Default.Equals(Ram, port.Ram) &&
                    EqualityComparer<Marca>.Default.Equals(Marca, port.Marca) &&
                    PrecioCompra == port.PrecioCompra &&
                    PrecioAlq == port.PrecioAlq &&
@@ -93,7 +93,7 @@ namespace OneHope.Design
             hash.Add(ID);
             hash.Add(Modelo);
             hash.Add(Procesador);
-            hash.Add(RAM);
+            hash.Add(Ram);
             hash.Add(Marca);
             hash.Add(PrecioCompra);
             hash.Add(PrecioAlq);
