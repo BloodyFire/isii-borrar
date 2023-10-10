@@ -44,7 +44,7 @@ namespace OneHope.API.Models
 
         [Required]
         [Display(Name = "Metodo de Pago")]
-        public MetodoPago MetodoPago { get; set; }
+        public TipoMetodoPago MetodoPago { get; set; }
 
         public IList<LineaAlquiler> LineasAlquiler { get; set; }
 
@@ -54,7 +54,7 @@ namespace OneHope.API.Models
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int telefonoCliente, MetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
+        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int telefonoCliente, TipoMetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
         {
             ID = iD;
             FechaAlquiler = fechaAlquiler;
@@ -90,7 +90,7 @@ namespace OneHope.API.Models
         }
 
         //Tipo de metodo de pago
-        public enum MetodPago
+        public enum TipoMetodoPago
         {
             TarjetaCredito,
             PayPal,
