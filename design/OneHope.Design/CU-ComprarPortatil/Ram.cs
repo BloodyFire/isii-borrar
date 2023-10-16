@@ -1,33 +1,33 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design.CUComprarPortatil
 {
-    public class Procesador
+    public class Ram
     {
 
-        public Procesador() { }
+        public Ram() { }
 
-        public Procesador(string valor) {
+        public Ram(string valor) {
             Valor = valor;
         }
 
         [Key]
         public int Id { get; set; }
-
         [Required]
-        [StringLength(20, ErrorMessage = "El procesador no puede ser superior a 20 caracteres.")]
+        [StringLength(20, ErrorMessage = "La RAM no puede ser superior a 20 caracteres.")]
         public string Valor { get; set; } = string.Empty;
         public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
 
         public override bool Equals(object? obj)
         {
-            return obj is Procesador procesador &&
-                   Id == procesador.Id &&
-                   Valor == procesador.Valor;
+            return obj is Ram ram &&
+                   Id == ram.Id &&
+                   Valor == ram.Valor;
         }
 
         public override int GetHashCode()
         {
             return HashCode.Combine(Id, Valor);
         }
-
     }
 }
