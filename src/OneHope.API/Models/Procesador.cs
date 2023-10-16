@@ -5,8 +5,8 @@
 
         public Procesador() { }
 
-        public Procesador(string nombre) {
-            Nombre = nombre;
+        public Procesador(string modeloProcesador) {
+            ModeloProcesador = modeloProcesador;
         }
 
         [Key]
@@ -14,19 +14,19 @@
 
         [Required]
         [StringLength(20, ErrorMessage = "El procesador no puede ser superior a 20 caracteres.")]
-        public string Nombre { get; set; } = string.Empty;
+        public string ModeloProcesador { get; set; } = string.Empty;
         public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
 
         public override bool Equals(object? obj)
         {
             return obj is Procesador procesador &&
                    Id == procesador.Id &&
-                   Nombre == procesador.Nombre;
+                   ModeloProcesador == procesador.ModeloProcesador;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre);
+            return HashCode.Combine(Id, ModeloProcesador);
         }
 
     }
