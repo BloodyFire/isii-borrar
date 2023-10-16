@@ -5,27 +5,27 @@
 
         public Ram() { }
 
-        public Ram(string valor) {
-            Valor = valor;
+        public Ram(string capacidad) {
+            Capacidad = capacidad;
         }
 
         [Key]
         public int Id { get; set; }
         [Required]
         [StringLength(20, ErrorMessage = "La RAM no puede ser superior a 20 caracteres.")]
-        public string Valor { get; set; } = string.Empty;
+        public string Capacidad { get; set; } = string.Empty;
         public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
 
         public override bool Equals(object? obj)
         {
             return obj is Ram ram &&
                    Id == ram.Id &&
-                   Valor == ram.Valor;
+                   Capacidad == ram.Capacidad;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Valor);
+            return HashCode.Combine(Id, Capacidad);
         }
     }
 }

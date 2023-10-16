@@ -1,10 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OneHope.Design.Models.LineaPedido">
-    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Position X="6.25" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Pedido" Type="OneHope.Design.Models.Pedido" FixedFromPoint="true">
+      <Path>
+        <Point X="7.75" Y="1.688" />
+        <Point X="9" Y="1.688" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAQAAEAAAAAAAEAgAAAAAAIAAAAAKAAAAAAAACAAAA=</HashCode>
       <FileName>Models\LineaPedido.cs</FileName>
@@ -20,7 +26,7 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAggAAAAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
       <FileName>Models\Marca.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -28,16 +34,32 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Portatil">
-    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Ram" Type="OneHope.Design.Models.Ram" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.812" Y="3.594" />
+        <Point X="3.812" Y="5.167" />
+        <Point X="2" Y="5.167" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Proveedor" Type="OneHope.Design.Models.Proveedor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.938" />
+        <Point X="6.812" Y="2.938" />
+        <Point X="6.812" Y="3.75" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAACCBCQAAgACAgAgAAAgAABgAAiAIAAAAgAAAAAEAA=</HashCode>
       <FileName>Models\Portatil.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Ram" />
       <Property Name="Marca" />
+      <Property Name="Procesador" />
       <Property Name="Proveedor" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
@@ -45,12 +67,12 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Procesador">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="2.5" Width="1.75" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAMAAAAAAAAAAAEA=</HashCode>
       <FileName>Models\Procesador.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -58,10 +80,18 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Proveedor">
-    <Position X="6" Y="3.75" Width="1.5" />
+    <Position X="6.25" Y="3.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.Models.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="4.912" />
+        <Point X="5.875" Y="4.912" />
+        <Point X="5.875" Y="3.375" />
+        <Point X="5" Y="3.375" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAACAAAAACAAAAAAgCAAgAAAAAAAAIAAAAAAAgAAAEA=</HashCode>
       <FileName>Models\Proveedor.cs</FileName>
@@ -75,8 +105,15 @@
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.Models.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="5.484" />
+        <Point X="4.562" Y="5.484" />
+        <Point X="4.562" Y="3.594" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAMA=</HashCode>
       <FileName>Models\Ram.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
@@ -84,7 +121,7 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Pedido">
-    <Position X="10" Y="0.5" Width="1.75" />
+    <Position X="9" Y="0.5" Width="1.75" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
