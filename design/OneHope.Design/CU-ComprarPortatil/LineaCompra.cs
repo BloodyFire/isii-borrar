@@ -35,7 +35,7 @@ namespace OneHope.Design.CUComprarPortatil
 
         public double PrecioUnitario {  get; set; }
 
-        public List<LineaCompra> Lista_Compra { get; set; }
+        public List<LineaCompra> ListaCompra { get; set; }
 
         public override bool Equals(object? obj)
         {
