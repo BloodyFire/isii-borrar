@@ -8,7 +8,6 @@
         [Key]
         public int IdDevolucion { get; set; }
 
-        public int IdCompra { get; set; }
 
         [DataType(DataType.Date), Display(Name = "Release Date")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
