@@ -80,6 +80,8 @@ namespace OneHope.API.Models
         [Required]
         public Proveedor Proveedor { get; set; }
 
+        public LineaCompra LineaCompra { get; set; }
+
         public override bool Equals(object? obj)
         {
             return obj is Portatil portatil &&
