@@ -34,9 +34,6 @@ namespace OneHope.API.Models
         [RegularExpression(@"[a-zA-Z]*$")]
         public String Apellidos { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
-        public int Cantidad {  get; set; }
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaCompra{  get; set; }
