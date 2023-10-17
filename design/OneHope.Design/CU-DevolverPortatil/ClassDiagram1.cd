@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="OneHope.API.Models.Devolucion">
+  <Class Name="OneHope.Design.Devolucion">
     <Position X="1.75" Y="1" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
@@ -26,8 +26,8 @@
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACCBAQAAAAiAgAgAEAgIAAAAAAAIAAAAAAAAAAEAA=</HashCode>
-      <FileName>CU-Comprar_Portatiles\Portatil.cs</FileName>
+      <HashCode>AAAAABAQAggAiAgAgAAAAAAAgAAgAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>CU-DevolverPortatil\Portatil.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Procesador" />
@@ -38,7 +38,7 @@
       <Property Name="ListaCompra" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.API.Models.LineaDevolucion">
+  <Class Name="OneHope.Design.LineaDevolucion">
     <Position X="4.75" Y="1" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
@@ -103,11 +103,19 @@
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatil" Type="OneHope.Design.Portatil" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.75" Y="6.5" />
+        <Point X="7.844" Y="6.5" />
+        <Point X="7.844" Y="3.517" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKAABAAEEAAAAAA=</HashCode>
-      <FileName>CU-Comprar_Portatiles\LineaCompra.cs</FileName>
+      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
+      <FileName>CU-DevolverPortatil\LineaCompra.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="LineaDevolucion" />
       <Property Name="Portatil" />
     </ShowAsAssociation>
   </Class>

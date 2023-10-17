@@ -3,6 +3,7 @@ namespace OneHope.API.Models
 {
     public class ApplicationDBContext : DbContext
     {
+        
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options)
                 : base(options)
         {
@@ -11,17 +12,19 @@ namespace OneHope.API.Models
         {
             base.OnModelCreating(builder);
 
+
+
             //Claves alternativas de los atributos multievaluados. No se pueden repetir en nombre.
-            builder.Entity<Procesador>().HasAlternateKey(p => new { p.Nombre });
-            builder.Entity<Ram>().HasAlternateKey(r => new { r.Nombre });
-            builder.Entity<Marca>().HasAlternateKey(m => new { m.Nombre });
+            builder.Entity<Procesador>().HasAlternateKey(p => new { p.ModeloProcesador });
+            builder.Entity<Ram>().HasAlternateKey(r => new { r.Capacidad });
+            builder.Entity<Marca>().HasAlternateKey(m => new { m.NombreMarca });
             builder.Entity<Portatil>().HasAlternateKey(m => new { m.Modelo });
             //Clave compuesta para las lineas de pedido.
             builder.Entity<LineaPedido>().HasKey(lp => new { lp.PortatilId, lp.PedidoId });
             //Clave alternativa para los proveedores
             builder.Entity<Proveedor>().HasAlternateKey(p => new { p.CIF });
-            
 
+            builder.Entity<LineaAlquiler>().HasAlternateKey(la => new { la.AlquilerID, la.PortatilID });
             builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdProd, pi.IdCompra });
             
             builder.Entity<LineaDevolucion>().HasAlternateKey(pi => new {pi.IdDevolucion, pi.LineaCompraId});
@@ -35,6 +38,7 @@ namespace OneHope.API.Models
         public DbSet<Proveedor> Proveedores { get; set; }
         public DbSet<Compra> Compras { get; set; }
         public DbSet<Devolucion> Devoluciones { get; set; }
+        public DbSet<Alquiler> Alquileres { get; set; }
 
     }
 

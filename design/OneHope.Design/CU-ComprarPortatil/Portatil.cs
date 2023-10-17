@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 
-namespace OneHope.Design
+namespace OneHope.Design.CUComprarPortatil
 {
     public class Portatil
     {

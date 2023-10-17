@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OneHope.Design.CUAlquilarPortatil.Alquiler">
+    <Position X="8.5" Y="1.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="OneHope.Design.CUAlquilarPortatil.Alquiler.TipoMetodoPago" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>CU-AlquilarPortatil\Alquiler.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AKAAAQAAAAEAgAAAkAEAAEAAAAACQIIAAAAAAAAAEAA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Alquiler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineasAlquiler" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.CUAlquilarPortatil.LineaAlquiler">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AIQAAAEAFAAAgAAAgAAAAAAAAAAAAKAAAAAAAAAAAAA=</HashCode>
+      <FileName>CU-AlquilarPortatil\LineaAlquiler.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portatil" />
+      <Property Name="Alquiler" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OneHope.Design.CUAlquilarPortatil.Portatil">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCBAQAAgACAgAgAAAgAAAgAAiAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Portatil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Marca" />
+      <Property Name="Procesador" />
+      <Property Name="Ram" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="LineasAlquiler" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.CUAlquilarPortatil.Marca">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.CUAlquilarPortatil.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="1.125" />
+        <Point X="3.812" Y="1.125" />
+        <Point X="3.812" Y="1.75" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Marca.cs</FileName>
+      <NewMemberFileName>CU-DevolverPortatil\Marca.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.CUAlquilarPortatil.Procesador">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Procesador.cs</FileName>
+      <NewMemberFileName>CU-DevolverPortatil\Procesador.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.CUAlquilarPortatil.Ram">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>CU-AlquilarPortatil\Ram.cs</FileName>
+      <NewMemberFileName>CU-DevolverPortatil\Ram.cs</NewMemberFileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

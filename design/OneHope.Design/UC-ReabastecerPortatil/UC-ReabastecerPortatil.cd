@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="OneHope.Design.Models.LineaPedido">
-    <Position X="6.75" Y="0.5" Width="1.5" />
+    <Position X="6.25" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Pedido" Type="OneHope.Design.Models.Pedido" FixedFromPoint="true">
+      <Path>
+        <Point X="7.75" Y="1.688" />
+        <Point X="9" Y="1.688" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAQAAEAAAAAAAEAgAAAAAAIAAAAAKAAAAAAAACAAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\LineaPedido.cs</FileName>
+      <FileName>Models\LineaPedido.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Portatil" />
@@ -20,134 +26,112 @@
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Marca.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAggAAAAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Marca.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.Models.MetodoPago">
-    <Position X="10" Y="3.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\MetodoPago.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OneHope.Design.Models.PayPal">
-    <Position X="10" Y="5.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAgAAAAAAAAAAAAIAAAAAAAgAAAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\PayPal.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="OneHope.Design.Models.Portatil">
-    <Position X="3.25" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Ram" Type="OneHope.Design.Models.Ram" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.812" Y="3.594" />
+        <Point X="3.812" Y="5.167" />
+        <Point X="2" Y="5.167" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="Proveedor" Type="OneHope.Design.Models.Proveedor" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5" Y="2.938" />
+        <Point X="6.812" Y="2.938" />
+        <Point X="6.812" Y="3.75" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAiABCQAAgAAAAAgAAAgAABgAAgAIAAAAgAIAAAEAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Portatil.cs</FileName>
+      <HashCode>AAACCBCQAAgACAgAgAAAgAABgAAiAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>Models\Portatil.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Ram" />
       <Property Name="Marca" />
+      <Property Name="Procesador" />
       <Property Name="Proveedor" />
-      <Property Name="Proceador" />
-      <Property Name="RAM" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="LineasPedido" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Procesador">
-    <Position X="0.5" Y="2.5" Width="1.5" />
+    <Position X="0.5" Y="2.5" Width="1.75" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Procesador.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAMAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Procesador.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="OneHope.Design.Models.Proveedor">
-    <Position X="5.25" Y="4.75" Width="1.5" />
+    <Position X="6.25" Y="3.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.Models.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="6.25" Y="4.912" />
+        <Point X="5.875" Y="4.912" />
+        <Point X="5.875" Y="3.375" />
+        <Point X="5" Y="3.375" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAACAAAAACAAAAAAgCAAgAAAAAAAAIAAAAAAAgAAAEA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Proveedor.cs</FileName>
+      <FileName>Models\Proveedor.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.Models.RAM">
-    <Position X="0.5" Y="5" Width="1.5" />
+  <Class Name="OneHope.Design.Models.Ram">
+    <Position X="0.5" Y="4.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.Models.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="5.484" />
+        <Point X="4.562" Y="5.484" />
+        <Point X="4.562" Y="3.594" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\RAM.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAMA=</HashCode>
+      <FileName>Models\Ram.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="OneHope.Design.Models.TarjetaCredito">
-    <Position X="7.75" Y="5.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAQgAAAAAAAAAAAAIAAAAAAAACAAQA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\TarjetaCredito.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="OneHope.Design.Models.Transferencia">
-    <Position X="12.25" Y="5.5" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Transferencia.cs</FileName>
-    </TypeIdentifier>
   </Class>
   <Class Name="OneHope.Design.Models.Pedido">
-    <Position X="10" Y="0.5" Width="1.5" />
+    <Position X="9" Y="0.5" Width="1.75" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAACAAAAAAAAAgCAAAAACAAAQQIMAAAAAAAAAAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Pedido.cs</FileName>
+      <HashCode>AAACAACAAAAAAAAAgCAAAEACAAAQQIEAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Pedido.cs</FileName>
     </TypeIdentifier>
-    <ShowAsAssociation>
-      <Property Name="TipoMetodoPago" />
-      <Property Name="MetodoPago" />
-    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="LineasPedido" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Enum Name="OneHope.Design.Models.TipoMetodoPago">
-    <Position X="13.25" Y="2.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAAAAAAABAAA=</HashCode>
-      <FileName>UC-ReabastecerPortatil\Models\Pedido.cs</FileName>
-    </TypeIdentifier>
-  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

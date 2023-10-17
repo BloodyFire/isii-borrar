@@ -1,10 +1,12 @@
-﻿namespace OneHope.API.Models
+﻿using OneHope.Design.Models;
+using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design.CUAlquilarPortatil
 {
     public class Portatil
     {
         public Portatil()
         {
-            LineasPedido = new List<LineaPedido>();
         }
 
         public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
@@ -20,7 +22,6 @@
             PrecioCoste = precioCoste;
             Stock = stock;
             StockAlquilar = stockAlquilar;
-            LineasPedido = new List<LineaPedido>();
             ListaCompra = new List<LineaCompra>();
             LineasAlquiler = new List<LineaAlquiler>();
         }
@@ -74,12 +75,6 @@
         [Required]
         [Display(Name = "Unidades disponibles")]
         public int StockAlquilar { get; set; } = 0;
-
-        public IList<LineaPedido> LineasPedido { get; set; } = new List<LineaPedido>();
-
-        [Required]
-        public Proveedor Proveedor { get; set; }
-
 
         public override bool Equals(object? obj)
         {
