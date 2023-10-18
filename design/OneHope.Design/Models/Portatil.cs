@@ -23,7 +23,7 @@ namespace OneHope.Design.Models
             Stock = stock;
             StockAlquilar = stockAlquilar;
             LineasPedido = new List<LineaPedido>();
-            ListaCompra = new List<LineaCompra>();
+            LineasCompra = new List<LineaCompra>();
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
@@ -65,7 +65,7 @@ namespace OneHope.Design.Models
         [Display(Name = "Precio de coste")]
         public double PrecioCoste { get; set; }
 
-        public IList<LineaCompra> ListaCompra { get; set; }
+        public IList<LineaCompra> LineasCompra { get; set; }
 
         [Required]
         public Procesador Procesador { get; set; }
@@ -81,6 +81,7 @@ namespace OneHope.Design.Models
 
         [Required]
         public Proveedor Proveedor { get; set; }
+
 
         public override bool Equals(object? obj)
         {

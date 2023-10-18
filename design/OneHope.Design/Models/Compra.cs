@@ -17,7 +17,7 @@ namespace OneHope.Design.Models
 
         public Compra()
         {
-            ListaCompras = new List<LineaCompra>();
+            LineasCompra = new List<LineaCompra>();
         }
 
         [Key]
@@ -25,6 +25,14 @@ namespace OneHope.Design.Models
 
         
         public int CustomerId {  get; set; }
+
+        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener un nombre que supere los 50 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public String NombreCliente { get; set; }
+
+        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener unos apellidos que superen los 50 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public String Apellidos { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -35,7 +43,7 @@ namespace OneHope.Design.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, escribe tu direccion de envio")]
         public String Direccion { get; set; }
 
-        public IList<LineaCompra> ListaCompras { get; set; }
+        public IList<LineaCompra> LineasCompra { get; set; }
 
 
         [Display(Name = "Metodo Pago")]
@@ -64,7 +72,7 @@ namespace OneHope.Design.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, ListaCompras, MetodosPagos, Total);
+            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodosPagos, Total);
         }
 
     }

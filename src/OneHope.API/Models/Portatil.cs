@@ -21,7 +21,7 @@
             Stock = stock;
             StockAlquilar = stockAlquilar;
             LineasPedido = new List<LineaPedido>();
-            ListaCompra = new List<LineaCompra>();
+            LineasCompra = new List<LineaCompra>();
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
@@ -63,7 +63,7 @@
         [Display(Name = "Precio de coste")]
         public double PrecioCoste { get; set; }
 
-        public IList<LineaCompra> ListaCompra { get; set; }
+        public IList<LineaCompra> LineasCompra { get; set; }
 
         [Required]
         public Procesador Procesador { get; set; }

@@ -17,7 +17,7 @@ namespace OneHope.API.Models
 
         public Compra()
         {
-            ListaCompras = new List<LineaCompra>();
+            LineasCompra = new List<LineaCompra>();
         }
 
         [Key]
@@ -43,7 +43,7 @@ namespace OneHope.API.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, escribe tu direccion de envio")]
         public String Direccion { get; set; }
 
-        public IList<LineaCompra> ListaCompras { get; set; }
+        public IList<LineaCompra> LineasCompra { get; set; }
 
 
         [Display(Name = "Metodo Pago")]
@@ -72,7 +72,7 @@ namespace OneHope.API.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, ListaCompras, MetodosPagos, Total);
+            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodosPagos, Total);
         }
 
     }

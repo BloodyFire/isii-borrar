@@ -33,7 +33,7 @@ namespace OneHope.API.Models
 
         public double PrecioUnitario {  get; set; }
 
-        public List<LineaCompra> ListasCompra { get; set; }
+        public List<LineaCompra> LineasCompra { get; set; }
 
         public LineaDevolucion? LineaDevolucion { get; set; }
 
