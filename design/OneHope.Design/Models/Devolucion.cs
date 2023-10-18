@@ -7,12 +7,12 @@ namespace OneHope.Design.Models
 
         public Devolucion() { }
 
-        public Devolucion(int id, DateTime fecha, float total, string direccion, string reseña) {
+        public Devolucion(int id, DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string nota) {
             IdDevolucion = id; 
             Fecha = fecha;
-            Total = total;
-            Direccion = direccion;
-            Reseña = reseña;
+            CuantiaDevolucion = cuantiaDevolucion;
+            DireccionRecogida = direccionRecogida;
+            Nota = nota;
         }
 
         [Key]
@@ -23,12 +23,12 @@ namespace OneHope.Design.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fecha { get; set; }
 
-        public float Total { get; set; }
+        public float CuantiaDevolucion { get; set; }
 
         [Required]
-        public string Direccion { get; set; }
+        public string DireccionRecogida { get; set; }
 
-        public string Reseña { get; set; }
+        public string Nota { get; set; }
 
         public IList<LineaDevolucion> LineaDevolucion
         { 
@@ -40,15 +40,15 @@ namespace OneHope.Design.Models
             return obj is Devolucion devolucion &&
                    IdDevolucion == devolucion.IdDevolucion &&
                    Fecha == devolucion.Fecha &&
-                   Total == devolucion.Total &&
-                   Direccion == devolucion.Direccion &&
-                   Reseña == devolucion.Reseña &&
+                   CuantiaDevolucion == devolucion.CuantiaDevolucion &&
+                   DireccionRecogida == devolucion.DireccionRecogida &&
+                   Nota == devolucion.Nota &&
                    EqualityComparer<IList<LineaDevolucion>>.Default.Equals(LineaDevolucion, devolucion.LineaDevolucion);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdDevolucion, Fecha, Total, Direccion, Reseña, LineaDevolucion);
+            return HashCode.Combine(IdDevolucion, Fecha, CuantiaDevolucion, DireccionRecogida, Nota, LineaDevolucion);
         }
     }
 }
