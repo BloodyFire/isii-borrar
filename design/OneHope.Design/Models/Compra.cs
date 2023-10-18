@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace OneHope.API.Models
+namespace OneHope.Design.Models
 {
     public class Compra
     {
@@ -25,14 +25,6 @@ namespace OneHope.API.Models
 
         
         public int CustomerId {  get; set; }
-
-        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener un nombre que supere los 50 caracteres.")]
-        [RegularExpression(@"[a-zA-Z]*$")]
-        public String NombreCliente { get; set; }
-
-        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener unos apellidos que superen los 50 caracteres.")]
-        [RegularExpression(@"[a-zA-Z]*$")]
-        public String Apellidos { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

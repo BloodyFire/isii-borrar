@@ -1,105 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="OneHope.Design.Devolucion">
-    <Position X="1.75" Y="1" Width="1.5" />
+  <Class Name="OneHope.Design.Models.Devolucion">
+    <Position X="9.25" Y="4.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAEAAAAAAAAIAEAgAAAAAAAAAAAQIIAAAAAAAAAAAA=</HashCode>
-      <FileName>CU-DevolverPortatil\Devolucion.cs</FileName>
+      <HashCode>gAAAAAAAAAAAIAEAgCAAAAAAAAAAQIIAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Devolucion.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="LineaDevolucion" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.Portatil">
-    <Position X="7.5" Y="1" Width="1.5" />
+  <Class Name="OneHope.Design.Models.LineaCompra">
+    <Position X="6.25" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAABAQAggAiAgAgAAAAAAAgAAgAIAAAAgAAAAAEAA=</HashCode>
-      <FileName>CU-DevolverPortatil\Portatil.cs</FileName>
+      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
+      <FileName>Models\LineaCompra.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Ram" />
-      <Property Name="Procesador" />
-      <Property Name="Marca" />
+      <Property Name="Portatil" />
+      <Property Name="LineaDevolucion" />
     </ShowAsAssociation>
-    <ShowAsCollectionAssociation>
-      <Property Name="LineasCompra" />
-    </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.LineaDevolucion">
-    <Position X="4.75" Y="1" Width="1.5" />
+  <Class Name="OneHope.Design.Models.LineaDevolucion">
+    <Position X="9.25" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAGAAAAQJAAAgAAAAAAAAAAAAIAAAAAAAAAAAAQ=</HashCode>
-      <FileName>CU-DevolverPortatil\LineaDevolucion.cs</FileName>
+      <FileName>Models\LineaDevolucion.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LineaCompra" />
+      <Property Name="Devolucion" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="OneHope.Design.Marca">
-    <Position X="10" Y="0.5" Width="1.5" />
+  <Class Name="OneHope.Design.Models.Marca">
+    <Position X="0.75" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>CU-DevolverPortatil\Marca.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAggAAAAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Marca.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Portatiles" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="OneHope.Design.Ram">
-    <Position X="10" Y="4.25" Width="1.5" />
+  <Class Name="OneHope.Design.Models.Portatil">
+    <Position X="3.5" Y="1.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Methods" Collapsed="true" />
     </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>CU-DevolverPortatil\Ram.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Portatiles" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="OneHope.Design.Procesador">
-    <Position X="10" Y="2.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAgAAAgAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
-      <FileName>CU-DevolverPortatil\Procesador.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Portatiles" />
-    </ShowAsCollectionAssociation>
-  </Class>
-  <Class Name="OneHope.Design.LineaCompra">
-    <Position X="4.25" Y="4.25" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Methods" Collapsed="true" />
-    </Compartments>
-    <AssociationLine Name="Portatil" Type="OneHope.Design.Portatil" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+    <AssociationLine Name="Ram" Type="OneHope.Design.Models.Ram" FixedFromPoint="true" FixedToPoint="true">
       <Path>
-        <Point X="5.75" Y="6.5" />
-        <Point X="7.844" Y="6.5" />
-        <Point X="7.844" Y="3.517" />
+        <Point X="4.375" Y="4.786" />
+        <Point X="4.375" Y="6.104" />
+        <Point X="2.25" Y="6.104" />
       </Path>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
-      <FileName>CU-DevolverPortatil\LineaCompra.cs</FileName>
+      <HashCode>AAACCBCQAAgACAgAgAAAgAABgAAiAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>Models\Portatil.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="LineaDevolucion" />
-      <Property Name="Portatil" />
+      <Property Name="Ram" />
+      <Property Name="Marca" />
+      <Property Name="Procesador" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListaCompra" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Procesador">
+    <Position X="0.75" Y="3.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAMAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Procesador.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Ram">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <AssociationLine Name="Portatiles" Type="OneHope.Design.Models.Portatil" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2.25" Y="5.591" />
+        <Point X="3.812" Y="5.591" />
+        <Point X="3.812" Y="4.786" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAMA=</HashCode>
+      <FileName>Models\Ram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

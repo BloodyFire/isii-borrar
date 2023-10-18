@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OneHope.Design.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace OneHope.Design.CUAlquilarPortatil
 {

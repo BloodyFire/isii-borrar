@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="OneHope.Design.Models.Marca">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAggAAAAAAAAAAAIAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Marca.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Portatil">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACCBCQAAgACAgAgAAAgAABgAAiAIAAAAgAAAAAEAA=</HashCode>
+      <FileName>Models\Portatil.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ram" />
+      <Property Name="Marca" />
+      <Property Name="Procesador" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListaCompra" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Procesador">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAMAAAAAAAAAAAEA=</HashCode>
+      <FileName>Models\Procesador.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Ram">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAMA=</HashCode>
+      <FileName>Models\Ram.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Portatiles" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.LineaCompra">
+    <Position X="6.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAUAAGAAAAAAAAAgAAAAAAAAAAAAKIABAAEEAAAAAA=</HashCode>
+      <FileName>Models\LineaCompra.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Portatil" />
+      <Property Name="Compra" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="OneHope.Design.Models.Compra">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="OneHope.Design.Models.Compra.MetodoPago" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Models\Compra.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAACCAAAAAAAAAAAgCAAAAACAAAAQJAAAAAAAEAAAAA=</HashCode>
+      <FileName>Models\Compra.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="ListaCompras" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OneHope.API.Models
+namespace OneHope.Design.CUComprarPortatil
 {
     public class Compra
     {
@@ -26,6 +25,17 @@ namespace OneHope.API.Models
 
         
         public int CustomerId {  get; set; }
+
+        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener un nombre que supere los 50 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public String NombreCliente { get; set; }
+
+        [Required, StringLength(50, ErrorMessage = "El cliente no puede tener unos apellidos que superen los 50 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public String Apellidos { get; set; }
+
+        [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
+        public int Cantidad {  get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]

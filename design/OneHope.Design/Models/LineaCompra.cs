@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OneHope.API.Models
+namespace OneHope.Design.Models
 {
     public class LineaCompra
     {

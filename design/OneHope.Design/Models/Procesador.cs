@@ -1,4 +1,6 @@
-﻿namespace OneHope.API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OneHope.Design.Models
 {
     public class Procesador
     {

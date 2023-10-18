@@ -4,27 +4,33 @@ namespace OneHope.Design.Models
 {
     public class Marca
     {
-        public Marca() {}
+        //Constructores
+        public Marca() { }
 
-        public Marca(string nombre) {
-            Nombre = nombre;
+        public Marca(string nombreMarca) {
+            NombreMarca = nombreMarca;
         }
 
+        //Atributos
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(50, ErrorMessage = "La marca no puede ser superior a 50 caracteres.")]
-        public string Nombre { get; set; } = string.Empty;
+        public string NombreMarca { get; set; } = string.Empty;
         public IList<Portatil> Portatiles { get; set; } = new List<Portatil>();
+
+        //Metodos
         public override bool Equals(object? obj)
         {
-            return obj is Marca proc &&
-                   Id == proc.Id &&
-                   Nombre == proc.Nombre;
+            return obj is Marca marca &&
+                   Id == marca.Id &&
+                   NombreMarca == marca.NombreMarca;
         }
+
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre);
+            return HashCode.Combine(Id, NombreMarca);
         }
 
     }
