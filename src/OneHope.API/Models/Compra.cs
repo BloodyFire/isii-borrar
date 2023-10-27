@@ -5,13 +5,13 @@ namespace OneHope.API.Models
     public class Compra
     {
 
-        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, MetodoPago metodosPagos, int total)
+        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, int total)
         {
             Id = id;
             CustomerId = customerId;
             FechaCompra = fechaCompra;
             Direccion = direccion;
-            MetodosPagos = metodosPagos;
+            MetodoPago = metodosPagos;
             Total = total;
         }
 
@@ -48,17 +48,17 @@ namespace OneHope.API.Models
 
         [Display(Name = "Metodo Pago")]
         [Required()]
-        public MetodoPago MetodosPagos { get; set; }
+        public TipoMetodoPago MetodoPago { get; set; }
 
         [Required]
         public int Total {  get; set; }
         
-        public enum MetodoPago
+        /*public enum MetodoPago
         {
             TarjetaCredito,
             PayPal,
             Transferencia
-        }
+        }*/
 
         public override bool Equals(object? obj)
         {
@@ -72,7 +72,7 @@ namespace OneHope.API.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodosPagos, Total);
+            return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodoPago, Total);
         }
 
     }

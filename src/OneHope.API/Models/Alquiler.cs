@@ -90,11 +90,11 @@ namespace OneHope.API.Models
         }
 
         //Tipo de metodo de pago
-        public enum TipoMetodoPago
+        /*public enum TipoMetodoPago
         {
             TarjetaCredito,
             PayPal,
             Transferencia
-        }
+        }*/
     }
 }
