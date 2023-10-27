@@ -5,13 +5,14 @@
 
         public Devolucion() { }
 
-        public Devolucion(int id, DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string nota)
+        public Devolucion(int idDevolucion, DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string notaRepartidor, string motivoDevolucion)
         {
-            IdDevolucion = id;
+            IdDevolucion = idDevolucion;
             Fecha = fecha;
             CuantiaDevolucion = cuantiaDevolucion;
             DireccionRecogida = direccionRecogida;
-            Nota = nota;
+            NotaRepartidor = notaRepartidor;
+            MotivoDevolucion = motivoDevolucion;
         }
 
         [Key]
@@ -27,7 +28,11 @@
         [Required]
         public string DireccionRecogida { get; set; }
 
-        public string Nota { get; set; }
+        public string NotaRepartidor { get; set; }
+
+        [Required, StringLength(100, ErrorMessage = "El motivo no puede exceder los 100 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public string MotivoDevolucion { get; set; }
 
         public IList<LineaDevolucion> LineaDevolucion
         {
@@ -41,13 +46,14 @@
                    Fecha == devolucion.Fecha &&
                    CuantiaDevolucion == devolucion.CuantiaDevolucion &&
                    DireccionRecogida == devolucion.DireccionRecogida &&
-                   Nota == devolucion.Nota &&
+                   NotaRepartidor == devolucion.NotaRepartidor &&
+                   MotivoDevolucion == devolucion.MotivoDevolucion &&
                    EqualityComparer<IList<LineaDevolucion>>.Default.Equals(LineaDevolucion, devolucion.LineaDevolucion);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdDevolucion, Fecha, CuantiaDevolucion, DireccionRecogida, Nota, LineaDevolucion);
+            return HashCode.Combine(IdDevolucion, Fecha, CuantiaDevolucion, DireccionRecogida, NotaRepartidor, MotivoDevolucion, LineaDevolucion);
         }
     }
 }
