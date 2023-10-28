@@ -7,7 +7,8 @@ namespace OneHope.Shared.PortatilDTOs
 {
     public class PortatilParaComprarDTO
     {
-        public PortatilParaComprarDTO(int id, string modelo, double precioCompra, Ram ram, Marca marca, string nombre, Procesador procesador, int stock)
+        public PortatilParaComprarDTO() {}
+        public PortatilParaComprarDTO(int id, string modelo, double precioCompra, string ram, string marca, string nombre, string procesador, int cantidad)
         {
             Id = id;
             Modelo = modelo ?? throw new ArgumentNullException(nameof(modelo));
@@ -16,7 +17,7 @@ namespace OneHope.Shared.PortatilDTOs
             Marca = marca ?? throw new ArgumentNullException(nameof(marca));
             Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
             Procesador = procesador ?? throw new ArgumentNullException(nameof(procesador));
-            Stock = stock;
+            Stock = cantidad;
         }
 
         [JsonPropertyName("id")]
@@ -37,10 +38,10 @@ namespace OneHope.Shared.PortatilDTOs
         [Required]
         [Display(Name = "Memoria RAM")]
         [JsonPropertyName("ram")]
-        public Ram Ram { get; set; }
+        public string Ram { get; set; }
 
         [Required]
-        public Marca Marca { get; set; }
+        public string Marca { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "El nombre del portatil no puede tener más de 100 characters.")]
@@ -49,9 +50,10 @@ namespace OneHope.Shared.PortatilDTOs
 
         [Required]
         [JsonPropertyName("procesador")]
-        public Procesador Procesador { get; set; }
+        public string Procesador { get; set; }
 
-        [Display(Name = "Unidades disponibles")]
+        [Required]
+        [Display(Name = "Stock")]
         [JsonPropertyName("stock")]
         public int Stock { get; set; } = 0;
 
@@ -61,11 +63,15 @@ namespace OneHope.Shared.PortatilDTOs
                    Id == dTO.Id &&
                    Modelo == dTO.Modelo &&
                    PrecioCompra == dTO.PrecioCompra &&
-                   EqualityComparer<Ram>.Default.Equals(Ram, dTO.Ram) &&
-                   EqualityComparer<Marca>.Default.Equals(Marca, dTO.Marca) &&
+                   Ram == dTO.Ram &&
+                   Marca == dTO.Marca &&
                    Nombre == dTO.Nombre &&
-                   EqualityComparer<Procesador>.Default.Equals(Procesador, dTO.Procesador) &&
+                   Procesador == dTO.Procesador &&
                    Stock == dTO.Stock;
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, Nombre);
         }
     }
 }
