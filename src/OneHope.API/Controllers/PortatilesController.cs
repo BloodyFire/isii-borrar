@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OneHope.API.Models;
 using System.Net;
@@ -14,7 +14,8 @@ namespace OneHope.API.Controllers
 
         private readonly ILogger<PortatilesController> _logger;
 
-        public PortatilesController(ApplicationDBContext context, ILogger<PortatilesController> logger)
+        public PortatilesController(
+            ApplicationDBContext context, ILogger<PortatilesController> logger)
         {
             _context = context;
             _logger = logger;
