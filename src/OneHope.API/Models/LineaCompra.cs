@@ -6,21 +6,23 @@ namespace OneHope.API.Models
     {
         public LineaCompra() { }
 
-        public LineaCompra(int idLinea, int idProd, int idCompra, int cantidad, double precioUnitario)
+        public LineaCompra(int idLinea, int idPortatil, int idCompra, int cantidad, double precioUnitario)
         {
             IdLinea = idLinea;
-            IdProd = idProd;
+            IdPortatil = idPortatil;
             IdCompra = idCompra;
             Cantidad = cantidad;
             PrecioUnitario = precioUnitario;
         }
 
         [Required]
+        [ForeignKey("IdPortatil")]
         public Portatil Portatil { get; set; }
 
-        public int IdProd {  get; set; }
+        public int IdPortatil {  get; set; }
 
         [Required]
+        [ForeignKey("IdCompra")]
         public Compra Compra { get; set; }
 
         public int IdCompra { get; set; }
@@ -33,15 +35,13 @@ namespace OneHope.API.Models
 
         public double PrecioUnitario {  get; set; }
 
-        public List<LineaCompra> LineasCompra { get; set; }
-
         public LineaDevolucion? LineaDevolucion { get; set; }
 
         public override bool Equals(object? obj)
         {
             return obj is LineaCompra compra &&
                    EqualityComparer<Portatil>.Default.Equals(Portatil, compra.Portatil) &&
-                   IdProd == compra.IdProd &&
+                   IdPortatil == compra.IdPortatil &&
                    IdLinea == compra.IdLinea &&
                    Cantidad == compra.Cantidad &&
                    PrecioUnitario == compra.PrecioUnitario;
@@ -49,7 +49,7 @@ namespace OneHope.API.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdProd, IdLinea);
+            return HashCode.Combine(IdPortatil, IdLinea);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace OneHope.API.Models
             builder.Entity<Proveedor>().HasAlternateKey(p => new { p.CIF });
 
             builder.Entity<LineaAlquiler>().HasAlternateKey(la => new { la.AlquilerID, la.PortatilID });
-            builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdProd, pi.IdCompra });
+            builder.Entity<LineaCompra>().HasAlternateKey(pi => new { pi.IdPortatil, pi.IdCompra });
             
             builder.Entity<LineaDevolucion>().HasAlternateKey(pi => new {pi.IdDevolucion, pi.LineaCompraId});
         }
