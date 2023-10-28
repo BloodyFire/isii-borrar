@@ -27,13 +27,17 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaPedidoDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PortatilParaPedidoDTO>> GetPortatilesParaPedido()
+        public async Task<ActionResult<PortatilParaPedidoDTO>> GetPortatilesParaPedido(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor)
         {
             var portatiles = await _context.Portatiles
-                .Include(portatil => portatil.Marca)
-                .Include(portatil => portatil.Procesador)
+                .Where(portatil =>  (filtroModelo == null || portatil.Modelo.Contains(filtroModelo)) &&
+                                    (filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
+                                    (filtroStockMinimo == null || portatil.Stock >= filtroStockMinimo) &&
+                                    (filtroStockMaximo == null || portatil.Stock <= filtroStockMaximo) &&
+                                    (filtroProveedor == null || portatil.Proveedor.Nombre.Equals(filtroProveedor)))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Proveedor)
+                .OrderBy(portatil => portatil.Stock)
                 .Select(portatil => new PortatilParaPedidoDTO(portatil.Id, portatil.Modelo ,portatil.Marca.NombreMarca, portatil.Stock, portatil.PrecioCoste, portatil.Proveedor.Nombre))
                 .ToListAsync();
 
