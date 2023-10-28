@@ -95,7 +95,7 @@ namespace OneHope.API.Migrations
                     b.Property<DateTime>("FechaCompra")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("MetodosPagos")
+                    b.Property<int>("MetodoPago")
                         .HasColumnType("int");
 
                     b.Property<string>("NombreCliente")
@@ -119,19 +119,19 @@ namespace OneHope.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDevolucion"));
 
-                    b.Property<string>("Direccion")
+                    b.Property<float>("CuantiaDevolucion")
+                        .HasColumnType("real");
+
+                    b.Property<string>("DireccionRecogida")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Reseña")
+                    b.Property<string>("Nota")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<float>("Total")
-                        .HasColumnType("real");
 
                     b.HasKey("IdDevolucion");
 
@@ -473,17 +473,17 @@ namespace OneHope.API.Migrations
             modelBuilder.Entity("OneHope.API.Models.LineaCompra", b =>
                 {
                     b.HasOne("OneHope.API.Models.Compra", "Compra")
-                        .WithMany("ListaCompras")
+                        .WithMany("LineasCompra")
                         .HasForeignKey("CompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OneHope.API.Models.LineaCompra", null)
-                        .WithMany("ListasCompra")
+                        .WithMany("LineasCompra")
                         .HasForeignKey("LineaCompraIdLinea");
 
                     b.HasOne("OneHope.API.Models.Portatil", "Portatil")
-                        .WithMany("ListaCompra")
+                        .WithMany("LineasCompra")
                         .HasForeignKey("PortatilId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -573,7 +573,7 @@ namespace OneHope.API.Migrations
 
             modelBuilder.Entity("OneHope.API.Models.Compra", b =>
                 {
-                    b.Navigation("ListaCompras");
+                    b.Navigation("LineasCompra");
                 });
 
             modelBuilder.Entity("OneHope.API.Models.Devolucion", b =>
@@ -585,7 +585,7 @@ namespace OneHope.API.Migrations
                 {
                     b.Navigation("LineaDevolucion");
 
-                    b.Navigation("ListasCompra");
+                    b.Navigation("LineasCompra");
                 });
 
             modelBuilder.Entity("OneHope.API.Models.Marca", b =>
@@ -602,9 +602,9 @@ namespace OneHope.API.Migrations
                 {
                     b.Navigation("LineasAlquiler");
 
-                    b.Navigation("LineasPedido");
+                    b.Navigation("LineasCompra");
 
-                    b.Navigation("ListaCompra");
+                    b.Navigation("LineasPedido");
                 });
 
             modelBuilder.Entity("OneHope.API.Models.Procesador", b =>

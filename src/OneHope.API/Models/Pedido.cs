@@ -65,11 +65,11 @@
             return HashCode.Combine(Id, Total, FechaPedido, CódigoEmpleado, Direccion, LineasPedido, TipoMetodoPago);
         }
     }
-    public enum TipoMetodoPago
+    /*public enum TipoMetodoPago
     {
         TarjetaCredito,
         PayPal,
         Transferencia
-    }
+    }*/
 }
 

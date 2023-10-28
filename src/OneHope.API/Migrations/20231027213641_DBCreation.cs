@@ -44,7 +44,7 @@ namespace OneHope.API.Migrations
                     Apellidos = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetodosPagos = table.Column<int>(type: "int", nullable: false),
+                    MetodoPago = table.Column<int>(type: "int", nullable: false),
                     Total = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -59,9 +59,9 @@ namespace OneHope.API.Migrations
                     IdDevolucion = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Total = table.Column<float>(type: "real", nullable: false),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reseña = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CuantiaDevolucion = table.Column<float>(type: "real", nullable: false),
+                    DireccionRecogida = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nota = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
