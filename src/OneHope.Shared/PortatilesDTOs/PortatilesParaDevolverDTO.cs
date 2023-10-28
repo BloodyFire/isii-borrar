@@ -11,7 +11,8 @@ namespace OneHope.Shared.PortatilesDTOs
     public class PortatilesParaDevolverDTO
     {
 
-        public PortatilesParaDevolverDTO() { }
+        public PortatilesParaDevolverDTO() { 
+        }
 
         public PortatilesParaDevolverDTO(int id, string marca, int cantidad, DateTime fechaCompra, int total)
         {
@@ -21,6 +22,7 @@ namespace OneHope.Shared.PortatilesDTOs
             FechaCompra = fechaCompra;
             Total = total;
         }
+
 
         [JsonPropertyName("IdCompra")]
         public int Id { get; set; }
