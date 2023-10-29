@@ -18,13 +18,15 @@ namespace OneHope.API.Models
         public int Cantidad { get; set; }
 
         [Required]
+        [ForeignKey("LineaCompraId")]
         public LineaCompra LineaCompra { get; set; }
 
         public int LineaCompraId { get; set; }
 
 
 
-        
+        [Required]
+        [ForeignKey("IdDevolucion")]
         public Devolucion Devolucion { get; set; }
 
         public int IdDevolucion { get; set; }
