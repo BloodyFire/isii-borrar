@@ -25,4 +25,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\OneHope.API\OneHope.API.csproj" />
+    <ProjectReference Include="..\..\src\OneHope.Shared\OneHope.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
