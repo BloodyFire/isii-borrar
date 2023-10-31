@@ -5,3 +5,4 @@ global using OneHope.API.Controllers;
 global using OneHope.Shared.PortatilDTOs;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.Logging;
+global using Moq;
