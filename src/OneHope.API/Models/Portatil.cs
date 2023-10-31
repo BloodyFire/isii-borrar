@@ -7,7 +7,7 @@
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
+        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar, Proveedor proveedor)
         {
             Id = id;
             Modelo = modelo;
@@ -20,6 +20,7 @@
             PrecioCoste = precioCoste;
             Stock = stock;
             StockAlquilar = stockAlquilar;
+            Proveedor = proveedor;
             LineasPedido = new List<LineaPedido>();
             LineasCompra = new List<LineaCompra>();
             LineasAlquiler = new List<LineaAlquiler>();
@@ -94,7 +95,8 @@
                    PrecioAlquiler == portatil.PrecioAlquiler &&
                    PrecioCoste == portatil.PrecioCoste &&
                    Stock == portatil.Stock &&
-                   StockAlquilar == portatil.StockAlquilar;
+                   StockAlquilar == portatil.StockAlquilar &&
+                   EqualityComparer<Proveedor>.Default.Equals(Proveedor, portatil.Proveedor);
         }
 
         public override int GetHashCode()
