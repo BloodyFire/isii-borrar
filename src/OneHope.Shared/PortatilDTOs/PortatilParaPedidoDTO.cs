@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneHope.Shared.PortatilDTO
+namespace OneHope.Shared.PortatilDTOs
 {
     public class PortatilParaPedidoDTO
     {

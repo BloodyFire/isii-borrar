@@ -5,7 +5,7 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Azure.Identity;
-using OneHope.Shared.PortatilDTO;
+using OneHope.Shared.PortatilDTOs;
 
 namespace OneHope.API.Controllers
 {
