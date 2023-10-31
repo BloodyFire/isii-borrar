@@ -51,7 +51,7 @@ namespace OneHope.API.Models
         public TipoMetodoPago MetodoPago { get; set; }
 
         [Required]
-        public int Total {  get; set; }
+        public double Total {  get; set; }
         
         /*public enum MetodoPago
         {
