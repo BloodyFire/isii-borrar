@@ -42,7 +42,7 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaComprarDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IList<PortatilParaComprarDTO>>> GetPortatilesParaComprar(string? nombrePortatil,
-            string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, int? precioPortatil)
+            string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil)
         {
             IList<PortatilParaComprarDTO> selectPortatiles= await _context.Portatiles
                 .Include(p => p.Marca)
