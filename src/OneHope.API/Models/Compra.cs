@@ -5,7 +5,7 @@ namespace OneHope.API.Models
     public class Compra
     {
 
-        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, int total)
+        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, double total)
         {
             Id = id;
             CustomerId = customerId;
