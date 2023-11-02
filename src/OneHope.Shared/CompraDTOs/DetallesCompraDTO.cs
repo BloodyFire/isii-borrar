@@ -14,7 +14,7 @@ namespace OneHope.Shared.CompraDTOs
         public DetallesCompraDTO() { }
 
         public DetallesCompraDTO(int id, string nombreUsuario, string apellidosUsuario, 
-            string direccion, IList<CompraPortatilDTO> portatilesComprados, TipoMetodoPago metodoPago,
+            string direccion, IList<CompraPortatilDTO> portatilesComprados, OneHope.Shared.TipoMetodoPago metodoPago,
             DateTime fechaCompra) : 
             base(direccion, portatilesComprados, nombreUsuario, apellidosUsuario, metodoPago)
             {

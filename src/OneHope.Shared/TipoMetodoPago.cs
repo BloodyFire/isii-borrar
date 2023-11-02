@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OneHope.Shared
 {
-    public enum TiposMetodoPago
+    public enum TipoMetodoPago
     {
         TarjetaCredito,
         PayPal,

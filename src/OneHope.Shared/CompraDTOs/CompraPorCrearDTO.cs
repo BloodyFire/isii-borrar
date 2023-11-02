@@ -17,7 +17,7 @@ namespace OneHope.Shared.CompraDTOs
         }
 
         public CompraPorCrearDTO(string direccion, IList<CompraPortatilDTO> compraPortatiles, string nombreUsuario,
-            string apellidosUsuario, TipoMetodoPago metodoPago)
+            string apellidosUsuario,OneHope.Shared.TipoMetodoPago metodoPago)
         {
             direccion = direccion ?? throw new ArgumentNullException(nameof(direccion));
             compraPortatiles = compraPortatiles ?? throw new ArgumentException(nameof(compraPortatiles));
@@ -61,7 +61,7 @@ namespace OneHope.Shared.CompraDTOs
         [Required]
         [JsonPropertyName("metodoDePago")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public TipoMetodoPago MetodoPago { get; set;}
+        public Design.Models.TipoMetodoPago MetodoPago { get; set;}
 
         public override bool Equals(object? obj)
         {
