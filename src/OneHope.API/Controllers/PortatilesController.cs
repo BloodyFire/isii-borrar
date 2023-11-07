@@ -4,7 +4,6 @@ using OneHope.API.Models;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using Azure.Identity;
 using OneHope.Shared.PortatilDTOs;
 
 namespace OneHope.API.Controllers
@@ -29,7 +28,15 @@ namespace OneHope.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<ActionResult<PortatilParaPedidoDTO>> GetPortatilesParaPedido(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor)
         {
-            var portatiles = await _context.Portatiles
+
+            if (filtroStockMinimo != null && filtroStockMaximo != null && filtroStockMinimo > filtroStockMaximo)
+            {
+                ModelState.AddModelError("filtroStockMinimo&filtroStockMaximo", "filtroStockMinimo debe ser menor que filtroStockMaximo");
+                _logger.LogError($"{DateTime.Now} Error: filtroStockMinimo debe ser menor que filtroStockMaximo");
+                return BadRequest(new ValidationProblemDetails(ModelState));
+            }
+
+            IList<PortatilParaPedidoDTO> portatiles = await _context.Portatiles
                 .Where(portatil =>  (filtroModelo == null || portatil.Modelo.Contains(filtroModelo)) &&
                                     (filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroStockMinimo == null || portatil.Stock >= filtroStockMinimo) &&
