@@ -1,4 +1,4 @@
-namespace OneHope.UT.PortatilesController_test
+﻿namespace OneHope.UT.PortatilesController_test
 {
     public class GetPortatilesParaPedido_test : OneHope4SqliteUT
     {
@@ -20,7 +20,7 @@ namespace OneHope.UT.PortatilesController_test
             };
             //TODO: Remove some Portatiles and keep just the needed ones for the test.
             var portatiles = new List<Portatil>()
-            {                
+            {
                 new Portatil(id: 1, modelo: "HP-1151", procesador: procesadores[0], ram: rams[0], marca: marcas[0], nombre: "HP 486 del pleistoceno", precioCompra: 199.95, precioAlquiler: 6.66, precioCoste: 50.00, stock: 0, stockAlquilar: 5, proveedor: proveedores[0]),
                 new Portatil(2, "DELL-1244", procesadores[0], rams[0], marcas[1], "DELL R5 gama alta", 1999.95, 66.66, 500.00, 1, 1, proveedores[0]),
                 new Portatil(3, "ASUS-1362", procesadores[0], rams[0], marcas[0], "portatilote grandote marca asus perfecto para ir de camping.", 699.95, 23.33, 175.00, 5, 5, proveedores[1]),
@@ -68,7 +68,7 @@ namespace OneHope.UT.PortatilesController_test
             var result = await portatilesController.GetPortatilesParaPedido(null,null,null,null,null);
 
             //Assert
-            var okresult = Assert.IsType<OkObjectResult>(result);
+            var okresult = Assert.IsType<OkObjectResult>(result.Result);
             var actualPortatiles = Assert.IsType<List<PortatilParaPedidoDTO>>(okresult.Value);
 
             Assert.Equal<PortatilParaPedidoDTO>(expectedPortatiles, actualPortatiles);
@@ -119,7 +119,7 @@ namespace OneHope.UT.PortatilesController_test
             var result = await controller.GetPortatilesParaPedido(filtroModelo, filtroMarca, filtroStockMinimo, filtroStockMaximo, filtroProveedor);
 
             //Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
+            var okResult = Assert.IsType<OkObjectResult>(result.Result);
             var movieDTOsActual = Assert.IsType<List<PortatilParaPedidoDTO>>(okResult.Value);
 
             //Check results
@@ -140,7 +140,7 @@ namespace OneHope.UT.PortatilesController_test
             var result = await controller.GetPortatilesParaPedido(null, null, 5, 1, null);
             //Assert
             //we check that the response type is OK and obtain the list of movies
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
             var problemDetails = Assert.IsType<ValidationProblemDetails>(badRequestResult.Value);
             var problem = problemDetails.Errors.First().Value[0];
 
