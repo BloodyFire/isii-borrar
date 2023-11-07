@@ -49,7 +49,7 @@ namespace OneHope.API.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Portatil, IdPortatil, Compra, IdCompra, Cantidad, PrecioUnitario, LineaDevolucion);
+            return HashCode.Combine(IdPortatil, IdCompra);
         }
     }
 }
