@@ -6,11 +6,11 @@ namespace OneHope.API.Models
     {
         public LineaCompra() { }
 
-        public LineaCompra(int idLinea, int idPortatil, int idCompra, int cantidad, double precioUnitario)
+        public LineaCompra(int idLinea, Portatil portatil, Compra compra, int cantidad, double precioUnitario)
         {
             IdLinea = idLinea;
-            IdPortatil = idPortatil;
-            IdCompra = idCompra;
+            IdPortatil = portatil.Id;
+            IdCompra = compra.Id;
             Cantidad = cantidad;
             PrecioUnitario = precioUnitario;
         }
