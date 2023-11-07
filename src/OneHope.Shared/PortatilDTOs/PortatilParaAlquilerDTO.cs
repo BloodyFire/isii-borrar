@@ -9,13 +9,13 @@ namespace OneHope.Shared.PortatilDTOs
 {
     public class PortatilParaAlquilerDTO
     {
-        public PortatilParaAlquilerDTO(int id, string nombre, string marca, string procesador, int cantidad, double precioAlquiler)
+        public PortatilParaAlquilerDTO(int id, string nombre, string marca, string procesador, int stockAlquilar, double precioAlquiler)
         {
             Id = id;
             Nombre = nombre;
             Marca = marca;
             Procesador = procesador;
-            Cantidad = cantidad;
+            StockAlquilar = stockAlquilar;
             PrecioAlquiler = precioAlquiler;
         }
         [Required]
@@ -25,7 +25,7 @@ namespace OneHope.Shared.PortatilDTOs
         [Required]
         public string Marca { get; set; }
         [Required]
-        public int Cantidad { get; set; }
+        public int StockAlquilar { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         public double PrecioAlquiler { get; set; }
@@ -36,14 +36,14 @@ namespace OneHope.Shared.PortatilDTOs
         {
             return obj is PortatilParaAlquilerDTO dTO &&
                    Id == dTO.Id && Nombre == dTO.Nombre &&
-                   Marca == dTO.Marca && Cantidad == dTO.Cantidad &&
+                   Marca == dTO.Marca && StockAlquilar == dTO.StockAlquilar &&
                    Procesador == dTO.Procesador &&
                    PrecioAlquiler == dTO.PrecioAlquiler;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Nombre, Marca, Procesador, Cantidad, PrecioAlquiler);
+            return HashCode.Combine(Id, Nombre, Marca, Procesador, StockAlquilar, PrecioAlquiler);
         }
     }
 }

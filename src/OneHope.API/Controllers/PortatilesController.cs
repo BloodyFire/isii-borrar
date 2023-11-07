@@ -31,13 +31,13 @@ namespace OneHope.API.Controllers
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroProcesador == null || portatil.Modelo.Contains(filtroProcesador)) &&
                                     (filtroRam == null || portatil.Modelo.Contains(filtroRam)) &&
-                                    (filtroCantidadMinima == null || portatil.Cantidad >= filtroCantidadMinima) &&
-                                    (filtroCantidadMaxima == null || portatil.Cantidad <= filtroCantidadMaxima) 
+                                    (filtroCantidadMinima == null || portatil.StockAlquilar >= filtroCantidadMinima) &&
+                                    (filtroCantidadMaxima == null || portatil.StockAlquilar <= filtroCantidadMaxima) 
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
-                .OrderBy(portatil => portatil.Cantidad)
-                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Nombre, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.Cantidad, portatil.PrecioAlquiler))
+                .OrderBy(portatil => portatil.StockAlquilar)
+                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Nombre, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.StockAlquilar, portatil.PrecioAlquiler))
                 .ToListAsync();
 
             return Ok(portatiles);
