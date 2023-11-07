@@ -74,5 +74,78 @@ namespace OneHope.UT.PortatilesController_test
             Assert.Equal<PortatilParaPedidoDTO>(expectedPortatiles, actualPortatiles);
 
         }
+
+        public static IEnumerable<object[]> TestCasesFor_GetPortatilesParaPedido()
+        {
+
+            var portatilDTOs = new List<PortatilParaPedidoDTO>() {
+                new PortatilParaPedidoDTO(1,"HP-1151", "HP", 0, 50.0, "Proveedores S.L."),
+                new PortatilParaPedidoDTO(2,"DELL-1244", "DELL", 1, 500.00, "Proveedores S.L."),
+                new PortatilParaPedidoDTO(3, "ASUS-1362", "HP", 5, 175.00,"Portatiles Mayorista"),
+                new PortatilParaPedidoDTO(4, "TOASTER-1421", "DELL", 15, 325.00, "Portatiles Mayorista")
+            };
+
+            var portatilDTOsTC1 = new List<PortatilParaPedidoDTO>() { portatilDTOs[0] };
+            
+            var portatilDTOsTC2 = new List<PortatilParaPedidoDTO>() { portatilDTOs[0], portatilDTOs[2] }
+                .OrderBy(p => p.Stock).ToList();
+            var portatilDTOsTC3 = new List<PortatilParaPedidoDTO>() { portatilDTOs[2], portatilDTOs[3] }
+                .OrderBy(p => p.Stock).ToList();
+            var portatilDTOsTC4 = new List<PortatilParaPedidoDTO>() { portatilDTOs[0], portatilDTOs[1] }
+                .OrderBy(p => p.Stock).ToList();
+
+            var allTests = new List<object[]>
+            {
+                new object[] { "1151", null, null, null, null, portatilDTOsTC1 },
+                new object[] { null, "HP", null, null, null, portatilDTOsTC2 },
+                new object[] { null, null, 5, null, null, portatilDTOsTC3 },
+                new object[] { null, null, null, 3, null, portatilDTOsTC4 },
+                new object[] { null, null, null, null, "Proveedores S.L.", portatilDTOsTC4 }
+            };
+
+            return allTests;
+        }
+
+        [Theory]
+        [MemberData(nameof(TestCasesFor_GetPortatilesParaPedido))]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task GetPortatilesParaPedido_testcase(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor,
+            IList<PortatilParaPedidoDTO> expectedPortatiles)
+        {
+            // Arrange
+            var controller = new PortatilesController(_context, null);
+
+            // Act
+            var result = await controller.GetPortatilesParaPedido(filtroModelo, filtroMarca, filtroStockMinimo, filtroStockMaximo, filtroProveedor);
+
+            //Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var movieDTOsActual = Assert.IsType<List<PortatilParaPedidoDTO>>(okResult.Value);
+
+            //Check results
+            Assert.Equal(expectedPortatiles, movieDTOsActual);
+
+        }
+
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task GetPortatilesParaPedido_badrequest_test()
+        {
+            // Arrange
+            var mock = new Mock<ILogger<PortatilesController>>();
+            ILogger<PortatilesController> logger = mock.Object;
+            var controller = new PortatilesController(_context, logger);
+
+            // Act
+            var result = await controller.GetPortatilesParaPedido(null, null, 5, 1, null);
+            //Assert
+            //we check that the response type is OK and obtain the list of movies
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            var problemDetails = Assert.IsType<ValidationProblemDetails>(badRequestResult.Value);
+            var problem = problemDetails.Errors.First().Value[0];
+
+            Assert.Equal("filtroStockMinimo debe ser menor que filtroStockMaximo", problem);
+        }
+
     }
 }
