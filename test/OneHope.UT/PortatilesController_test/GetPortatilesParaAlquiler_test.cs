@@ -62,7 +62,7 @@
                 new Portatil(3, "ASUS-1362", procesadores[1], rams[1], marcas[1], "portatil marca asus perfecto para ir de camping.", 699.95, 23.33, 175.00, 5, 5, proveedores[1]),
                 new Portatil(4, "LAPTOP-2.0", procesadores[0], rams[0], marcas[1], "Portatil supremo.", 1299.95, 43.33, 325.00, 15, 6, proveedores[1])
             }
-            .OrderBy(p => p.Stock).Select(p => new PortatilParaAlquilerDTO(p.Id, p.Modelo, p.Marca.NombreMarca, p.Procesador.ModeloProcesador, p.Ram.Capacidad, p.StockAlquilar, p.PrecioAlquiler)).ToList();
+            .OrderBy(p => p.StockAlquilar).Select(p => new PortatilParaAlquilerDTO(p.Id, p.Modelo, p.Marca.NombreMarca, p.Procesador.ModeloProcesador, p.Ram.Capacidad, p.StockAlquilar, p.PrecioAlquiler)).ToList();
 
             PortatilesController portatilesController = new PortatilesController(_context, null);
             var result = await portatilesController.GetPortatilesParaAlquiler(null, null, null);
@@ -83,7 +83,7 @@
                 new PortatilParaAlquilerDTO(4, "LAPTOP-2.0", "ASUS", "Intel I5 12500k", "8Gb", 6, 43.33)
             };
 
-            var portatilDTOsTC1 = new List<PortatilParaAlquilerDTO>() { portatilDTOs[1], portatilDTOs[3] }
+            var portatilDTOsTC1 = new List<PortatilParaAlquilerDTO>() { portatilDTOs[2], portatilDTOs[3] }
             .OrderBy(p => p.StockAlquilar).ToList(); //Marca ASUS
 
             var portatilDTOsTC2 = new List<PortatilParaAlquilerDTO>() { portatilDTOs[0], portatilDTOs[2] }
@@ -95,7 +95,7 @@
             var allTests = new List<object[]>
             {
                 new object[] { "ASUS", null, null, portatilDTOsTC1 },
-                new object[] { null, "Ryzen 5 2900", portatilDTOsTC2 },
+                new object[] { null, "Ryzen 5 2900", null, portatilDTOsTC2 },
                 new object[] { null, null, "16Gb", portatilDTOsTC3 },
             };
 
