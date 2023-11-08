@@ -9,12 +9,13 @@ namespace OneHope.Shared.PortatilDTOs
 {
     public class PortatilParaAlquilerDTO
     {
-        public PortatilParaAlquilerDTO(int id, string modelo, string marca, string procesador, int stockAlquilar, double precioAlquiler)
+        public PortatilParaAlquilerDTO(int id, string modelo, string marca, string procesador, string ram, int stockAlquilar, double precioAlquiler)
         {
             Id = id;
             Modelo = modelo;
             Marca = marca;
             Procesador = procesador;
+            Ram = ram;
             StockAlquilar = stockAlquilar;
             PrecioAlquiler = precioAlquiler;
         }
@@ -31,6 +32,8 @@ namespace OneHope.Shared.PortatilDTOs
         public double PrecioAlquiler { get; set; }
         [Required]
         public string Procesador { get; set; }
+        [Required]
+        public string Ram { get; set; }
 
         public override bool Equals(object? obj)
         {

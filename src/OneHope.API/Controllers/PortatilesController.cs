@@ -35,7 +35,7 @@ namespace OneHope.API.Controllers
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
                 .OrderBy(portatil => portatil.StockAlquilar)
-                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Modelo, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.StockAlquilar, portatil.PrecioAlquiler))
+                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Modelo, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.Ram.Capacidad, portatil.StockAlquilar, portatil.PrecioAlquiler))
                 .ToListAsync();
 
             return Ok(portatiles);
