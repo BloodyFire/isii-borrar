@@ -8,11 +8,11 @@ using OneHope.API.Controllers;
 using OneHope.API.Models;
 using OneHope.Shared.PortatilDTOs;
 
-namespace OneHope.UT
+namespace OneHope.UT.PortatilController_test
 {
-    public class PortatilesController_test : OneHope4SqliteUT
+    public class GetPortatilesParaComprar_test : OneHope4SqliteUT
     {
-        public PortatilesController_test()
+        public GetPortatilesParaComprar_test()
         {
             var rams = new List<Ram>()
             {
@@ -95,7 +95,7 @@ namespace OneHope.UT
         [Theory]
         [MemberData(nameof(TestCasesFor_GetPortatilesParaComprar))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaComprar_test(string? filtrarNombre, string? filtrarMarca, string? filtrarModelo,
+        public async Task GetPortatilesParaComprar_testcase(string? filtrarNombre, string? filtrarMarca, string? filtrarModelo,
             string? filtrarRam, string? filtrarProcesador, double? filtrarPrecio,
             IList<PortatilParaComprarDTO> expectedPortatiles)
         {
