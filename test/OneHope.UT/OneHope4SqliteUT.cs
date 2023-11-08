@@ -11,7 +11,7 @@ using OneHope.API.Models;
 
 namespace OneHope.UT
 {
-    public class AppForMovies4SqliteUT
+    public class OneHope4SqliteUT
     {
         protected readonly DbConnection _connection;
         protected readonly ApplicationDBContext _context;
@@ -24,7 +24,7 @@ namespace OneHope.UT
         //}
 
         void Dispose() => _connection.Dispose();
-        public AppForMovies4SqliteUT()
+        public OneHope4SqliteUT()
         {
             // Create and open a connection. This creates the SQLite in-memory database, which will persist until the connection is closed
             // at the end of the test (see Dispose below).
