@@ -41,8 +41,8 @@ namespace OneHope.API.Controllers
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaComprarDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IList<PortatilParaComprarDTO>>> GetPortatilesParaComprar(string? nombrePortatil,
-            string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil)
+        public async Task<ActionResult> GetPortatilesParaComprar(string? nombrePortatil,
+            string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil)
         {
             IList<PortatilParaComprarDTO> selectPortatiles= await _context.Portatiles
                 .Include(p => p.Marca)
@@ -52,6 +52,7 @@ namespace OneHope.API.Controllers
                 .ThenInclude(po => po.Compra)
                 .Where(portatil => portatil.Stock>0 
                 && (nombrePortatil == null || portatil.Nombre.Contains(nombrePortatil))
+                && (modeloPortatil == null || portatil.Modelo.Contains(modeloPortatil))
                 && (marcaPortatil == null || portatil.Marca.NombreMarca.Equals(marcaPortatil))
                 && (procesadorPortatil == null || portatil.Procesador.ModeloProcesador.Equals(procesadorPortatil))
                 && (ramPortatil == null || portatil.Ram.Capacidad.Equals(ramPortatil))
