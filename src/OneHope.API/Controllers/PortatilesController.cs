@@ -25,19 +25,17 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaAlquilerDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam, int? filtroCantidadMinima, int? filtroCantidadMaxima)
+        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam)
         {
             var portatiles = await _context.Portatiles
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
-                                    (filtroProcesador == null || portatil.Modelo.Contains(filtroProcesador)) &&
-                                    (filtroRam == null || portatil.Modelo.Contains(filtroRam)) &&
-                                    (filtroCantidadMinima == null || portatil.StockAlquilar >= filtroCantidadMinima) &&
-                                    (filtroCantidadMaxima == null || portatil.StockAlquilar <= filtroCantidadMaxima) 
+                                    (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
+                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam))
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
                 .OrderBy(portatil => portatil.StockAlquilar)
-                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Nombre, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.StockAlquilar, portatil.PrecioAlquiler))
+                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Modelo, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.StockAlquilar, portatil.PrecioAlquiler))
                 .ToListAsync();
 
             return Ok(portatiles);
