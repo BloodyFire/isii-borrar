@@ -28,6 +28,9 @@ namespace OneHope.API.Models
 
         public int IdCompra { get; set; }
 
+        [Key]
+        public int IdLinea {  get; set; }
+
         [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
         public int Cantidad {  get; set; }
 
