@@ -77,11 +77,11 @@ namespace OneHope.Shared.AlquilerDTOs
 
         [Display(Name = "Precio total de alquiler")]
         [JsonPropertyName("Total")]
-        public double Total
+        public float Total
         {
             get
             {
-                return LineasAlquiler.Sum(pi => pi.Cantidad * pi.PrecioAlquiler * NumeroDias);
+                return (float)LineasAlquiler.Sum(pi => pi.Cantidad * pi.PrecioAlquiler * NumeroDias);
             }
         }
 
