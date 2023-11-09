@@ -81,7 +81,7 @@ namespace OneHope.Shared.AlquilerDTOs
         {
             get
             {
-                return LineasAlquiler.Sum(pi => pi.PrecioAlquiler * NumeroDias);
+                return LineasAlquiler.Sum(pi => pi.Cantidad * pi.PrecioAlquiler * NumeroDias);
             }
         }
 
