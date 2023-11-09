@@ -36,7 +36,7 @@
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Pedido(int id, double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
+        public Pedido(int id, double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios = "")
         {
             Id = id;
             Total = total;
@@ -48,7 +48,7 @@
             Comentarios = comentarios;
         }
 
-        public Pedido( double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
+        public Pedido( double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios = "")
         {
             Total = total;
             FechaPedido = fechaPedido;
