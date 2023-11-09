@@ -12,7 +12,7 @@ namespace OneHope.Shared.PedidoDTOs
     {
         public DetallePedidoDTO() { }
 
-        public DetallePedidoDTO(int id, string direccion, IList<LineaPedidoDTO> lineasPedido, string codigoEmpleado, TipoMetodoPago tipoMetodoPago, DateTime fechaPedido, string comentarios) :
+        public DetallePedidoDTO(int id, string direccion, IList<LineaPedidoDTO> lineasPedido, string codigoEmpleado, TipoMetodoPago tipoMetodoPago, DateTime fechaPedido, string comentarios = "") :
             base(direccion, lineasPedido, codigoEmpleado, tipoMetodoPago, comentarios)
         {
             Id = id;

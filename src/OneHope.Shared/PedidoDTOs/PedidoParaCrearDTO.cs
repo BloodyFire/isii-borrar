@@ -15,7 +15,7 @@ namespace OneHope.Shared.PedidoDTOs
             LineasPedido = new List<LineaPedidoDTO>();
         }
 
-        public PedidoParaCrearDTO(string direccion, IList<LineaPedidoDTO> lineasPedido, string codigoEmpleado, TipoMetodoPago tipoMetodoPago, string? comentarios)
+        public PedidoParaCrearDTO(string direccion, IList<LineaPedidoDTO> lineasPedido, string codigoEmpleado, TipoMetodoPago tipoMetodoPago, string comentarios = "")
         {
             Direccion = direccion ?? throw new ArgumentNullException(nameof(direccion));
             LineasPedido = lineasPedido ?? throw new ArgumentNullException(nameof(lineasPedido));
