@@ -18,7 +18,6 @@
                 new Proveedor(1, "Proveedores S.L.", "44444444A", "Calle providia numero 75", "proveemos@proveedores.com", "600000000"),
                 new Proveedor(2, "Portatiles Mayorista", "12345678T", "Poligono del unicornio, avenida de la purpurina numero 7. Narnia 02000", "pormay@yahoorespuestas.com", "999555666")
             };
-            //TODO: Remove some Portatiles and keep just the needed ones for the test.
             var portatiles = new List<Portatil>()
             {
                 new Portatil(id: 1, modelo: "HP-1151", procesador: procesadores[0], ram: rams[0], marca: marcas[0], nombre: "HP 486 del pleistoceno", precioCompra: 199.95, precioAlquiler: 6.66, precioCoste: 50.00, stock: 0, stockAlquilar: 5, proveedor: proveedores[0]),
@@ -51,7 +50,7 @@
                 new Proveedor(1, "Proveedores S.L.", "44444444A", "Calle providia numero 75", "proveemos@proveedores.com", "600000000"),
                 new Proveedor(2, "Portatiles Mayorista", "12345678T", "Poligono del unicornio, avenida de la purpurina numero 7. Narnia 02000", "pormay@yahoorespuestas.com", "999555666")
             };
-            //TODO: Remove some Portatiles and keep just the needed ones for the test.
+
             var expectedPortatiles = new List<Portatil>()
             {
                 new Portatil(id: 1, modelo: "HP-1151", procesador: procesadores[0], ram: rams[0], marca: marcas[0], nombre: "HP 486 del pleistoceno", precioCompra: 199.95, precioAlquiler: 6.66, precioCoste: 50.00, stock: 0, stockAlquilar: 5, proveedor: proveedores[0]),
@@ -61,10 +60,10 @@
             }
             .OrderBy(p => p.Stock).Select(p => new PortatilParaPedidoDTO(p.Id, p.Modelo, p.Marca.NombreMarca, p.Stock, p.PrecioCoste, p.Proveedor.Nombre)).ToList();
 
+            var mock = new Mock<ILogger<PortatilesController>>();
+            ILogger<PortatilesController> logger = mock.Object;
 
-            //ILogger<PortatilesController> logger = mock.Object;
-
-            PortatilesController portatilesController = new PortatilesController(_context, null);
+            PortatilesController portatilesController = new PortatilesController(_context, logger);
             var result = await portatilesController.GetPortatilesParaPedido(null,null,null,null,null);
 
             //Assert
@@ -138,8 +137,8 @@
 
             // Act
             var result = await controller.GetPortatilesParaPedido(null, null, 5, 1, null);
+
             //Assert
-            //we check that the response type is OK and obtain the list of movies
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
             var problemDetails = Assert.IsType<ValidationProblemDetails>(badRequestResult.Value);
             var problem = problemDetails.Errors.First().Value[0];
