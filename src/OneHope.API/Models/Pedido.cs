@@ -16,7 +16,7 @@
 
         [Required]
         [Display(Name = "Código de empleado")]
-        public string CódigoEmpleado { get; set; }
+        public string CodigoEmpleado { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, indica la dirección del almacén de entrega.")]
         [DataType(DataType.MultilineText), Display(Name = "Dirección")]
@@ -36,12 +36,23 @@
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Pedido(int id, double total, DateTime fechaPedido, string códigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
+        public Pedido(int id, double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
         {
             Id = id;
             Total = total;
             FechaPedido = fechaPedido;
-            CódigoEmpleado = códigoEmpleado;
+            CodigoEmpleado = codigoEmpleado;
+            Direccion = direccion;
+            LineasPedido = lineasPedido;
+            TipoMetodoPago = tipoMetodoPago;
+            Comentarios = comentarios;
+        }
+
+        public Pedido( double total, DateTime fechaPedido, string codigoEmpleado, string direccion, IList<LineaPedido> lineasPedido, TipoMetodoPago tipoMetodoPago, string comentarios)
+        {
+            Total = total;
+            FechaPedido = fechaPedido;
+            CodigoEmpleado = codigoEmpleado;
             Direccion = direccion;
             LineasPedido = lineasPedido;
             TipoMetodoPago = tipoMetodoPago;
@@ -54,7 +65,7 @@
                    Id == pedido.Id &&
                    Total == pedido.Total &&
                    FechaPedido == pedido.FechaPedido &&
-                   CódigoEmpleado == pedido.CódigoEmpleado &&
+                   CodigoEmpleado == pedido.CodigoEmpleado &&
                    Direccion == pedido.Direccion &&
                    EqualityComparer<IList<LineaPedido>>.Default.Equals(LineasPedido, pedido.LineasPedido) &&
                    TipoMetodoPago == pedido.TipoMetodoPago;
@@ -62,14 +73,9 @@
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, Total, FechaPedido, CódigoEmpleado, Direccion, LineasPedido, TipoMetodoPago);
+            return HashCode.Combine(Id, Total, FechaPedido, CodigoEmpleado, Direccion, LineasPedido, TipoMetodoPago);
         }
     }
-    /*public enum TipoMetodoPago
-    {
-        TarjetaCredito,
-        PayPal,
-        Transferencia
-    }*/
+
 }
 
