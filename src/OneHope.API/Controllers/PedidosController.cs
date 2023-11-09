@@ -99,9 +99,9 @@ namespace OneHope.API.Controllers
                         .ThenInclude(portatil => portatil.Marca)
              .Select(pedido => new DetallePedidoDTO(pedido.Id, pedido.Direccion,
                     pedido.LineasPedido
-                        .Select(pi => new LineaPedidoDTO(pi.Portatil.Id,
-                                pi.Portatil.Modelo,pi.PrecioUnitario,
-                                pi.Cantidad)).ToList<LineaPedidoDTO>(),
+                        .Select(lp => new LineaPedidoDTO(lp.Portatil.Id,
+                                lp.Portatil.Modelo,lp.PrecioUnitario,
+                                lp.Cantidad)).ToList(),
                     pedido.CodigoEmpleado,
                     pedido.TipoMetodoPago, pedido.FechaPedido, pedido.Comentarios))
              .FirstOrDefaultAsync();
