@@ -34,5 +34,95 @@
             _context.SaveChanges(); //maybe async?
         }
 
+        public static IEnumerable<object[]> TestCasesFor_SuccessCreatePedido()
+        {
+            PedidoParaCrearDTO pedidoSinComentarios = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
+                "Daniel.Tomas", TipoMetodoPago.Transferencia);
+            pedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(4, "TOASTER-1421", 325.0, 1));
+
+            PedidoParaCrearDTO pedidoConComentarios = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.",
+                new List<LineaPedidoDTO>(),
+                 "Daniel.Tomas", TipoMetodoPago.Transferencia, "Tengo comentarios al respecto.");
+            pedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(4, "TOASTER-1421", 325.0, 1));
+
+            DetallePedidoDTO expectedPedidoSinComentarios = new DetallePedidoDTO(1, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
+                "Daniel.Tomas", TipoMetodoPago.Transferencia, DateTime.Now);
+            expectedPedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(4, "TOASTER-1421", 325.0, 1));
+
+            DetallePedidoDTO expectedPedidoConComentarios = new DetallePedidoDTO(1, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
+                "Daniel.Tomas", TipoMetodoPago.Transferencia, DateTime.Now, "Tengo comentarios al respecto.");
+            expectedPedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(4, "TOASTER-1421", 325.0, 1));
+
+            var allTests = new List<object[]>
+            {
+                new object[] { pedidoSinComentarios, expectedPedidoSinComentarios },
+                new object[] { pedidoConComentarios, expectedPedidoConComentarios },
+            };
+
+            return allTests;
+        }
+
+        [Theory]
+        [MemberData(nameof(TestCasesFor_SuccessCreatePedido))]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreatePedido_Success_test(PedidoParaCrearDTO pedidoParaCrear, DetallePedidoDTO pedidoExpected)
+        {
+            // Arrange
+            var mock = new Mock<ILogger<PedidosController>>();
+            ILogger<PedidosController> logger = mock.Object;
+
+            var controller = new PedidosController(_context, logger);
+
+            // Act
+            var result = await controller.CreatePedido(pedidoParaCrear);
+
+            // Assert
+            var okResult = Assert.IsType<CreatedAtActionResult>(result);
+            var pedidoActual = Assert.IsType<DetallePedidoDTO>(okResult.Value);
+
+            // Check results
+            Assert.Equal(pedidoExpected, pedidoActual);
+        }
+
+        public static IEnumerable<object[]> TestCasesFor_ErrorCreatePedido()
+        {
+            PedidoParaCrearDTO pedidoSinLineas = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
+                "Daniel.Tomas", TipoMetodoPago.Transferencia);
+
+            PedidoParaCrearDTO pedidoPortatilNoExiste = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.",
+                new List<LineaPedidoDTO>(),
+                 "Daniel.Tomas", TipoMetodoPago.Transferencia);
+            pedidoPortatilNoExiste.LineasPedido.Add(new LineaPedidoDTO(15, "NOEXISTE", 1325.0, 10));
+
+            var allTests = new List<object[]>
+            {
+                new object[] { pedidoSinLineas, "Error: Tienes que incluir al menos un portatil en el pedido.",  },
+                new object[] { pedidoPortatilNoExiste, $"Error: El portatil modelo {pedidoPortatilNoExiste.LineasPedido[0].Modelo} con Id {pedidoPortatilNoExiste.LineasPedido[0].PortatilID} no existe en la base de datos.", },
+            };
+
+            return allTests;
+        }
+
+        [Theory]
+        [Trait("LevelTesting", "Unit Testing")]
+        [MemberData(nameof(TestCasesFor_ErrorCreatePedido))]
+        public async Task CreatePedido_Error_test(PedidoParaCrearDTO? pedidoParaCrear, string errorExpected)
+        {
+            // Arrange
+            var mock = new Mock<ILogger<PedidosController>>();
+            ILogger<PedidosController> logger = mock.Object;
+
+            var controller = new PedidosController(_context, logger);
+
+            // Act
+            var result = await controller.CreatePedido(pedidoParaCrear);
+
+            // Assert
+            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+            var problemDetails = Assert.IsType<ValidationProblemDetails>(badRequestResult.Value);
+
+            // Check error messages
+            Assert.Equal(errorExpected, problemDetails.Errors.First().Value[0]);
+        }
     }
 }
