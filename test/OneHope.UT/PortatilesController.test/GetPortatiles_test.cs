@@ -54,19 +54,6 @@ namespace OneHope.UT.PortatilesController_test
                 new Portatil(4, "DELL-2274", procesadores[0], rams[2], marcas[1],"Portatil ultra fino 0.5cm de grosor. 2Kg", 1799.95, 50, 900,0, 4, proveedores[0]),
             };
 
-            /*var devolucion = new List<Devolucion>()
-            {
-                new Devolucion(1, DateTime.Today, 199.95f, "c/ Arquitecto Valdelvira s/n", "Recogida a partir de las 16h", "La batería dura poco"),
-                new Devolucion(2, new DateTime(2023, 06, 05), 499.95f, "c/ Tinte, nº 2", "El dueño no estará en casa, avisad a la vecina", "Poca memoria ram")
-            };*/
-
-            /*
-            var pagos = new List<TipoMetodoPago>()
-            {
-                TipoMetodoPago.PayPal,
-                TipoMetodoPago.Transferencia
-            };
-            */
 
 
 
