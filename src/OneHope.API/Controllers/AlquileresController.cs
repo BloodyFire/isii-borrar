@@ -62,7 +62,7 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(DetalleAlquilerDTO), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(ValidationProblemDetails), (int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult> CreateRental(AlquilerParaCrearDTO alquilerParaCrear)
+        public async Task<ActionResult> CrearAlquiler(AlquilerParaCrearDTO alquilerParaCrear)
         {
             if (_context.Alquileres == null)
             {
@@ -74,7 +74,7 @@ namespace OneHope.API.Controllers
             if (alquilerParaCrear.FechaInAlquiler <= DateTime.Today)
                 ModelState.AddModelError("FechaInAlquiler", "Error! Tu fecha de inicio de alquiler no puede empezar ni hoy ni antes");
 
-            if (alquilerParaCrear.FechaFinAlquiler >= alquilerParaCrear.FechaInAlquiler)
+            if (alquilerParaCrear.FechaFinAlquiler <= alquilerParaCrear.FechaInAlquiler)
                 ModelState.AddModelError("FechaFinAlquiler&FechaInAlquiler", "Error! Tu fecha de fin de alquiler no puede acabar antes o el mismo dia que tu fecha de inicio");
 
             if (alquilerParaCrear.LineasAlquiler.Count == 0)

@@ -18,7 +18,7 @@ namespace OneHope.Shared.AlquilerDTOs
         [JsonPropertyName("Id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("RentalDate")]
+        [JsonPropertyName("FechaAlquiler")]
         public DateTime FechaAlquiler { get; set; }
 
         public override bool Equals(object? obj)
