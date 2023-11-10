@@ -87,10 +87,9 @@ namespace OneHope.API.Controllers
 
             var portatilIDs = alquilerParaCrear.LineasAlquiler.Select(la => la.PortatilID).ToList<int>();
 
-            var movies = _context.Portatiles.Include(p => p.LineasAlquiler)
+            var portatiles = _context.Portatiles.Include(p => p.LineasAlquiler)
                 .ThenInclude(la => la.Alquiler)
                 .Where(p => portatilIDs.Contains(p.Id))
-
                 //we use an anonymous type https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/anonymous-types
                 .Select(p => new {
                     p.Id,
@@ -102,12 +101,20 @@ namespace OneHope.API.Controllers
                 })
                 .ToList();
 
-
-
-            Alquiler alquiler = new Alquiler(idAlquiler, DateTime.Now, alquilerParaCrear.FechaInAlquiler, alquilerParaCrear.FechaFinAlquiler, 
-                alquilerParaCrear.Total, alquilerParaCrear.NombreCliente, alquilerParaCrear.ApellidosCliente, alquilerParaCrear.DireccionEnvio,
-                alquilerParaCrear.EmailCliente, (int)alquilerParaCrear.TelefonoCliente, (OneHope.API.Models.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
-                new List<LineaAlquiler>());
+            Alquiler alquiler;
+            if (alquilerParaCrear.TelefonoCliente.HasValue)
+            {
+                    alquiler = new Alquiler(idAlquiler, DateTime.Now, alquilerParaCrear.FechaInAlquiler, alquilerParaCrear.FechaFinAlquiler,
+                    alquilerParaCrear.Total, alquilerParaCrear.NombreCliente, alquilerParaCrear.ApellidosCliente, alquilerParaCrear.DireccionEnvio,
+                    alquilerParaCrear.EmailCliente, alquilerParaCrear.TelefonoCliente.Value, (OneHope.API.Models.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
+                    new List<LineaAlquiler>());
+            }
+            else {
+                    alquiler = new Alquiler(idAlquiler, DateTime.Now, alquilerParaCrear.FechaInAlquiler, alquilerParaCrear.FechaFinAlquiler,
+                    alquilerParaCrear.Total, alquilerParaCrear.NombreCliente, alquilerParaCrear.ApellidosCliente, alquilerParaCrear.DireccionEnvio,
+                    alquilerParaCrear.EmailCliente, 0, (OneHope.API.Models.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
+                    new List<LineaAlquiler>());
+            }
 
             idAlquiler++;
 
@@ -118,7 +125,7 @@ namespace OneHope.API.Controllers
                 //Check de que hay disponibles para alquilar
                 if ((portatil == null) || (portatil.StockAlquilar < linea.Cantidad))
                 {
-                    ModelState.AddModelError("RentalItems", $"Error! Portatil con id '{linea.PortatilID}' no puede ser alquilado desde {alquilerParaCrear.FechaInAlquiler.ToShortDateString()} hasta {alquilerParaCrear.FechaFinAlquiler.ToShortDateString()}");
+                    ModelState.AddModelError("LineasAlquiler", $"Error! Portatil con id '{linea.PortatilID}' no puede ser alquilado desde {alquilerParaCrear.FechaInAlquiler.ToShortDateString()} hasta {alquilerParaCrear.FechaFinAlquiler.ToShortDateString()}");
                 }
                 else
                 {
@@ -154,7 +161,7 @@ namespace OneHope.API.Controllers
                 alquiler.FechaInAlquiler, alquiler.FechaFinAlquiler,
                 alquilerParaCrear.LineasAlquiler);
 
-            return CreatedAtAction("GetRental", new { id = alquiler.ID }, detalleAlquiler);
+            return CreatedAtAction("GetAlquiler", new { id = alquiler.ID }, detalleAlquiler);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace OneHope.Design.Models
             LineasAlquiler = new List<LineaAlquiler>();
         }
 
-        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int telefonoCliente, TipoMetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
+        public Alquiler(int iD, DateTime fechaAlquiler, DateTime fechaInAlquiler, DateTime fechaFinAlquiler, float total, string nombreCliente, string apellidosCliente, string direccionEnvio, string emailCliente, int? telefonoCliente, TipoMetodoPago metodoPago, IList<LineaAlquiler> lineasAlquiler)
         {
             ID = iD;
             FechaAlquiler = fechaAlquiler;
