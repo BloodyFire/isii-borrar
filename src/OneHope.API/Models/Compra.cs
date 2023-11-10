@@ -33,6 +33,18 @@ namespace OneHope.API.Models
             LineasCompra = new List<LineaCompra>();
         }
 
+        public Compra(string nombreCliente, string apellidosCliente, string direccion, DateTime fechaCompra,
+            IList<LineaCompra> lineasCompra, TipoMetodoPago metodoPago, double precioTotal)
+        {
+            Total = precioTotal;
+            FechaCompra = fechaCompra;
+            Direccion = direccion;
+            MetodoPago = metodoPago;
+            LineasCompra = lineasCompra;
+            NombreCliente = nombreCliente;
+            Apellidos = apellidosCliente;
+        }
+
         [Key]
         public int Id {  get; set; }
 
