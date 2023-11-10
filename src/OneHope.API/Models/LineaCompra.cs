@@ -15,6 +15,13 @@ namespace OneHope.API.Models
             Cantidad = cantidad;
             PrecioUnitario = precioUnitario;
         }
+
+        public LineaCompra(Portatil portatil, int cantidad, Compra compra)
+        {
+            Portatil = portatil;
+            Cantidad = cantidad;
+            Compra = compra;
+        }
         
         [Required]
         [ForeignKey("IdPortatil")]
@@ -32,8 +39,10 @@ namespace OneHope.API.Models
         public int IdLinea {  get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
+        [Required]
         public int Cantidad {  get; set; }
 
+        [Required]
         public double PrecioUnitario {  get; set; }
 
         public LineaDevolucion? LineaDevolucion { get; set; }
