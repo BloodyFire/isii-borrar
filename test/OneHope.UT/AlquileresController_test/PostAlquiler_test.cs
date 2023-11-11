@@ -36,19 +36,11 @@ namespace OneHope.UT.AlquileresController_test
                 new Portatil(4, "LAPTOP-2.0", procesadores[0], rams[0], marcas[1], "Portatil supremo.", 1299.95, 43.33, 325.00, 15, 6, proveedores[1])
             };
 
-            var alquiler = new Alquiler(1, DateTime.Now, DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),
-                (float)portatiles[0].PrecioAlquiler * 3, "Juanito", "Golosinas",
-                "Avda. España s/n, Albacete 02071", "juanito@uclm.es", 0,
-                   OneHope.API.Models.TipoMetodoPago.TarjetaCredito,
-                    new List<LineaAlquiler>());
-            alquiler.LineasAlquiler.Add(new LineaAlquiler(1, 2, portatiles[0], alquiler));
-
             _context.AddRange(procesadores);
             _context.AddRange(rams);
             _context.AddRange(marcas);
             _context.AddRange(proveedores);
             _context.AddRange(portatiles);
-            _context.Add(alquiler);
             _context.SaveChanges();
         }
 
@@ -123,7 +115,7 @@ namespace OneHope.UT.AlquileresController_test
                 "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", 0,
                 new List<LineaAlquilerDTO>() { new LineaAlquilerDTO(1, 6.66, 2) }, Shared.TipoMetodoPago.TarjetaCredito);
 
-            var expectedAlquiler = new DetalleAlquilerDTO(id: 2, fechaAlquiler: DateTime.Now, emailCliente: "juanito@uclm.es",
+            var expectedAlquiler = new DetalleAlquilerDTO(id: 1, fechaAlquiler: DateTime.Now, emailCliente: "juanito@uclm.es",
                 nombreCliente: "Juanito", apellidosCliente: "Golosinas",
                         direccionEnvio: "Avda. España s/n, Albacete 02071", telefonoCliente: 0, tipoMetodoPago: Shared.TipoMetodoPago.TarjetaCredito,
                         fechaInAlquiler: DateTime.Today.AddDays(2), fechaFinAlquiler: DateTime.Today.AddDays(5),
