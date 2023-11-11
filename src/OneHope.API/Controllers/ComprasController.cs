@@ -55,7 +55,7 @@ namespace OneHope.API.Controllers
             var compraDto = await _context.Compras
                 .Where(compra => compra.Id == id)
                     .Include(compra => compra.LineasCompra)
-                        .ThenInclude(compraPortatil => compraPortatil.Portatil)
+                        .ThenInclude(lineaCompra => lineaCompra.Portatil)
                             .ThenInclude(portatil => portatil.Ram)
                     .Include(compra => compra.LineasCompra)
                         .ThenInclude(portatil => portatil.Portatil)
@@ -65,7 +65,7 @@ namespace OneHope.API.Controllers
                             .ThenInclude(portatil => portatil.Marca)
                 .Select(compra => new DetallesCompraDTO(compra.Id, compra.NombreCliente, compra.Apellidos, compra.Direccion,
                 compra.LineasCompra
-                            .Select(pi => new LineaCompraDTO(pi.Portatil.Id, pi.Portatil.Nombre, pi.PrecioUnitario,
+                            .Select(pi => new LineaCompraDTO(pi.Portatil.Id, pi.Portatil.Nombre, pi.Portatil.PrecioCompra,
                                     pi.Portatil.Marca.NombreMarca, pi.Portatil.Procesador.ModeloProcesador, pi.Portatil.Ram.Capacidad, pi.Cantidad))
                                     .ToList<LineaCompraDTO>(),
                        (OneHope.Shared.TipoMetodoPago)compra.MetodoPago, compra.FechaCompra))
@@ -98,7 +98,7 @@ namespace OneHope.API.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState));
             }
 
-            Compra compra = new Compra(compraPorCrear.NombreUsuario, compraPorCrear.ApellidosUsuario, compraPorCrear.Direccion, DateTime.Now,
+            Compra compra = new Compra(compraPorCrear.NombreUsuario, compraPorCrear.ApellidosUsuario, compraPorCrear.Direccion, DateTime.Today,
                 new List<LineaCompra>(), (Models.TipoMetodoPago)compraPorCrear.MetodoPago, compraPorCrear.PrecioTotal);
 
             Portatil portatil;
@@ -138,6 +138,11 @@ namespace OneHope.API.Controllers
 
             return CreatedAtAction("GetCompra", new { id = compra.Id }, detalleCompra);
 
+        }
+        
+        private bool PurchaseExists(int id)
+        {
+            return (_context.Compras?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
