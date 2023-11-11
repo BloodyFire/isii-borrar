@@ -36,15 +36,16 @@ namespace OneHope.API.Controllers
 
             var alquilerDTO = await _context.Alquileres
              .Where(alquiler => alquiler.ID == id)
-                 .Include(alquiler => alquiler.LineasAlquiler) //join table RentalItems
-                    .ThenInclude(ai => ai.Portatil) //then join table Movies
-                        .ThenInclude(movie => movie.Marca) //then join table Genre
-             .Select(alquiler => new DetalleAlquilerDTO(alquiler.ID, alquiler.FechaAlquiler, alquiler.EmailCliente, alquiler.NombreCliente,
+                 .Include(alquiler => alquiler.LineasAlquiler) //join table LineasAlquiler
+                    .ThenInclude(ai => ai.Portatil) //then join table Portatiles
+                        .ThenInclude(portatil => portatil.Marca) //then join table Marcas
+             .Select(alquiler => new DetalleAlquilerDTO(alquiler.ID, alquiler.FechaAlquiler, 
+                    alquiler.FechaInAlquiler, alquiler.FechaFinAlquiler,
+                    alquiler.EmailCliente, alquiler.NombreCliente,
                     alquiler.ApellidosCliente, alquiler.DireccionEnvio, alquiler.TelefonoCliente,
                     (Shared.TipoMetodoPago)alquiler.MetodoPago,
-                    alquiler.FechaInAlquiler, alquiler.FechaFinAlquiler,
                     alquiler.LineasAlquiler
-                        .Select(la => new LineaAlquilerDTO(la.ID,la.Portatil.Id,
+                        .Select(la => new LineaAlquilerDTO(la.Portatil.Id,
                                 la.Portatil.PrecioAlquiler, la.Cantidad)).ToList<LineaAlquilerDTO>()))
              .FirstOrDefaultAsync();
 
@@ -70,7 +71,7 @@ namespace OneHope.API.Controllers
                 return Problem("Entity set 'ApplicationDBContext.Purchases'  is null.");
             }
 
-            //any validation defined in PurchaseForCreate is checked before running the method so they don't have to be checked again
+            //validamos que AlquilerParaCrear este bien definido y ya no debemos comprobarlo despues
             if (alquilerParaCrear.FechaInAlquiler <= DateTime.Today)
                 ModelState.AddModelError("FechaInAlquiler", "Error! Tu fecha de inicio de alquiler no puede empezar ni hoy ni antes");
 
@@ -80,10 +81,8 @@ namespace OneHope.API.Controllers
             if (alquilerParaCrear.LineasAlquiler.Count == 0)
                 ModelState.AddModelError("LineasAlquiler", "Error! Debes alquilar al menos un portatil");
 
-
             if (ModelState.ErrorCount > 0)
                 return BadRequest(new ValidationProblemDetails(ModelState));
-
 
             var portatilIDs = alquilerParaCrear.LineasAlquiler.Select(la => la.PortatilID).ToList<int>();
 
@@ -97,9 +96,23 @@ namespace OneHope.API.Controllers
                     p.StockAlquilar,
                     //Elegimos los portatiles disponibles para alquilar
                     NumeroDePortatilesAlquilados = p.LineasAlquiler.Count(la => la.Alquiler.FechaInAlquiler <= alquilerParaCrear.FechaFinAlquiler
-                            && la.Alquiler.FechaFinAlquiler >= alquilerParaCrear.FechaInAlquiler)
+                            && la.Alquiler.FechaFinAlquiler >= alquilerParaCrear.FechaInAlquiler),
+                    p.PrecioAlquiler
                 })
                 .ToList();
+
+            /*foreach(LineaAlquilerDTO lineaAlquiler in alquilerParaCrear.LineasAlquiler)
+            {
+                var precio = 0;
+
+                //System.Collections.Generic.List <<> f__AnonymousType0<int, string, int, int, double> >
+                foreach(var portatil in portatiles)
+                {
+                    if (portatil.Id == lineaAlquiler.PortatilID) precio = portatil.PrecioAlquiler;
+                }
+
+                lineaAlquiler.PrecioAlquiler = precio;
+            }*/
 
             Alquiler alquiler;
             if (alquilerParaCrear.TelefonoCliente.HasValue)
@@ -129,13 +142,13 @@ namespace OneHope.API.Controllers
                 }
                 else
                 {
-                    // rental does not exist in the database yet and does not have a valid Id, so we must relate rentalitem to the object rental
+                    // Alquiler no existe, debemos crearlo con un id valido igual que la linea de pedido
                     alquiler.LineasAlquiler.Add(new LineaAlquiler(idLinea, linea.Cantidad, portatil, alquiler));
                     idLinea++;
                 }
             }
 
-            //if there is any problem because of the available quantity of movies or because the movie does not exist
+            //if there is any problem because of the available quantity of portatiles or because the portatil does not exist
             if (ModelState.ErrorCount > 0)
             {
                 return BadRequest(new ValidationProblemDetails(ModelState));
@@ -156,9 +169,9 @@ namespace OneHope.API.Controllers
 
             //it returns rentalDetail
             var detalleAlquiler = new DetalleAlquilerDTO(alquiler.ID, alquiler.FechaAlquiler,
+                alquiler.FechaInAlquiler, alquiler.FechaFinAlquiler,
                 alquiler.EmailCliente, alquiler.NombreCliente, alquiler.ApellidosCliente,
                 alquiler.DireccionEnvio, alquiler.TelefonoCliente, alquilerParaCrear.TipoMetodoPago,
-                alquiler.FechaInAlquiler, alquiler.FechaFinAlquiler,
                 alquilerParaCrear.LineasAlquiler);
 
             return CreatedAtAction("GetAlquiler", new { id = alquiler.ID }, detalleAlquiler);
