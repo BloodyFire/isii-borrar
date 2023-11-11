@@ -70,7 +70,7 @@ namespace OneHope.UT.AlquileresController_test
 
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetAlqiler_Found_test()
+        public async Task GetAlquiler_Found_test()
         {
             // Arrange
             var mock = new Mock<ILogger<AlquileresController>>();
