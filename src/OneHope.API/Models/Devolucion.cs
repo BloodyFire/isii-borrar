@@ -13,6 +13,17 @@
             DireccionRecogida = direccionRecogida;
             NotaRepartidor = notaRepartidor;
             MotivoDevolucion = motivoDevolucion;
+            LineaDevolucion = new List<LineaDevolucion>();
+
+        }
+        public Devolucion( DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string notaRepartidor, string motivoDevolucion)
+        {
+            Fecha = fecha;
+            CuantiaDevolucion = cuantiaDevolucion;
+            DireccionRecogida = direccionRecogida;
+            NotaRepartidor = notaRepartidor;
+            MotivoDevolucion = motivoDevolucion;
+            LineaDevolucion = new List<LineaDevolucion>();
         }
 
         [Key]
@@ -30,8 +41,8 @@
 
         public string NotaRepartidor { get; set; }
 
-        [Required, StringLength(100, ErrorMessage = "El motivo no puede exceder los 100 caracteres.")]
-        [RegularExpression(@"[a-zA-Z]*$")]
+        [Required]
+        [StringLength(100, ErrorMessage = "El motivo de la devolución no puede exceder los 100 caracteres.")]
         public string MotivoDevolucion { get; set; }
 
         public IList<LineaDevolucion> LineaDevolucion
