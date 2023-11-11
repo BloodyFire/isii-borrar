@@ -11,16 +11,12 @@ namespace OneHope.Shared.AlquilerDTOs
 {
     public class LineaAlquilerDTO
     {
-        public LineaAlquilerDTO(int id, int portatilID, double precioAlquiler, int cantidad) 
+        public LineaAlquilerDTO( int portatilID, double precioAlquiler, int cantidad) 
         { 
-            Id = id;
             PortatilID = portatilID;
             PrecioAlquiler = precioAlquiler;
             Cantidad = cantidad;
         }
-
-        [JsonPropertyName("Id")]
-        public int Id { get; set; }
 
         [JsonPropertyName("PortatilID")]
         public int PortatilID { get; set; }
@@ -37,7 +33,6 @@ namespace OneHope.Shared.AlquilerDTOs
         public override bool Equals(object obj)
         {
             return obj is LineaAlquilerDTO model &&
-                Id == model.Id &&
                 PortatilID == model.PortatilID &&
                 PrecioAlquiler == model.PrecioAlquiler &&
                 Cantidad == model.Cantidad;
@@ -45,7 +40,7 @@ namespace OneHope.Shared.AlquilerDTOs
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id, PortatilID, PrecioAlquiler, Cantidad);
+            return HashCode.Combine( PortatilID, PrecioAlquiler, Cantidad);
         }
     }
 }
