@@ -56,8 +56,9 @@ namespace OneHope.API.Controllers
                 }
                 else
                 {
-                    //Actualizamos el precio por el precio real que tenemos en la bbdd.
+                    //Actualizamos el precio y modelo por los de la bbdd para garantizar la integridad de los datos.
                     linea.PrecioUnitario = portatil.PrecioCoste;
+                    linea.Modelo = portatil.Modelo;
                     pedido.LineasPedido.Add(new LineaPedido(portatil, linea.Cantidad, pedido, portatil.PrecioCoste));
                 }
                 /* No es necesario validar el stock. No conocemos el stock de los proveedores.*/
