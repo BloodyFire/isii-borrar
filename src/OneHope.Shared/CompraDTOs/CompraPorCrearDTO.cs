@@ -13,36 +13,36 @@ namespace OneHope.Shared.CompraDTOs
     {
         public CompraPorCrearDTO()
         {
-            compraPortatiles = new List<CompraPortatilDTO>();
+            LineasCompra = new List<LineaCompraDTO>();
         }
 
-        public CompraPorCrearDTO(string direccion, IList<CompraPortatilDTO> compraPortatiles, string nombreUsuario,
+        public CompraPorCrearDTO(string direccion, IList<LineaCompraDTO> lineasCompra, string nombreUsuario,
             string apellidosUsuario,OneHope.Shared.TipoMetodoPago metodoPago)
         {
-            direccion = direccion ?? throw new ArgumentNullException(nameof(direccion));
-            compraPortatiles = compraPortatiles ?? throw new ArgumentException(nameof(compraPortatiles));
-            nombreUsuario = nombreUsuario ?? throw new ArgumentNullException(nameof(nombreUsuario));
-            apellidosUsuario = apellidosUsuario ?? throw new ArgumentException(nameof(apellidosUsuario));
-            metodoPago = metodoPago;
+            Direccion = direccion ?? throw new ArgumentNullException(nameof(direccion));
+            LineasCompra = lineasCompra ?? throw new ArgumentException(nameof(lineasCompra));
+            NombreUsuario = nombreUsuario ?? throw new ArgumentNullException(nameof(nombreUsuario));
+            ApellidosUsuario = apellidosUsuario ?? throw new ArgumentException(nameof(apellidosUsuario));
+            MetodoPago = metodoPago;
         }
 
         [Required(AllowEmptyStrings =false, ErrorMessage ="Por favor, introduzca su dirección de envío.")]
         [StringLength(50, MinimumLength = 10, ErrorMessage ="La dirección de envío tiene que tener al menos 10 caracteres.")]
         [Display(Name ="Dirección De Envío.")]
         [JsonPropertyName("direccionEnvio")]
-        public string direccion { get; set; }
+        public string Direccion { get; set; }
 
         [ValidateComplexType]
         [JsonPropertyName("compraPortatiles")]
-        public IList<CompraPortatilDTO> compraPortatiles { get; set; }
+        public IList<LineaCompraDTO> LineasCompra { get; set; }
 
         [Display(Name ="Precio Total")]
-        [JsonPropertyName("PrecioTotal")]
+        [JsonPropertyName("precioTotal")]
         public double PrecioTotal
         {
             get
             {
-                return compraPortatiles.Sum(p => p.Cantidad * p.precioCompra);
+                return LineasCompra.Sum(pi => pi.Cantidad * pi.PrecioUnitario);
             }
         }
 
@@ -50,27 +50,27 @@ namespace OneHope.Shared.CompraDTOs
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, introduzca su nombre.")]
         [StringLength(50, ErrorMessage = "No puedes tener un nombre que supere los 50 caracteres.")]
         [RegularExpression(@"[a-zA-Z]*$")]
-        public string nombreUsuario { get; set;}
+        public string NombreUsuario { get; set;}
 
         [JsonPropertyName("apellidosUsuario")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, introduzca sus apellidos.")]
         [StringLength(50, ErrorMessage = "No puedes tener apellidos que superen los 50 caracteres.")]
         [RegularExpression(@"[a-zA-Z]*$")]
-        public string apellidosUsuario { get; set;}
+        public string ApellidosUsuario { get; set;}
 
         [Required]
         [JsonPropertyName("metodoDePago")]
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public Design.Models.TipoMetodoPago MetodoPago { get; set;}
+        public TipoMetodoPago MetodoPago { get; set;}
 
         public override bool Equals(object? obj)
         {
             return obj is CompraPorCrearDTO dTO &&
-                   direccion == dTO.direccion &&
-                   EqualityComparer<IList<CompraPortatilDTO>>.Default.Equals(compraPortatiles, dTO.compraPortatiles) &&
+                   Direccion == dTO.Direccion &&
+                   LineasCompra.SequenceEqual(dTO.LineasCompra) &&
                    PrecioTotal == dTO.PrecioTotal &&
-                   nombreUsuario == dTO.nombreUsuario &&
-                   apellidosUsuario == dTO.apellidosUsuario &&
+                   NombreUsuario == dTO.NombreUsuario &&
+                   ApellidosUsuario == dTO.ApellidosUsuario &&
                    MetodoPago == dTO.MetodoPago;
         }
     }
