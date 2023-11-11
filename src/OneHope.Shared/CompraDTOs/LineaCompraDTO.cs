@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace OneHope.Shared.CompraDTOs
 {
-    public class CompraPortatilDTO
+    public class LineaCompraDTO
     {
-        public CompraPortatilDTO(int portatilID, string nombre, double precioCompra,
+        public LineaCompraDTO(int portatilID, string nombre, double precioUnitario,
             string marca, string procesador, string ram, int cantidad)
         {
-            portatilID = portatilID;
-            nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
-            precioCompra = precioCompra;
-            marca = marca ?? throw new ArgumentNullException(nameof (marca));
-            procesador = procesador ?? throw new ArgumentNullException(nameof(procesador));
-            ram = ram ?? throw new ArgumentNullException(nameof(ram));
-            cantidad = cantidad;
+            PortatilID = portatilID;
+            Nombre = nombre ?? throw new ArgumentNullException(nameof(nombre));
+            PrecioUnitario = precioUnitario;
+            Marca = marca ?? throw new ArgumentNullException(nameof (marca));
+            Procesador = procesador ?? throw new ArgumentNullException(nameof(procesador));
+            Ram = ram ?? throw new ArgumentNullException(nameof(ram));
+            Cantidad = cantidad;
         }
 
         [JsonPropertyName("portatilID")]
@@ -29,9 +29,10 @@ namespace OneHope.Shared.CompraDTOs
         [JsonPropertyName("nombre")]
         public string Nombre { get; set;}
 
-        [Display(Name = "Precio de la Compra")]
-        [JsonPropertyName("precioDeLaCompra")]
-        public double precioCompra { get; set; }
+        [Display(Name = "Precio unitario de la Compra")]
+        [JsonPropertyName("precioUnitario")]
+        [Required]
+        public double PrecioUnitario { get; set; }
 
         [JsonPropertyName("ram")]
         public string Ram { get; set; }
@@ -49,10 +50,10 @@ namespace OneHope.Shared.CompraDTOs
 
         public override bool Equals(object? obj)
         {
-            return obj is CompraPortatilDTO dTO &&
+            return obj is LineaCompraDTO dTO &&
                    PortatilID == dTO.PortatilID &&
                    Nombre == dTO.Nombre &&
-                   precioCompra == dTO.precioCompra &&
+                   PrecioUnitario == dTO.PrecioUnitario &&
                    Ram == dTO.Ram &&
                    Procesador == dTO.Procesador &&
                    Marca == dTO.Marca &&
