@@ -24,10 +24,8 @@ namespace OneHope.Shared.AlquilerDTOs
         }
 
         [JsonPropertyName("FechaInAlquiler")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaInAlquiler { get; set; }
         [JsonPropertyName("FechaFinAlquiler")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaFinAlquiler { get; set; }
 
         [JsonPropertyName("EmailCliente")]

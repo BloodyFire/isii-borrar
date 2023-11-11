@@ -21,7 +21,6 @@ namespace OneHope.Shared.AlquilerDTOs
         public int Id { get; set; }
 
         [JsonPropertyName("FechaAlquiler")]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaAlquiler { get; set; }
 
         public override bool Equals(object? obj)
