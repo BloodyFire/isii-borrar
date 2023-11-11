@@ -108,5 +108,39 @@ namespace OneHope.UT.AlquileresController_test
             Assert.StartsWith(errorExpected, errorActual);
 
         }
+
+        [Fact]
+        [Trait("LevelTesting", "Unit Testing")]
+        public async Task CreateRental_Success_test()
+        {
+            // Arrange
+            var mock = new Mock<ILogger<AlquileresController>>();
+            ILogger<AlquileresController> logger = mock.Object;
+
+            var controller = new AlquileresController(_context, logger);
+
+            var alquilerDTO = new AlquilerParaCrearDTO(DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),
+                "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", 0,
+                new List<LineaAlquilerDTO>() { new LineaAlquilerDTO(1, 6.66, 2) }, Shared.TipoMetodoPago.TarjetaCredito);
+
+            var expectedAlquiler = new DetalleAlquilerDTO(id: 2, fechaAlquiler: DateTime.Now, emailCliente: "juanito@uclm.es",
+                nombreCliente: "Juanito", apellidosCliente: "Golosinas",
+                        direccionEnvio: "Avda. España s/n, Albacete 02071", telefonoCliente: 0, tipoMetodoPago: Shared.TipoMetodoPago.TarjetaCredito,
+                        fechaInAlquiler: DateTime.Today.AddDays(2), fechaFinAlquiler: DateTime.Today.AddDays(5),
+                        lineasAlquiler: new List<LineaAlquilerDTO>());
+            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO(1, 6.66, 2));
+
+            // Act
+            var result = await controller.CrearAlquiler(alquilerDTO);
+
+            //Assert
+            //we check that the response type is BadRequest and obtain the error returned
+            var createdResult = Assert.IsType<CreatedAtActionResult>(result);
+            var actualRentalDetailDTO = Assert.IsType<DetalleAlquilerDTO>(createdResult.Value);
+
+            Assert.Equal(expectedAlquiler, actualRentalDetailDTO);
+
+        }
+
     }
 }
