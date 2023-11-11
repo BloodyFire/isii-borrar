@@ -34,7 +34,8 @@ namespace OneHope.UT.AlquileresController_test
             };
 
             var alquiler = new Alquiler(1, DateTime.Now, DateTime.Today.AddDays(2), DateTime.Today.AddDays(5), 
-                (float)portatiles[0].PrecioAlquiler * 3, "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", 0, 
+                (float)portatiles[0].PrecioAlquiler * 3, "Juanito", "Golosinas", 
+                "Avda. España s/n, Albacete 02071", "juanito@uclm.es", 0, 
                    OneHope.API.Models.TipoMetodoPago.TarjetaCredito,
                     new List<LineaAlquiler>());
             alquiler.LineasAlquiler.Add(new LineaAlquiler(1, 2, portatiles[0], alquiler));
@@ -44,13 +45,13 @@ namespace OneHope.UT.AlquileresController_test
             _context.AddRange(marcas);
             _context.AddRange(proveedores);
             _context.AddRange(portatiles);
-            _context.AddRange(portatiles);
+            _context.Add(alquiler);
             _context.SaveChanges();
         }
 
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetRental_NotFound_test()
+        public async Task GetAlquiler_NotFound_test()
         {
             // Arrange
             var mock = new Mock<ILogger<AlquileresController>>();
@@ -69,7 +70,7 @@ namespace OneHope.UT.AlquileresController_test
 
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetRental_Found_test()
+        public async Task GetAlqiler_Found_test()
         {
             // Arrange
             var mock = new Mock<ILogger<AlquileresController>>();
@@ -77,11 +78,12 @@ namespace OneHope.UT.AlquileresController_test
             var controller = new AlquileresController(_context, logger);
 
 
-            var expectedAlquiler = new DetalleAlquilerDTO(1, DateTime.Now, "juanito@uclm.es", "Juanito", "Golosinas",
-                        "Avda. España s/n, Albacete 02071", 0, Shared.TipoMetodoPago.TarjetaCredito,
-                        DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),
-                        new List<LineaAlquilerDTO>());
-            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO(1, 1, 6.66, 3));
+            var expectedAlquiler = new DetalleAlquilerDTO(id: 1, fechaAlquiler: DateTime.Now, emailCliente: "juanito@uclm.es", 
+                nombreCliente: "Juanito", apellidosCliente: "Golosinas",
+                        direccionEnvio: "Avda. España s/n, Albacete 02071", telefonoCliente: 0, tipoMetodoPago: Shared.TipoMetodoPago.TarjetaCredito,
+                        fechaInAlquiler: DateTime.Today.AddDays(2), fechaFinAlquiler: DateTime.Today.AddDays(5),
+                        lineasAlquiler: new List<LineaAlquilerDTO>()); 
+            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO( 1, 6.66, 2));
 
             // Act 
             var result = await controller.GetAlquiler(1);
@@ -89,7 +91,7 @@ namespace OneHope.UT.AlquileresController_test
             //Assert
             //we check that the response type is OK and obtain the rental
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var alquilerDTOActual = Assert.IsType<LineaAlquilerDTO>(okResult.Value);
+            var alquilerDTOActual = Assert.IsType<DetalleAlquilerDTO>(okResult.Value);
 
             //we check that the expected and actual are the same
             Assert.Equal(expectedAlquiler, alquilerDTOActual);
