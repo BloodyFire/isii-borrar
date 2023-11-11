@@ -27,8 +27,8 @@ namespace OneHope.UT.ComprasController_test
 
             var marcas = new List<Marca>()
             {
+                new Marca("Acer"),
                 new Marca("Samsung"),
-                new Marca("HP"),
             };
 
             var portatiles = new List<Portatil>()
@@ -37,10 +37,10 @@ namespace OneHope.UT.ComprasController_test
                 new Portatil(2, "3", procesadores[1], rams[0], marcas[1], "Galaxy", 850.99, 49.99, 499.85, 17, 2, new Proveedor(2, "USA", "46", "C/Patria", "eeuu@", "258")),
             };
 
-            var compra = new Compra(1, 01, DateTime.Today, "C/Expedición", TipoMetodoPago.TarjetaCredito, 248.36, "Jose", "García");
+            var compra = new Compra(1, 1, DateTime.Today, "C/Expedición", TipoMetodoPago.TarjetaCredito, 248.36, "Jose", "García");
 
-            var compraPortatil = new LineaCompra(portatiles[1], compra, 1, portatiles[1].PrecioCompra);
-            compra.LineasCompra.Add(compraPortatil);
+            var lineasCompra = new LineaCompra(portatiles[1], 1, compra);
+            compra.LineasCompra.Add(lineasCompra);
 
             _context.AddRange(rams);
             _context.AddRange(procesadores);
@@ -77,9 +77,9 @@ namespace OneHope.UT.ComprasController_test
             var controller = new ComprasController(_context, logger);
 
             var expectedCompra = new DetallesCompraDTO(1, "Jose", "García", "C/Expedición", new List<LineaCompraDTO>(),
-                Shared.TipoMetodoPago.TarjetaCredito, DateTime.Now);
+                Shared.TipoMetodoPago.TarjetaCredito, DateTime.Today);
 
-            expectedCompra.LineasCompra.Add(new LineaCompraDTO(1, "Aspire", 248.36, "Acer", "Snapdragon 888+", "8Gb", 1));
+            expectedCompra.LineasCompra.Add(new LineaCompraDTO(2, "Galaxy", 850.99, "Samsung", "Intel-Core i7", "12Gb", 1));
 
             //Act
             var result = await controller.GetCompras(1);
@@ -107,8 +107,8 @@ namespace OneHope.UT.ComprasController_test
             var allTests = new List<object[]>
             {
                 new object[] { compraNoCompraPortatiles, "Error! Debes incluir al menos un portátil para comprarlo", },
-                new object[] { compraPortatilNoExiste, $"Error! El portátil con nombre {compraPortatilNoExiste.LineasCompra[0].Nombre} con ID { compraPortatilNoExiste.LineasCompra[0].PortatilID} no existe en la base de datos", },
-                new object[] { compraCantidadDemasiadoAlta, $"Error! El portátil con nombre {compraCantidadDemasiadoAlta.LineasCompra[0].Nombre} solo tiene 5 unidades disponibles, pero has seleccionado {compraCantidadDemasiadoAlta.LineasCompra[0].Cantidad}", },
+                new object[] { compraPortatilNoExiste, $"Error! El portátil con nombre {compraPortatilNoExiste.LineasCompra[0].Nombre} y con ID { compraPortatilNoExiste.LineasCompra[0].PortatilID} no existe en la base de datos.", },
+                new object[] { compraCantidadDemasiadoAlta, $"Error! El portátil con nombre {compraCantidadDemasiadoAlta.LineasCompra[0].Nombre} solo tiene 24 unidades disponibles, pero has seleccionado {compraCantidadDemasiadoAlta.LineasCompra[0].Cantidad} unidades para comprar.", },
             };
 
             return allTests;
@@ -138,7 +138,7 @@ namespace OneHope.UT.ComprasController_test
 
         [Fact]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task CrearCompra_Succes_test()
+        public async Task CrearCompra_Success_test()
         {
             //Arrange
             var mock = new Mock<ILogger<ComprasController>>();
@@ -150,8 +150,10 @@ namespace OneHope.UT.ComprasController_test
             compraPorCrear.LineasCompra.Add(new LineaCompraDTO(1, "Aspire", 248.36, "Acer", "Snapdragon 888+", "8Gb", 1));
 
             //we expected to have a new purchase in the database
-            var expectedDetalleCompraDTO = new DetallesCompraDTO(1, "Jose", "García", "C/Expedición", new List<LineaCompraDTO>(),
-                Shared.TipoMetodoPago.TarjetaCredito, DateTime.Now);
+            var expectedDetalleCompraDTO = new DetallesCompraDTO(2, "Jose", "García", "C/Expedición", new List<LineaCompraDTO>(),
+                Shared.TipoMetodoPago.TarjetaCredito, DateTime.Today);
+
+            expectedDetalleCompraDTO.LineasCompra.Add(new LineaCompraDTO(1, "Aspire", 248.36, "Acer", "Snapdragon 888+", "8Gb", 1));
 
             var controller = new ComprasController(_context, logger);
 
