@@ -101,18 +101,15 @@ namespace OneHope.API.Controllers
                 })
                 .ToList();
 
-            /*foreach(LineaAlquilerDTO lineaAlquiler in alquilerParaCrear.LineasAlquiler)
+            foreach(LineaAlquilerDTO lineaAlquiler in alquilerParaCrear.LineasAlquiler)
             {
-                var precio = 0;
+                var portatilCambio = portatiles.FirstOrDefault(p => p.Id == lineaAlquiler.PortatilID);
 
-                //System.Collections.Generic.List <<> f__AnonymousType0<int, string, int, int, double> >
-                foreach(var portatil in portatiles)
+                if (portatilCambio != null)
                 {
-                    if (portatil.Id == lineaAlquiler.PortatilID) precio = portatil.PrecioAlquiler;
+                    lineaAlquiler.PrecioAlquiler = portatilCambio.PrecioAlquiler;
                 }
-
-                lineaAlquiler.PrecioAlquiler = precio;
-            }*/
+            }
 
             Alquiler alquiler;
             if (alquilerParaCrear.TelefonoCliente.HasValue)
