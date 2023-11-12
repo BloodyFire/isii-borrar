@@ -25,32 +25,13 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(DetallesCompraDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> GetCompras(int id)
+        public async Task<ActionResult> GetCompra(int id)
         {
             if (_context.Compras == null)
             {
                 _logger.LogError("Error: la tabla de compras no existe");
                 return NotFound();
             }
-            /*
-            var query = await _context.Compras
-                .Where(compra => compra.Id == id)
-                    .Include(compra => compra.LineasCompra)
-                        .ThenInclude(compraPortatil => compraPortatil.Portatil)
-                            .ThenInclude(portatil => portatil.Ram)
-                    /*.Include(compra => compra.LineasCompra)
-                        .ThenInclude(portatil => portatil.Portatil)
-                            .ThenInclude(portatil => portatil.Procesador)
-                    .Include(compra => compra.LineasCompra)
-                        .ThenInclude(portatil => portatil.Portatil)
-                            .ThenInclude(portatil => portatil.Marca)
-                .Select(compra => new DetallesCompraDTO(compra.Id, compra.NombreCliente, compra.Apellidos, compra.Direccion,
-                compra.LineasCompra
-                            .Select(pi => new CompraPortatilDTO(pi.Portatil.Id, pi.Portatil.Nombre, pi.PrecioUnitario,
-                                    "marc", "proc", pi.Portatil.Ram.Capacidad, pi.Cantidad))
-                                    .ToList<CompraPortatilDTO>(),
-                       (OneHope.Shared.TipoMetodoPago)compra.MetodoPago, compra.FechaCompra)).FirstOrDefaultAsync();
-            */
 
             var compraDto = await _context.Compras
                 .Where(compra => compra.Id == id)
@@ -96,6 +77,33 @@ namespace OneHope.API.Controllers
             {
                 ModelState.AddModelError("LineasCompra", "Error! Debes incluir al menos un portátil para comprarlo");
                 return BadRequest(new ValidationProblemDetails(ModelState));
+            }
+
+            var portatilID = compraPorCrear.LineasCompra.Select(lc => lc.PortatilID).ToList<int>();
+
+            var portatiles = _context.Portatiles.Include(p => p.LineasCompra)
+                .ThenInclude(lc => lc.Compra)
+                .Where(p => portatilID.Contains(p.Id))
+                .Select(p => new
+                {
+                    p.Id,
+                    p.Modelo,
+                    p.Marca,
+                    p.Procesador,
+                    p.Stock,
+                    NumeroDePortatilesComprados = p.LineasCompra.Count(),
+                    p.PrecioCompra
+                })
+                .ToList();
+
+            foreach(LineaCompraDTO lineaCompra in compraPorCrear.LineasCompra)
+            {
+                var portatilCambio = portatiles.FirstOrDefault(p => p.Id == lineaCompra.PortatilID);
+
+                if (portatilCambio != null)
+                {
+                    lineaCompra.PrecioUnitario = portatilCambio.PrecioCompra;
+                }
             }
 
             Compra compra = new Compra(compraPorCrear.NombreUsuario, compraPorCrear.ApellidosUsuario, compraPorCrear.Direccion, DateTime.Today,
