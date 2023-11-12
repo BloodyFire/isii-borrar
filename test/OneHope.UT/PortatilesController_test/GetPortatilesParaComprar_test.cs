@@ -8,7 +8,7 @@ using OneHope.API.Controllers;
 using OneHope.API.Models;
 using OneHope.Shared.PortatilDTOs;
 
-namespace OneHope.UT.PortatilController_test
+namespace OneHope.UT.PortatilesController_test
 {
     public class GetPortatilesParaComprar_test : OneHope4SqliteUT
     {
