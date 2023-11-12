@@ -39,6 +39,7 @@ namespace OneHope.API.Models
         public DbSet<Compra> Compras { get; set; }
         public DbSet<Devolucion> Devoluciones { get; set; }
         public DbSet<Alquiler> Alquileres { get; set; }
+        public DbSet<LineaCompra> LineaCompra { get; set; }
 
     }
 

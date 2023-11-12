@@ -9,6 +9,25 @@ namespace OneHope.API.Models
 
         public LineaDevolucion() { }
 
+        public LineaDevolucion( int cantidad, LineaCompra lineaCompra, Devolucion devolucion)
+        {
+            Cantidad = cantidad;
+            LineaCompra = lineaCompra;
+            LineaCompraId = lineaCompra.IdLinea;
+            Devolucion = devolucion;
+            IdDevolucion = devolucion.IdDevolucion;
+        }
+
+        public LineaDevolucion(int idLinea, int cantidad, LineaCompra lineaCompra, Devolucion devolucion)
+        {
+            IdLinea = idLinea;
+            Cantidad = cantidad;
+            LineaCompra = lineaCompra;
+            LineaCompraId = lineaCompra.IdLinea;
+            Devolucion = devolucion;
+            IdDevolucion = devolucion.IdDevolucion;
+        }
+
         [Key]
         public int IdLinea { get; set; }
 
@@ -18,13 +37,15 @@ namespace OneHope.API.Models
         public int Cantidad { get; set; }
 
         [Required]
+        [ForeignKey("LineaCompraId")]
         public LineaCompra LineaCompra { get; set; }
 
         public int LineaCompraId { get; set; }
 
 
 
-        
+        [Required]
+        [ForeignKey("IdDevolucion")]
         public Devolucion Devolucion { get; set; }
 
         public int IdDevolucion { get; set; }

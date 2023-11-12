@@ -16,6 +16,26 @@ namespace OneHope.API.Models
             PrecioUnitario = precioUnitario;
         }
 
+        public LineaCompra(int idLinea, int idPortatil, int idCompra, int cantidad, double precioUnitario)
+        {
+            IdLinea = idLinea;
+            IdPortatil = idPortatil;
+            IdCompra = idCompra;
+            Cantidad = cantidad;
+            PrecioUnitario = precioUnitario;
+        }
+
+        public LineaCompra(int idLinea, Portatil portatil, Compra compra, int cantidad, double precioUnitario)
+        {
+            IdLinea = idLinea;
+            Portatil = portatil;
+            IdPortatil = portatil.Id;
+            Compra = compra;
+            IdCompra = compra.Id;
+            Cantidad = cantidad;
+            PrecioUnitario = precioUnitario;
+        }
+
         public LineaCompra(Portatil portatil, int cantidad, Compra compra)
         {
             Portatil = portatil;
@@ -39,13 +59,12 @@ namespace OneHope.API.Models
         public int IdLinea {  get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
-        [Required]
         public int Cantidad {  get; set; }
 
-        [Required]
         public double PrecioUnitario {  get; set; }
 
-        public LineaDevolucion? LineaDevolucion { get; set; }
+
+        public IList<LineaDevolucion>? LineaDevolucion { get; set; }
 
         public override bool Equals(object? obj)
         {
@@ -54,6 +73,7 @@ namespace OneHope.API.Models
                    IdPortatil == compra.IdPortatil &&
                    EqualityComparer<Compra>.Default.Equals(Compra, compra.Compra) &&
                    IdCompra == compra.IdCompra &&
+                   IdLinea == compra.IdLinea &&
                    Cantidad == compra.Cantidad &&
                    PrecioUnitario == compra.PrecioUnitario &&
                    EqualityComparer<LineaDevolucion?>.Default.Equals(LineaDevolucion, compra.LineaDevolucion);

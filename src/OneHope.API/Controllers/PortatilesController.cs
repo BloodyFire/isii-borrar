@@ -2,10 +2,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OneHope.API.Models;
-using System.Net;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using OneHope.Shared.PortatilDTOs;
+using System.Net;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace OneHope.API.Controllers
 {
@@ -54,20 +55,36 @@ namespace OneHope.API.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<string>> GetComputingProcess(bool error)
+        [ProducesResponseType(typeof(IList<PortatilesParaDevolverDTO>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NoContent)]
+        public async Task<ActionResult<IList<PortatilesParaDevolverDTO>>> GetPortatilesParaDevolver(int? idCompra, DateTime? fecha, int CustomerId)
         {
-            if (!error) {
-                string result = "Este es el resultado de un proceso complejo.";
-                return Ok(result);
-            }
-            else
-            {
-                _logger.LogError($"{DateTime.Now} Critical error: proceso demasiado complejo.");
-                return BadRequest();
-            }
+            
+                     
+
+            DateTime defaultDate = DateTime.Now.Date.AddDays(-30);
+           
+
+
+            IList<PortatilesParaDevolverDTO> portatiles = await _context.LineaCompra
+                    .Include(portatil => portatil.Compra)
+                    .Include(compra => compra.Portatil)
+                    .ThenInclude(marca => marca.Marca)
+                    .Where(portatil => (portatil.Compra.CustomerId.Equals(CustomerId)) &&
+                                       (idCompra == null || portatil.IdCompra.Equals(idCompra)) &&
+                                       ((fecha == null || portatil.Compra.FechaCompra.Equals(fecha)) &&
+                                        portatil.Compra.FechaCompra >= defaultDate)
+                                       )
+                    .OrderBy(portatil => portatil.Compra.FechaCompra)
+                    .Select(portatil => new PortatilesParaDevolverDTO(portatil.IdCompra, portatil.Portatil.Marca.NombreMarca, portatil.Cantidad,
+                    portatil.Compra.FechaCompra, portatil.PrecioUnitario)
+                     ).ToListAsync();
+            return Ok(portatiles);
+
         }
 
+
+        
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaComprarDTO>), (int)HttpStatusCode.OK)]
@@ -96,4 +113,7 @@ namespace OneHope.API.Controllers
             return Ok(selectPortatiles);
         }
     }
+
+
+
 }

@@ -7,12 +7,13 @@ namespace OneHope.Design.Models
 
         public Devolucion() { }
 
-        public Devolucion(int id, DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string nota) {
+        public Devolucion(int id, DateTime fecha, float cuantiaDevolucion, string direccionRecogida, string nota, string motivo) {
             IdDevolucion = id; 
             Fecha = fecha;
             CuantiaDevolucion = cuantiaDevolucion;
             DireccionRecogida = direccionRecogida;
-            Nota = nota;
+            NotaRepartidor = nota;
+            MotivoDevolucion = motivo;
         }
 
         [Key]
@@ -28,7 +29,11 @@ namespace OneHope.Design.Models
         [Required]
         public string DireccionRecogida { get; set; }
 
-        public string Nota { get; set; }
+        public string NotaRepartidor { get; set; }
+
+        [Required, StringLength(100, ErrorMessage = "El motivo no puede exceder los 100 caracteres.")]
+        [RegularExpression(@"[a-zA-Z]*$")]
+        public string MotivoDevolucion { get; set; }
 
         public IList<LineaDevolucion> LineaDevolucion
         { 
@@ -42,13 +47,14 @@ namespace OneHope.Design.Models
                    Fecha == devolucion.Fecha &&
                    CuantiaDevolucion == devolucion.CuantiaDevolucion &&
                    DireccionRecogida == devolucion.DireccionRecogida &&
-                   Nota == devolucion.Nota &&
+                   NotaRepartidor == devolucion.NotaRepartidor &&
+                   MotivoDevolucion == devolucion.MotivoDevolucion &&
                    EqualityComparer<IList<LineaDevolucion>>.Default.Equals(LineaDevolucion, devolucion.LineaDevolucion);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(IdDevolucion, Fecha, CuantiaDevolucion, DireccionRecogida, Nota, LineaDevolucion);
+            return HashCode.Combine(IdDevolucion, Fecha, CuantiaDevolucion, DireccionRecogida, NotaRepartidor, MotivoDevolucion, LineaDevolucion);
         }
     }
 }
