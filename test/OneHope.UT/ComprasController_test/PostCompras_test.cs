@@ -60,7 +60,7 @@ namespace OneHope.UT.ComprasController_test
             var controller = new ComprasController(_context, logger);
 
             //Act
-            var result = await controller.GetCompras(0);
+            var result = await controller.GetCompra(0);
 
             //Assert
             Assert.IsType<NotFoundResult>(result);
@@ -81,7 +81,7 @@ namespace OneHope.UT.ComprasController_test
             expectedPurchase.LineasCompra.Add(new LineaCompraDTO(2, "Galaxy", 850.99, "Samsung", "Intel-Core i7", "12Gb", 1));
 
             //Act
-            var result = await controller.GetCompras(1);
+            var result = await controller.GetCompra(1);
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
