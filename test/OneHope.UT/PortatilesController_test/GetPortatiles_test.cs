@@ -79,7 +79,6 @@ namespace OneHope.UT.PortatilesController_test
             _context.AddRange(portatiles);
             _context.AddRange(compras);
             _context.AddRange(lineasCompra);
-            //_context.Add(devolucion); 
             _context.SaveChanges();
 
         }
@@ -134,6 +133,8 @@ namespace OneHope.UT.PortatilesController_test
             Assert.Equal(expectedPortatiles, PortatilDTOsActual);
 
         }
+
+
 
 
 
