@@ -107,7 +107,7 @@ namespace OneHope.API.Controllers
             }
 
             Compra compra = new Compra(compraPorCrear.NombreUsuario, compraPorCrear.ApellidosUsuario, compraPorCrear.Direccion, DateTime.Today,
-                new List<LineaCompra>(), (Models.TipoMetodoPago)compraPorCrear.MetodoPago, compraPorCrear.PrecioTotal);
+                new List<LineaCompra>(), (Shared.TipoMetodoPago)compraPorCrear.MetodoPago, compraPorCrear.PrecioTotal);
 
             Portatil portatil;
             foreach (var item in compraPorCrear.LineasCompra)
