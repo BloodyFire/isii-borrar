@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OneHope.API.Migrations
 {
-    /// <inheritdoc />
     public partial class DBCreation : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -90,7 +88,7 @@ namespace OneHope.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Total = table.Column<double>(type: "float", nullable: false),
                     FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CódigoEmpleado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CodigoEmpleado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TipoMetodoPago = table.Column<int>(type: "int", nullable: false),
                     Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -372,7 +370,6 @@ namespace OneHope.API.Migrations
                 column: "RamId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
