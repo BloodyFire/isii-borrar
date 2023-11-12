@@ -49,13 +49,11 @@ namespace OneHope.Shared.CompraDTOs
         [JsonPropertyName("nombreUsuario")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, introduzca su nombre.")]
         [StringLength(50, ErrorMessage = "No puedes tener un nombre que supere los 50 caracteres.")]
-        [RegularExpression(@"[a-zA-Z]*$")]
         public string NombreUsuario { get; set;}
 
         [JsonPropertyName("apellidosUsuario")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, introduzca sus apellidos.")]
         [StringLength(50, ErrorMessage = "No puedes tener apellidos que superen los 50 caracteres.")]
-        [RegularExpression(@"[a-zA-Z]*$")]
         public string ApellidosUsuario { get; set;}
 
         [Required]
