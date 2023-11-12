@@ -16,8 +16,8 @@ namespace OneHope.Shared.DevolucionDTOs
         public DevolucionDetailDTO() { }
 
         public DevolucionDetailDTO(int idDevolucion, string motivoDevolucion, string direccionRecogida,
-            DateTime fecha, float cuantiaDevolucion, IList<DevolucionItemDTO> lineasDevoluciones, string notaRepartidor = "") : 
-            base(idDevolucion, motivoDevolucion, direccionRecogida, fecha, cuantiaDevolucion, lineasDevoluciones, notaRepartidor)
+            DateTime fecha, IList<DevolucionItemDTO> lineasDevoluciones, string notaRepartidor = "") : 
+            base( motivoDevolucion, direccionRecogida, fecha, lineasDevoluciones, notaRepartidor)
         {
             IdDevolucion = idDevolucion;
             Fecha = fecha;
