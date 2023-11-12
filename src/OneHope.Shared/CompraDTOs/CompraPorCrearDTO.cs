@@ -33,7 +33,7 @@ namespace OneHope.Shared.CompraDTOs
         public string Direccion { get; set; }
 
         [ValidateComplexType]
-        [JsonPropertyName("compraPortatiles")]
+        [JsonPropertyName("lineaCompra")]
         public IList<LineaCompraDTO> LineasCompra { get; set; }
 
         [Display(Name ="Precio Total")]
