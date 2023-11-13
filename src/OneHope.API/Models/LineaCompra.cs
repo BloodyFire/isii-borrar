@@ -74,8 +74,7 @@ namespace OneHope.API.Models
                    IdCompra == compra.IdCompra &&
                    IdLinea == compra.IdLinea &&
                    Cantidad == compra.Cantidad &&
-                   PrecioUnitario == compra.PrecioUnitario &&
-                   EqualityComparer<IList<LineaDevolucion>?>.Default.Equals(LineaDevolucion, compra.LineaDevolucion);
+                   PrecioUnitario == compra.PrecioUnitario;
         }
 
         public override int GetHashCode()
