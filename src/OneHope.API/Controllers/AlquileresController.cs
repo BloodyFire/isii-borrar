@@ -116,13 +116,13 @@ namespace OneHope.API.Controllers
             {
                     alquiler = new Alquiler(idAlquiler, DateTime.Now, alquilerParaCrear.FechaInAlquiler, alquilerParaCrear.FechaFinAlquiler,
                     alquilerParaCrear.Total, alquilerParaCrear.NombreCliente, alquilerParaCrear.ApellidosCliente, alquilerParaCrear.DireccionEnvio,
-                    alquilerParaCrear.EmailCliente, alquilerParaCrear.TelefonoCliente.Value, (OneHope.API.Models.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
+                    alquilerParaCrear.EmailCliente, alquilerParaCrear.TelefonoCliente.Value, (OneHope.Shared.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
                     new List<LineaAlquiler>());
             }
             else {
                     alquiler = new Alquiler(idAlquiler, DateTime.Now, alquilerParaCrear.FechaInAlquiler, alquilerParaCrear.FechaFinAlquiler,
                     alquilerParaCrear.Total, alquilerParaCrear.NombreCliente, alquilerParaCrear.ApellidosCliente, alquilerParaCrear.DireccionEnvio,
-                    alquilerParaCrear.EmailCliente, 0, (OneHope.API.Models.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
+                    alquilerParaCrear.EmailCliente, 0, (OneHope.Shared.TipoMetodoPago)alquilerParaCrear.TipoMetodoPago,
                     new List<LineaAlquiler>());
             }
 

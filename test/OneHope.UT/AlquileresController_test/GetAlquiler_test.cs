@@ -36,7 +36,7 @@ namespace OneHope.UT.AlquileresController_test
             var alquiler = new Alquiler(1, DateTime.Now, DateTime.Today.AddDays(2), DateTime.Today.AddDays(5), 
                 (float)portatiles[0].PrecioAlquiler * 3, "Juanito", "Golosinas", 
                 "Avda. España s/n, Albacete 02071", "juanito@uclm.es", 0, 
-                   OneHope.API.Models.TipoMetodoPago.TarjetaCredito,
+                   OneHope.Shared.TipoMetodoPago.TarjetaCredito,
                     new List<LineaAlquiler>());
             alquiler.LineasAlquiler.Add(new LineaAlquiler(1, 2, portatiles[0], alquiler));
 
