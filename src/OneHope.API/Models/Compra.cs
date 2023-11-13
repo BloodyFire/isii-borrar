@@ -76,7 +76,7 @@ namespace OneHope.API.Models
 
         [Required]
         public double Total {  get; set; }
-        
+
         /*public enum MetodoPago
         {
             TarjetaCredito,
@@ -91,6 +91,7 @@ namespace OneHope.API.Models
                    CustomerId == compra.CustomerId &&
                    FechaCompra == compra.FechaCompra &&
                    Direccion == compra.Direccion &&
+                   EqualityComparer<IList<LineaCompra>>.Default.Equals(LineasCompra, compra.LineasCompra) &&
                    Total == compra.Total;
         }
 
@@ -98,6 +99,5 @@ namespace OneHope.API.Models
         {
             return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodoPago, Total);
         }
-
     }
 }
