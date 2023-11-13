@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using OneHope.API.Models;
 using Microsoft.EntityFrameworkCore;
 using OneHope.Shared.PortatilDTOs;
@@ -82,6 +83,55 @@ namespace OneHope.API.Controllers
 
         }
 
+
+        
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<PortatilParaComprarDTO>), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult> GetPortatilesParaComprar(string? nombrePortatil,
+            string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil)
+        {
+            IList<PortatilParaComprarDTO> selectPortatiles= await _context.Portatiles
+                .Include(p => p.Marca)
+                .Include(p => p.Procesador)
+                .Include(p => p.Ram)
+                .Include(p => p.LineasCompra)
+                .ThenInclude(po => po.Compra)
+                .Where(portatil => portatil.Stock>0 
+                && (nombrePortatil == null || portatil.Nombre.Contains(nombrePortatil))
+                && (modeloPortatil == null || portatil.Modelo.Contains(modeloPortatil))
+                && (marcaPortatil == null || portatil.Marca.NombreMarca.Equals(marcaPortatil))
+                && (procesadorPortatil == null || portatil.Procesador.ModeloProcesador.Equals(procesadorPortatil))
+                && (ramPortatil == null || portatil.Ram.Capacidad.Equals(ramPortatil))
+                && (precioPortatil == null || portatil.PrecioCompra.Equals(precioPortatil)))
+                .OrderBy(p=> p.Nombre)
+                .Select(p => new PortatilParaComprarDTO(p.Id, p.Modelo, p.PrecioCompra,
+                p.Ram.Capacidad, p.Marca.NombreMarca, p.Nombre, p.Procesador.ModeloProcesador, p.Stock)
+                )
+                .ToListAsync();
+
+            return Ok(selectPortatiles);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IList<PortatilParaAlquilerDTO>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam)
+        {
+            var portatiles = await _context.Portatiles
+                .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
+                                    (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
+                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam))
+                                    ))
+                .Include(portatil => portatil.Ram)
+                .Include(portatil => portatil.Procesador)
+                .OrderBy(portatil => portatil.StockAlquilar)
+                .Select(portatil => new PortatilParaAlquilerDTO(portatil.Id, portatil.Modelo, portatil.Marca.NombreMarca, portatil.Procesador.ModeloProcesador, portatil.Ram.Capacidad, portatil.StockAlquilar, portatil.PrecioAlquiler))
+                .ToListAsync();
+
+            return Ok(portatiles);
+        }
     }
 
 
