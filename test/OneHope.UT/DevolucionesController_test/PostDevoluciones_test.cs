@@ -154,10 +154,14 @@ namespace OneHope.UT.DevolucionesController_test
             DevolucionForCreateDTO devolucionPortatilNoExiste = new DevolucionForCreateDTO("la bateria dura poco", "c/ Rosario, nº2", DateTime.Now, new List<DevolucionItemDTO>());
             devolucionPortatilNoExiste.LineasDevoluciones.Add(new DevolucionItemDTO(2, 1, "HP-1151", 3, 14, 199.95));
 
+            DevolucionForCreateDTO devolucionMasPortatiles = new DevolucionForCreateDTO("la bateria dura poco", "c/ Rosario, nº2", DateTime.Now, new List<DevolucionItemDTO>());
+            devolucionMasPortatiles.LineasDevoluciones.Add(new DevolucionItemDTO(2, 3, "HP-1151", 3, 4, 199.95));
+
             var allTests = new List<object[]>
             {
                 new object[] { devolucionSinLineas, "Error: Tienes que incluir al menos un portatil en la devolucion.", },
                 new object[] { devolucionPortatilNoExiste, $"Error: El portatil modelo {devolucionPortatilNoExiste.LineasDevoluciones[0].Modelo} con Id {devolucionPortatilNoExiste.LineasDevoluciones[0].IdPortatil} no existe en la base de datos.", },
+                new object[] { devolucionMasPortatiles, $"Error! No puedes devolver mas portatiles de los comprados", }
             };
 
             return allTests;

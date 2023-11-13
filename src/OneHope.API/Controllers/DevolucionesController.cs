@@ -95,7 +95,7 @@ namespace OneHope.API.Controllers
                     {
                         if (lineaCompra.Cantidad < linea.Cantidad)
                         {
-                            ModelState.AddModelError("LineaDevolucion", $"Error! Portatil modelo {linea.Modelo} solo tiene {lineaCompra.Cantidad} portatiles y {linea.Cantidad} han sido seleccionados");
+                            ModelState.AddModelError("LineaDevolucion", $"Error! No puedes devolver mas portatiles de los comprados");
                         }
                         else
                         {
