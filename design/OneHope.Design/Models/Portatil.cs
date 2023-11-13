@@ -9,7 +9,7 @@ namespace OneHope.Design.Models
             LineasPedido = new List<LineaPedido>();
         }
 
-        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar)
+        public Portatil(int id, string modelo, Procesador procesador, Ram ram, Marca marca, string nombre, double precioCompra, double precioAlquiler, double precioCoste, int stock, int stockAlquilar, Proveedor proveedor)
         {
             Id = id;
             Modelo = modelo;
@@ -25,6 +25,7 @@ namespace OneHope.Design.Models
             LineasPedido = new List<LineaPedido>();
             LineasCompra = new List<LineaCompra>();
             LineasAlquiler = new List<LineaAlquiler>();
+            Proveedor = proveedor;
         }
 
         [Key]

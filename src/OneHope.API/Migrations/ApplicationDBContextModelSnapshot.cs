@@ -103,8 +103,8 @@ namespace OneHope.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -129,7 +129,12 @@ namespace OneHope.API.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nota")
+                    b.Property<string>("MotivoDevolucion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NotaRepartidor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -178,19 +183,10 @@ namespace OneHope.API.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("CompraId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdCompra")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdProd")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LineaCompraIdLinea")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PortatilId")
+                    b.Property<int>("IdPortatil")
                         .HasColumnType("int");
 
                     b.Property<double>("PrecioUnitario")
@@ -198,13 +194,9 @@ namespace OneHope.API.Migrations
 
                     b.HasKey("IdLinea");
 
-                    b.HasAlternateKey("IdProd", "IdCompra");
+                    b.HasAlternateKey("IdPortatil", "IdCompra");
 
-                    b.HasIndex("CompraId");
-
-                    b.HasIndex("LineaCompraIdLinea");
-
-                    b.HasIndex("PortatilId");
+                    b.HasIndex("IdCompra");
 
                     b.ToTable("LineaCompra");
                 });
@@ -220,9 +212,6 @@ namespace OneHope.API.Migrations
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("DevolucionIdDevolucion")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdDevolucion")
                         .HasColumnType("int");
 
@@ -233,10 +222,7 @@ namespace OneHope.API.Migrations
 
                     b.HasAlternateKey("IdDevolucion", "LineaCompraId");
 
-                    b.HasIndex("DevolucionIdDevolucion");
-
-                    b.HasIndex("LineaCompraId")
-                        .IsUnique();
+                    b.HasIndex("LineaCompraId");
 
                     b.ToTable("LineaDevolucion");
                 });
@@ -474,17 +460,13 @@ namespace OneHope.API.Migrations
                 {
                     b.HasOne("OneHope.API.Models.Compra", "Compra")
                         .WithMany("LineasCompra")
-                        .HasForeignKey("CompraId")
+                        .HasForeignKey("IdCompra")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OneHope.API.Models.LineaCompra", null)
-                        .WithMany("LineasCompra")
-                        .HasForeignKey("LineaCompraIdLinea");
-
                     b.HasOne("OneHope.API.Models.Portatil", "Portatil")
                         .WithMany("LineasCompra")
-                        .HasForeignKey("PortatilId")
+                        .HasForeignKey("IdPortatil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -497,13 +479,13 @@ namespace OneHope.API.Migrations
                 {
                     b.HasOne("OneHope.API.Models.Devolucion", "Devolucion")
                         .WithMany("LineaDevolucion")
-                        .HasForeignKey("DevolucionIdDevolucion")
+                        .HasForeignKey("IdDevolucion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OneHope.API.Models.LineaCompra", "LineaCompra")
-                        .WithOne("LineaDevolucion")
-                        .HasForeignKey("OneHope.API.Models.LineaDevolucion", "LineaCompraId")
+                        .WithMany("LineaDevolucion")
+                        .HasForeignKey("LineaCompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -584,8 +566,6 @@ namespace OneHope.API.Migrations
             modelBuilder.Entity("OneHope.API.Models.LineaCompra", b =>
                 {
                     b.Navigation("LineaDevolucion");
-
-                    b.Navigation("LineasCompra");
                 });
 
             modelBuilder.Entity("OneHope.API.Models.Marca", b =>
