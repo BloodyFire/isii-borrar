@@ -116,7 +116,7 @@ namespace OneHope.UT.PortatilesController_test
         [Theory]
         [MemberData(nameof(TestCasesPara_GetPortatilesParaDevolver))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaDevolver_test(int? idCompra, DateTime? fecha, int CustomerId,
+        public async Task GetPortatilesParaDevolver_testcase(int? idCompra, DateTime? fecha, int CustomerId,
             IList<PortatilesParaDevolverDTO> expectedPortatiles)
         {
             // Arrange
