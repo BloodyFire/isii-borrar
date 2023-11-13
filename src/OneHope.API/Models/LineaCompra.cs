@@ -71,7 +71,6 @@ namespace OneHope.API.Models
             return obj is LineaCompra compra &&
                    EqualityComparer<Portatil>.Default.Equals(Portatil, compra.Portatil) &&
                    IdPortatil == compra.IdPortatil &&
-                   EqualityComparer<Compra>.Default.Equals(Compra, compra.Compra) &&
                    IdCompra == compra.IdCompra &&
                    IdLinea == compra.IdLinea &&
                    Cantidad == compra.Cantidad &&
