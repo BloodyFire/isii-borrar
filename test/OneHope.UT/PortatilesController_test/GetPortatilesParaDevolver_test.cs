@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace OneHope.UT.PortatilesController_test
 {
-    public class GetPortatiles_test : OneHope4SqliteUT
+    public class GetPortatilesParaDevolver_test : OneHope4SqliteUT
     {
-        public GetPortatiles_test()
+        public GetPortatilesParaDevolver_test()
         {
 
             var procesadores = new List<Procesador>()
