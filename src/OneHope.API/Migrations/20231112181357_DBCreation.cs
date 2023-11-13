@@ -5,10 +5,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace OneHope.API.Migrations
 {
-    /// <inheritdoc />
     public partial class DBCreation : Migration
     {
-        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -45,7 +43,7 @@ namespace OneHope.API.Migrations
                     FechaCompra = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     MetodoPago = table.Column<int>(type: "int", nullable: false),
-                    Total = table.Column<int>(type: "int", nullable: false)
+                    Total = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,7 +59,8 @@ namespace OneHope.API.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CuantiaDevolucion = table.Column<float>(type: "real", nullable: false),
                     DireccionRecogida = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Nota = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    NotaRepartidor = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MotivoDevolucion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,7 +89,7 @@ namespace OneHope.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Total = table.Column<double>(type: "float", nullable: false),
                     FechaPedido = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CódigoEmpleado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CodigoEmpleado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TipoMetodoPago = table.Column<int>(type: "int", nullable: false),
                     Comentarios = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -229,32 +228,24 @@ namespace OneHope.API.Migrations
                 {
                     IdLinea = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PortatilId = table.Column<int>(type: "int", nullable: false),
-                    IdProd = table.Column<int>(type: "int", nullable: false),
-                    CompraId = table.Column<int>(type: "int", nullable: false),
+                    IdPortatil = table.Column<int>(type: "int", nullable: false),
                     IdCompra = table.Column<int>(type: "int", nullable: false),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
-                    PrecioUnitario = table.Column<double>(type: "float", nullable: false),
-                    LineaCompraIdLinea = table.Column<int>(type: "int", nullable: true)
+                    PrecioUnitario = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LineaCompra", x => x.IdLinea);
-                    table.UniqueConstraint("AK_LineaCompra_IdProd_IdCompra", x => new { x.IdProd, x.IdCompra });
+                    table.UniqueConstraint("AK_LineaCompra_IdPortatil_IdCompra", x => new { x.IdPortatil, x.IdCompra });
                     table.ForeignKey(
-                        name: "FK_LineaCompra_Compras_CompraId",
-                        column: x => x.CompraId,
+                        name: "FK_LineaCompra_Compras_IdCompra",
+                        column: x => x.IdCompra,
                         principalTable: "Compras",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_LineaCompra_LineaCompra_LineaCompraIdLinea",
-                        column: x => x.LineaCompraIdLinea,
-                        principalTable: "LineaCompra",
-                        principalColumn: "IdLinea");
-                    table.ForeignKey(
-                        name: "FK_LineaCompra_Portatiles_PortatilId",
-                        column: x => x.PortatilId,
+                        name: "FK_LineaCompra_Portatiles_IdPortatil",
+                        column: x => x.IdPortatil,
                         principalTable: "Portatiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -294,7 +285,6 @@ namespace OneHope.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Cantidad = table.Column<int>(type: "int", nullable: false),
                     LineaCompraId = table.Column<int>(type: "int", nullable: false),
-                    DevolucionIdDevolucion = table.Column<int>(type: "int", nullable: false),
                     IdDevolucion = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -302,8 +292,8 @@ namespace OneHope.API.Migrations
                     table.PrimaryKey("PK_LineaDevolucion", x => x.IdLinea);
                     table.UniqueConstraint("AK_LineaDevolucion_IdDevolucion_LineaCompraId", x => new { x.IdDevolucion, x.LineaCompraId });
                     table.ForeignKey(
-                        name: "FK_LineaDevolucion_Devoluciones_DevolucionIdDevolucion",
-                        column: x => x.DevolucionIdDevolucion,
+                        name: "FK_LineaDevolucion_Devoluciones_IdDevolucion",
+                        column: x => x.IdDevolucion,
                         principalTable: "Devoluciones",
                         principalColumn: "IdDevolucion",
                         onDelete: ReferentialAction.Cascade);
@@ -321,30 +311,14 @@ namespace OneHope.API.Migrations
                 column: "PortatilID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LineaCompra_CompraId",
+                name: "IX_LineaCompra_IdCompra",
                 table: "LineaCompra",
-                column: "CompraId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LineaCompra_LineaCompraIdLinea",
-                table: "LineaCompra",
-                column: "LineaCompraIdLinea");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LineaCompra_PortatilId",
-                table: "LineaCompra",
-                column: "PortatilId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_LineaDevolucion_DevolucionIdDevolucion",
-                table: "LineaDevolucion",
-                column: "DevolucionIdDevolucion");
+                column: "IdCompra");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LineaDevolucion_LineaCompraId",
                 table: "LineaDevolucion",
-                column: "LineaCompraId",
-                unique: true);
+                column: "LineaCompraId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LineaPedido_PedidoId",
@@ -372,7 +346,6 @@ namespace OneHope.API.Migrations
                 column: "RamId");
         }
 
-        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

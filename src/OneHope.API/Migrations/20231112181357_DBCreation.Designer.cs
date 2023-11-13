@@ -12,18 +12,17 @@ using OneHope.API.Models;
 namespace OneHope.API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20231027213641_DBCreation")]
+    [Migration("20231112181357_DBCreation")]
     partial class DBCreation
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.11")
+                .HasAnnotation("ProductVersion", "6.0.19")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("OneHope.API.Models.Alquiler", b =>
                 {
@@ -31,7 +30,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<string>("ApellidosCliente")
                         .IsRequired()
@@ -81,7 +80,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
@@ -106,8 +105,8 @@ namespace OneHope.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<double>("Total")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -120,7 +119,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDevolucion"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDevolucion"), 1L, 1);
 
                     b.Property<float>("CuantiaDevolucion")
                         .HasColumnType("real");
@@ -132,7 +131,12 @@ namespace OneHope.API.Migrations
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nota")
+                    b.Property<string>("MotivoDevolucion")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NotaRepartidor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -147,7 +151,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"), 1L, 1);
 
                     b.Property<int>("AlquilerID")
                         .HasColumnType("int");
@@ -176,24 +180,15 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLinea"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLinea"), 1L, 1);
 
                     b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CompraId")
                         .HasColumnType("int");
 
                     b.Property<int>("IdCompra")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdProd")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LineaCompraIdLinea")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PortatilId")
+                    b.Property<int>("IdPortatil")
                         .HasColumnType("int");
 
                     b.Property<double>("PrecioUnitario")
@@ -201,13 +196,9 @@ namespace OneHope.API.Migrations
 
                     b.HasKey("IdLinea");
 
-                    b.HasAlternateKey("IdProd", "IdCompra");
+                    b.HasAlternateKey("IdPortatil", "IdCompra");
 
-                    b.HasIndex("CompraId");
-
-                    b.HasIndex("LineaCompraIdLinea");
-
-                    b.HasIndex("PortatilId");
+                    b.HasIndex("IdCompra");
 
                     b.ToTable("LineaCompra");
                 });
@@ -218,12 +209,9 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLinea"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLinea"), 1L, 1);
 
                     b.Property<int>("Cantidad")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DevolucionIdDevolucion")
                         .HasColumnType("int");
 
                     b.Property<int>("IdDevolucion")
@@ -236,10 +224,7 @@ namespace OneHope.API.Migrations
 
                     b.HasAlternateKey("IdDevolucion", "LineaCompraId");
 
-                    b.HasIndex("DevolucionIdDevolucion");
-
-                    b.HasIndex("LineaCompraId")
-                        .IsUnique();
+                    b.HasIndex("LineaCompraId");
 
                     b.ToTable("LineaDevolucion");
                 });
@@ -271,7 +256,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("NombreMarca")
                         .IsRequired()
@@ -291,13 +276,13 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Comentarios")
+                    b.Property<string>("CodigoEmpleado")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CódigoEmpleado")
+                    b.Property<string>("Comentarios")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -325,7 +310,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("MarcaId")
                         .HasColumnType("int");
@@ -385,7 +370,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("ModeloProcesador")
                         .IsRequired()
@@ -405,7 +390,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CIF")
                         .IsRequired()
@@ -440,7 +425,7 @@ namespace OneHope.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Capacidad")
                         .IsRequired()
@@ -477,17 +462,13 @@ namespace OneHope.API.Migrations
                 {
                     b.HasOne("OneHope.API.Models.Compra", "Compra")
                         .WithMany("LineasCompra")
-                        .HasForeignKey("CompraId")
+                        .HasForeignKey("IdCompra")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OneHope.API.Models.LineaCompra", null)
-                        .WithMany("LineasCompra")
-                        .HasForeignKey("LineaCompraIdLinea");
-
                     b.HasOne("OneHope.API.Models.Portatil", "Portatil")
                         .WithMany("LineasCompra")
-                        .HasForeignKey("PortatilId")
+                        .HasForeignKey("IdPortatil")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -500,13 +481,13 @@ namespace OneHope.API.Migrations
                 {
                     b.HasOne("OneHope.API.Models.Devolucion", "Devolucion")
                         .WithMany("LineaDevolucion")
-                        .HasForeignKey("DevolucionIdDevolucion")
+                        .HasForeignKey("IdDevolucion")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("OneHope.API.Models.LineaCompra", "LineaCompra")
-                        .WithOne("LineaDevolucion")
-                        .HasForeignKey("OneHope.API.Models.LineaDevolucion", "LineaCompraId")
+                        .WithMany("LineaDevolucion")
+                        .HasForeignKey("LineaCompraId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -587,8 +568,6 @@ namespace OneHope.API.Migrations
             modelBuilder.Entity("OneHope.API.Models.LineaCompra", b =>
                 {
                     b.Navigation("LineaDevolucion");
-
-                    b.Navigation("LineasCompra");
                 });
 
             modelBuilder.Entity("OneHope.API.Models.Marca", b =>

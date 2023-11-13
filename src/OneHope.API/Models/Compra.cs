@@ -5,7 +5,7 @@ namespace OneHope.API.Models
     public class Compra
     {
 
-        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, int total)
+        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, double total)
         {
             Id = id;
             CustomerId = customerId;
@@ -15,9 +15,34 @@ namespace OneHope.API.Models
             Total = total;
         }
 
+        public Compra(int id, int customerId, DateTime fechaCompra, string direccion, TipoMetodoPago metodosPagos, double total, string nombreCliente, string apellidos)
+        {
+            Id = id;
+            CustomerId = customerId;
+            FechaCompra = fechaCompra;
+            Direccion = direccion;
+            MetodoPago = metodosPagos;
+            Total = total;
+            NombreCliente = nombreCliente;
+            Apellidos = apellidos;
+            LineasCompra = new List<LineaCompra>();
+        }
+
         public Compra()
         {
             LineasCompra = new List<LineaCompra>();
+        }
+
+        public Compra(string nombreCliente, string apellidosCliente, string direccion, DateTime fechaCompra,
+            IList<LineaCompra> lineasCompra, TipoMetodoPago metodoPago, double precioTotal)
+        {
+            Total = precioTotal;
+            FechaCompra = fechaCompra;
+            Direccion = direccion;
+            MetodoPago = metodoPago;
+            LineasCompra = lineasCompra;
+            NombreCliente = nombreCliente;
+            Apellidos = apellidosCliente;
         }
 
         [Key]
@@ -28,11 +53,11 @@ namespace OneHope.API.Models
 
         [Required, StringLength(50, ErrorMessage = "El cliente no puede tener un nombre que supere los 50 caracteres.")]
         [RegularExpression(@"[a-zA-Z]*$")]
-        public String NombreCliente { get; set; }
+        public string NombreCliente { get; set; }
 
         [Required, StringLength(50, ErrorMessage = "El cliente no puede tener unos apellidos que superen los 50 caracteres.")]
         [RegularExpression(@"[a-zA-Z]*$")]
-        public String Apellidos { get; set; }
+        public string Apellidos { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
@@ -41,18 +66,17 @@ namespace OneHope.API.Models
         [DataType(DataType.MultilineText)]
         [Display(Name = "Direccion")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Por favor, escribe tu direccion de envio")]
-        public String Direccion { get; set; }
+        public string Direccion { get; set; }
 
         public IList<LineaCompra> LineasCompra { get; set; }
-
 
         [Display(Name = "Metodo Pago")]
         [Required()]
         public TipoMetodoPago MetodoPago { get; set; }
 
         [Required]
-        public int Total {  get; set; }
-        
+        public double Total {  get; set; }
+
         /*public enum MetodoPago
         {
             TarjetaCredito,
@@ -67,6 +91,7 @@ namespace OneHope.API.Models
                    CustomerId == compra.CustomerId &&
                    FechaCompra == compra.FechaCompra &&
                    Direccion == compra.Direccion &&
+                   EqualityComparer<IList<LineaCompra>>.Default.Equals(LineasCompra, compra.LineasCompra) &&
                    Total == compra.Total;
         }
 
@@ -74,6 +99,5 @@ namespace OneHope.API.Models
         {
             return HashCode.Combine(Id, CustomerId, FechaCompra, Direccion, LineasCompra, MetodoPago, Total);
         }
-
     }
 }
