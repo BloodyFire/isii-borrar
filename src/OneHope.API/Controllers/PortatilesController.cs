@@ -117,12 +117,13 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaAlquilerDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam)
+        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam, string? filtroModelo)
         {
             var portatiles = await _context.Portatiles
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
-                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam))
+                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam)) &&
+                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo))
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
