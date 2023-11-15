@@ -7,6 +7,7 @@ using OneHope.Shared.PortatilDTOs;
 using System.Net;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
+using OneHope.Design.Models;
 
 namespace OneHope.API.Controllers
 {
@@ -28,7 +29,7 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaPedidoDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PortatilParaPedidoDTO>> GetPortatilesParaPedido(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor)
+        public async Task<ActionResult<PortatilParaPedidoDTO>> GetPortatilesParaPedido(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor, string? filtroNombre)
         {
 
             if (filtroStockMinimo != null && filtroStockMaximo != null && filtroStockMinimo > filtroStockMaximo)
@@ -43,7 +44,8 @@ namespace OneHope.API.Controllers
                                     (filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroStockMinimo == null || portatil.Stock >= filtroStockMinimo) &&
                                     (filtroStockMaximo == null || portatil.Stock <= filtroStockMaximo) &&
-                                    (filtroProveedor == null || portatil.Proveedor.Nombre.Equals(filtroProveedor)))
+                                    (filtroProveedor == null || portatil.Proveedor.Nombre.Equals(filtroProveedor)) &&
+                                    (filtroNombre == null || portatil.Nombre.Contains(filtroNombre)))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Proveedor)
                 .OrderBy(portatil => portatil.Stock)
