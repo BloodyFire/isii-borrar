@@ -55,7 +55,7 @@
             ILogger<PortatilesController> logger = mock.Object;
 
             PortatilesController portatilesController = new PortatilesController(_context, logger);
-            var result = await portatilesController.GetPortatilesParaPedido(null,null,null,null,null);
+            var result = await portatilesController.GetPortatilesParaPedido(null,null,null,null,null,null);
 
             //Assert
             var okresult = Assert.IsType<OkObjectResult>(result.Result);
@@ -86,11 +86,12 @@
 
             var allTests = new List<object[]>
             {
-                new object[] { "1151", null, null, null, null, portatilDTOsTC1 },
-                new object[] { null, "HP", null, null, null, portatilDTOsTC2 },
-                new object[] { null, null, 5, null, null, portatilDTOsTC3 },
-                new object[] { null, null, null, 3, null, portatilDTOsTC4 },
-                new object[] { null, null, null, null, "Proveedores S.L.", portatilDTOsTC4 }
+                new object[] { "1151", null, null, null, null, null, portatilDTOsTC1 },
+                new object[] { null, "HP", null, null, null, null, portatilDTOsTC2 },
+                new object[] { null, null, 5, null, null, null, portatilDTOsTC3 },
+                new object[] { null, null, null, 3, null, null, portatilDTOsTC4 },
+                new object[] { null, null, null, null, "Proveedores S.L.", null, portatilDTOsTC4 },
+                new object[] { null, null, null, null, null, "pleistoceno", portatilDTOsTC1 }
             };
 
             return allTests;
@@ -99,14 +100,14 @@
         [Theory]
         [MemberData(nameof(TestCasesFor_GetPortatilesParaPedido))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaPedido_testcase(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor,
+        public async Task GetPortatilesParaPedido_testcase(string? filtroModelo, string? filtroMarca, int? filtroStockMinimo, int? filtroStockMaximo, string? filtroProveedor, string? filtroNombre,
             IList<PortatilParaPedidoDTO> expectedPortatiles)
         {
             // Arrange
             var controller = new PortatilesController(_context, null);
 
             // Act
-            var result = await controller.GetPortatilesParaPedido(filtroModelo, filtroMarca, filtroStockMinimo, filtroStockMaximo, filtroProveedor);
+            var result = await controller.GetPortatilesParaPedido(filtroModelo, filtroMarca, filtroStockMinimo, filtroStockMaximo, filtroProveedor, filtroNombre);
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
@@ -127,7 +128,7 @@
             var controller = new PortatilesController(_context, logger);
 
             // Act
-            var result = await controller.GetPortatilesParaPedido(null, null, 5, 1, null);
+            var result = await controller.GetPortatilesParaPedido(null, null, 5, 1, null, null);
 
             //Assert
             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
