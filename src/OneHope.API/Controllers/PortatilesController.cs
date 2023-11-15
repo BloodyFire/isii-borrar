@@ -57,7 +57,7 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilesParaDevolverDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
-        public async Task<ActionResult<IList<PortatilesParaDevolverDTO>>> GetPortatilesParaDevolver(int? idCompra, DateTime? fecha, int CustomerId)
+        public async Task<ActionResult<IList<PortatilesParaDevolverDTO>>> GetPortatilesParaDevolver(int? idCompra, DateTime? fecha, int CustomerId, double? precio)
         {
             
                      
@@ -72,6 +72,7 @@ namespace OneHope.API.Controllers
                     .ThenInclude(marca => marca.Marca)
                     .Where(portatil => (portatil.Compra.CustomerId.Equals(CustomerId)) &&
                                        (idCompra == null || portatil.IdCompra.Equals(idCompra)) &&
+                                       (precio == null || portatil.PrecioUnitario > precio) &&
                                        ((fecha == null || portatil.Compra.FechaCompra.Equals(fecha)) &&
                                         portatil.Compra.FechaCompra >= defaultDate)
                                        )
