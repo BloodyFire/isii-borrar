@@ -79,13 +79,14 @@ namespace OneHope.UT.PortatilesController_test
 
             var allTests = new List<object[]>
             {
-                new object[] { null, null, null, null, null, null, portatilDTOsTC1, },
-                new object[] { "Asp", null, null, null, null, null, portatilDTOsTC2, },
-                new object[] { null, "Dell", null, null, null, null, portatilDTOsTC3, },
-                new object[] { null, null, "1", null, null, null, portatilDTOsTC3, },
-                new object[] { null, null, null, "128Mb", null, null, portatilDTOsTC4, },
-                new object[] { null, null, null, null, "Intel-Core i7", null, portatilDTOsTC5, },
-                new object[] { null, null, null, null, null, 248.36, portatilDTOsTC2, },
+                new object[] { null, null, null, null, null, null, null, portatilDTOsTC1, },
+                new object[] { "Asp", null, null, null, null, null, null, portatilDTOsTC2, },
+                new object[] { null, "Dell", null, null, null, null, null, portatilDTOsTC3, },
+                new object[] { null, null, "1", null, null, null, null, portatilDTOsTC3, },
+                new object[] { null, null, null, "128Mb", null, null, null, portatilDTOsTC4, },
+                new object[] { null, null, null, null, "Intel-Core i7", null, null, portatilDTOsTC5, },
+                new object[] { null, null, null, null, null, 248.36, null, portatilDTOsTC2, },
+                new object[] { null, null, null, null, null, null, 78, portatilDTOsTC4, }
 
             };
 
@@ -96,14 +97,14 @@ namespace OneHope.UT.PortatilesController_test
         [MemberData(nameof(TestCasesFor_GetPortatilesParaComprar))]
         [Trait("LevelTesting", "Unit Testing")]
         public async Task GetPortatilesParaComprar_testcase(string? filtrarNombre, string? filtrarMarca, string? filtrarModelo,
-            string? filtrarRam, string? filtrarProcesador, double? filtrarPrecio,
+            string? filtrarRam, string? filtrarProcesador, double? filtrarPrecio, int? filtrarStock,
             IList<PortatilParaComprarDTO> expectedPortatiles)
         {
             //Arrange
             var controller = new PortatilesController(_context, null);
 
             //Act
-            var result = await controller.GetPortatilesParaComprar(filtrarNombre, filtrarModelo, filtrarMarca, filtrarProcesador, filtrarRam, filtrarPrecio);
+            var result = await controller.GetPortatilesParaComprar(filtrarNombre, filtrarModelo, filtrarMarca, filtrarProcesador, filtrarRam, filtrarPrecio, filtrarStock);
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
