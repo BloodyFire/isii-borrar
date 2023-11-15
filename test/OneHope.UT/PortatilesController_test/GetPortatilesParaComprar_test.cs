@@ -86,7 +86,7 @@ namespace OneHope.UT.PortatilesController_test
                 new object[] { null, null, null, "128Mb", null, null, null, portatilDTOsTC4, },
                 new object[] { null, null, null, null, "Intel-Core i7", null, null, portatilDTOsTC5, },
                 new object[] { null, null, null, null, null, 248.36, null, portatilDTOsTC2, },
-                new object[] { null, null, null, null, null, null, 78, portatilDTOsTC4, }
+                new object[] { null, null, null, null, null, null, 76, portatilDTOsTC4, }
 
             };
 
