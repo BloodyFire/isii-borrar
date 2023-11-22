@@ -100,14 +100,16 @@ namespace OneHope.UT.PortatilesController_test
 
             var portatilDTOsTC2 = new List<PortatilesParaDevolverDTO>() { portatilDTOs[2] };
             var portatilDTOsTC3 = new List<PortatilesParaDevolverDTO>() { };
+            var portatilDTOsTC4 = new List<PortatilesParaDevolverDTO>() { portatilDTOs[0] };
 
 
             var allTests = new List<object[]>
             {             //filters to apply - expected laptops
-                new object[] { null, null, 3, portatilDTOs },
-                new object[] { 1, null, 3, portatilDTOsTC1 },
-                new object[] { null, new DateTime(2023, 10, 30), 3, portatilDTOsTC2 },
-                new object[] { null, null, 8, portatilDTOsTC3 }
+                new object[] { null, null, 3, null, portatilDTOs },
+                new object[] { 1, null, 3, null, portatilDTOsTC1 },
+                new object[] { null, new DateTime(2023, 10, 30), 3, null, portatilDTOsTC2 },
+                new object[] { null, null, 8, null, portatilDTOsTC3 },
+                new object[] {null, null, 3, 2099.95, portatilDTOsTC4}
         };
 
             return allTests;
@@ -116,14 +118,14 @@ namespace OneHope.UT.PortatilesController_test
         [Theory]
         [MemberData(nameof(TestCasesPara_GetPortatilesParaDevolver))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaDevolver_testcase(int? idCompra, DateTime? fecha, int CustomerId,
+        public async Task GetPortatilesParaDevolver_testcase(int? idCompra, DateTime? fecha, int CustomerId, double precio,
             IList<PortatilesParaDevolverDTO> expectedPortatiles)
         {
             // Arrange
             var controller = new PortatilesController(_context, null);
 
             // Act
-            var result = await controller.GetPortatilesParaDevolver(idCompra, fecha, CustomerId);
+            var result = await controller.GetPortatilesParaDevolver(idCompra, fecha, CustomerId, precio);
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
