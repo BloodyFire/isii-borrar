@@ -713,6 +713,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "precio",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
           }
         ],
         "responses": {
@@ -800,6 +808,14 @@
               "type": "number",
               "format": "double"
             }
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -858,6 +874,13 @@
           },
           {
             "name": "filtroRam",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroModelo",
             "in": "query",
             "schema": {
               "type": "string"
