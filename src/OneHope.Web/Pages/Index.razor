@@ -27,6 +27,6 @@ else foreach (var portatil in _portatiles)
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
     {
-        _portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(null, null, null, null, null);
+        _portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(null, null, null, null, null, null);
     }
 }

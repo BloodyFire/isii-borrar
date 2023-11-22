@@ -621,6 +621,13 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "filtroNombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
