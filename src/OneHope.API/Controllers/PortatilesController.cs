@@ -92,7 +92,7 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaComprarDTO>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult> GetPortatilesParaComprar(string? nombrePortatil,
-            string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil)
+            string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil, double? precioPortatil, int? stock)
         {
             IList<PortatilParaComprarDTO> selectPortatiles= await _context.Portatiles
                 .Include(p => p.Marca)
@@ -106,7 +106,8 @@ namespace OneHope.API.Controllers
                 && (marcaPortatil == null || portatil.Marca.NombreMarca.Equals(marcaPortatil))
                 && (procesadorPortatil == null || portatil.Procesador.ModeloProcesador.Equals(procesadorPortatil))
                 && (ramPortatil == null || portatil.Ram.Capacidad.Equals(ramPortatil))
-                && (precioPortatil == null || portatil.PrecioCompra.Equals(precioPortatil)))
+                && (precioPortatil == null || portatil.PrecioCompra.Equals(precioPortatil))
+                && (stock==null || portatil.Stock > stock))
                 .OrderBy(p=> p.Nombre)
                 .Select(p => new PortatilParaComprarDTO(p.Id, p.Modelo, p.PrecioCompra,
                 p.Ram.Capacidad, p.Marca.NombreMarca, p.Nombre, p.Procesador.ModeloProcesador, p.Stock)
@@ -120,12 +121,13 @@ namespace OneHope.API.Controllers
         [Route("[action]")]
         [ProducesResponseType(typeof(IList<PortatilParaAlquilerDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam)
+        public async Task<ActionResult<PortatilParaAlquilerDTO>> GetPortatilesParaAlquiler(string? filtroMarca, string? filtroProcesador, string? filtroRam, string? filtroModelo)
         {
             var portatiles = await _context.Portatiles
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
-                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam))
+                                    (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam)) &&
+                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo))
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
