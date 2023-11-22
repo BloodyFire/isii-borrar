@@ -65,7 +65,7 @@
             .OrderBy(p => p.StockAlquilar).Select(p => new PortatilParaAlquilerDTO(p.Id, p.Modelo, p.Marca.NombreMarca, p.Procesador.ModeloProcesador, p.Ram.Capacidad, p.StockAlquilar, p.PrecioAlquiler)).ToList();
 
             PortatilesController portatilesController = new PortatilesController(_context, null);
-            var result = await portatilesController.GetPortatilesParaAlquiler(null, null, null);
+            var result = await portatilesController.GetPortatilesParaAlquiler(null, null, null, null);
 
             //Assert
             var okresult = Assert.IsType<OkObjectResult>(result.Result);
@@ -92,11 +92,15 @@
             var portatilDTOsTC3 = new List<PortatilParaAlquilerDTO>() { portatilDTOs[1], portatilDTOs[2] } 
             .OrderBy(p => p.StockAlquilar).ToList(); //16Gb Ram
 
+            var portatilDTOsTC4 = new List<PortatilParaAlquilerDTO>() { portatilDTOs[0] }   
+            .OrderBy(p => p.StockAlquilar).ToList(); //Modelo HP-2023
+
             var allTests = new List<object[]>
             {
-                new object[] { "ASUS", null, null, portatilDTOsTC1 },
-                new object[] { null, "Ryzen 5 2900", null, portatilDTOsTC2 },
-                new object[] { null, null, "16Gb", portatilDTOsTC3 },
+                new object[] { "ASUS", null, null, null, portatilDTOsTC1 },
+                new object[] { null, "Ryzen 5 2900", null, null, portatilDTOsTC2 },
+                new object[] { null, null, "16Gb", null, portatilDTOsTC3 },
+                new object[] { null, null, null, "HP-2023", portatilDTOsTC4 }
             };
 
             return allTests;
@@ -105,14 +109,14 @@
         [Theory]
         [MemberData(nameof(TestCasesFor_GetPortatilesParaAlquiler))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaAlquiler_testcase(string? filtroMarca, string? filtroProcesador, string? filtroRam,
+        public async Task GetPortatilesParaAlquiler_testcase(string? filtroMarca, string? filtroProcesador, string? filtroRam, string? filtroModelo,
             IList<PortatilParaAlquilerDTO> expectedPortatiles)
         {
             // Arrange
             var controller = new PortatilesController(_context, null);
 
             // Act
-            var result = await controller.GetPortatilesParaAlquiler(filtroMarca, filtroProcesador, filtroRam);
+            var result = await controller.GetPortatilesParaAlquiler(filtroMarca, filtroProcesador, filtroRam, filtroModelo);
 
             //Assert
             var okResult = Assert.IsType<OkObjectResult>(result.Result);
