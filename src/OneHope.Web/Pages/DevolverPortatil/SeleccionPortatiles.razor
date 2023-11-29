@@ -1,0 +1,124 @@
+﻿
+@using PortatilesAPI;
+@inject swaggerClient swaggerClient;
+@page "/compras/devolver"
+
+<h3>Devolver Portátiles</h3>
+
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">IdCompra</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilIdCompra" id="portatilIdCompra">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para color. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Fecha</span>
+    </div>
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilFechaSeleccionado">
+        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string fecha in fechas)
+        {
+            <option value="@fecha" @onclick="@BuscarPortatiles" id="portatilFechaSeleccionado_@fecha">@fecha</option>
+        }
+    </select>
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    @* Añade el botón para buscar. *@
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TableOfPortatiles">
+            <thead>
+                <tr>
+                    <th>Id Compra</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Fecha Compra</th>
+                    <th>Total</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="ArticuloData_@portatil.IdCompra">
+                        <td>@portatil.IdCompra</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Cantidad</td>
+                        <td>@portatil.FechaCompra</td>
+                        <td>@portatil.Total</td>
+                        <td align="center">
+                            <input type="checkbox" id="articuloCompra_@portatil.IdCompra">
+                                   
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit">
+                                
+                                    Devolver
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+@code {
+    private int portatilIdCompra;
+
+    private ICollection<string> fechas { get; set; }
+                                = new List<string>();
+
+    private string portatilFechaSeleccionado; 
+
+    private ICollection<PortatilesParaDevolverDTO> Portatiles { get; set; } =
+                                                    new List<PortatilesParaDevolverDTO>();
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los artículos. *@
+        BuscarPortatiles();
+    }
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+
+        Portatiles = await swaggerClient.GetPortatilesParaDevolverAsync(portatilIdCompra, null, 3, null);
+        
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+}
+
