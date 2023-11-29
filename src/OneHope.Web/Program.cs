@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using OneHope.Web.Areas.Identity;
 using OneHope.Web.Data;
+using PortatilesAPI;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,14 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+//adding the service created for connecting to the AppForMovies.API
+builder.Services.AddHttpClient<swaggerClient>();
+
+//the environment variable is defined in Properties\launchsettings.json
+builder.Services.AddScoped<swaggerClient>(sp =>
+        new swaggerClient(Environment.GetEnvironmentVariable("swaggerClient_API"), new HttpClient())
+    );
 
 var app = builder.Build();
 

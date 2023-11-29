@@ -1,0 +1,1845 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "OneHope.API",
+    "description": "Esta API provee servicios para alquilar, comprar, devolver o reabastecer portátiles.",
+    "contact": {
+      "name": "OneHope Team",
+      "email": "daniel.tomas@alu.uclm.es"
+    },
+    "license": {
+      "name": "MIT License",
+      "url": "https://opensource.org/license/mit/"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Alquileres/GetAlquiler": {
+      "get": {
+        "tags": [
+          "Alquileres"
+        ],
+        "operationId": "GetAlquiler",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Alquileres/CrearAlquiler": {
+      "post": {
+        "tags": [
+          "Alquileres"
+        ],
+        "operationId": "CrearAlquiler",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlquilerParaCrearDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlquilerParaCrearDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlquilerParaCrearDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetalleAlquilerDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Compras/GetCompra": {
+      "get": {
+        "tags": [
+          "Compras"
+        ],
+        "operationId": "GetCompra",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Compras/CrearCompra": {
+      "post": {
+        "tags": [
+          "Compras"
+        ],
+        "operationId": "CrearCompra",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompraPorCrearDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompraPorCrearDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CompraPorCrearDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallesCompraDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Devoluciones/GetDevolucion": {
+      "get": {
+        "tags": [
+          "Devoluciones"
+        ],
+        "operationId": "GetDevolucion",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Devoluciones/CreateDevolucion": {
+      "post": {
+        "tags": [
+          "Devoluciones"
+        ],
+        "operationId": "CreateDevolucion",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevolucionForCreateDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevolucionForCreateDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/DevolucionForCreateDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DevolucionDetailDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Marcas/GetMarca": {
+      "get": {
+        "tags": [
+          "Marcas"
+        ],
+        "operationId": "GetMarca",
+        "parameters": [
+          {
+            "name": "nombreMarca",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Pedidos/CreatePedido": {
+      "post": {
+        "tags": [
+          "Pedidos"
+        ],
+        "operationId": "CreatePedido",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoParaCrearDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoParaCrearDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/PedidoParaCrearDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Pedidos/GetPedido": {
+      "get": {
+        "tags": [
+          "Pedidos"
+        ],
+        "operationId": "GetPedido",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetallePedidoDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Portatiles/GetPortatilesParaPedido": {
+      "get": {
+        "tags": [
+          "Portatiles"
+        ],
+        "operationId": "GetPortatilesParaPedido",
+        "parameters": [
+          {
+            "name": "filtroModelo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroMarca",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroStockMinimo",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "filtroStockMaximo",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "filtroProveedor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroNombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaPedidoDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaPedidoDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaPedidoDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Portatiles/GetPortatilesParaDevolver": {
+      "get": {
+        "tags": [
+          "Portatiles"
+        ],
+        "operationId": "GetPortatilesParaDevolver",
+        "parameters": [
+          {
+            "name": "idCompra",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "fecha",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "CustomerId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "precio",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilesParaDevolverDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilesParaDevolverDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilesParaDevolverDTO"
+                  }
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          }
+        }
+      }
+    },
+    "/api/Portatiles/GetPortatilesParaComprar": {
+      "get": {
+        "tags": [
+          "Portatiles"
+        ],
+        "operationId": "GetPortatilesParaComprar",
+        "parameters": [
+          {
+            "name": "nombrePortatil",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "modeloPortatil",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "marcaPortatil",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "procesadorPortatil",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ramPortatil",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "precioPortatil",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "stock",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaComprarDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaComprarDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaComprarDTO"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Portatiles/GetPortatilesParaAlquiler": {
+      "get": {
+        "tags": [
+          "Portatiles"
+        ],
+        "operationId": "GetPortatilesParaAlquiler",
+        "parameters": [
+          {
+            "name": "filtroMarca",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroProcesador",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroRam",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filtroModelo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaAlquilerDTO"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaAlquilerDTO"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PortatilParaAlquilerDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Procesadores/GetProcesador": {
+      "get": {
+        "tags": [
+          "Procesadores"
+        ],
+        "operationId": "GetProcesador",
+        "parameters": [
+          {
+            "name": "modeloProcesador",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Proveedores/GetProveedor": {
+      "get": {
+        "tags": [
+          "Proveedores"
+        ],
+        "operationId": "GetProveedor",
+        "parameters": [
+          {
+            "name": "nombre",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Rams/GetRam": {
+      "get": {
+        "tags": [
+          "Rams"
+        ],
+        "operationId": "GetRam",
+        "parameters": [
+          {
+            "name": "capacidad",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlquilerParaCrearDTO": {
+        "required": [
+          "ApellidosCliente",
+          "Direccion",
+          "EmailCliente",
+          "NombreCliente",
+          "TipoMetodoPago"
+        ],
+        "type": "object",
+        "properties": {
+          "FechaInAlquiler": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "FechaFinAlquiler": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "EmailCliente": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "NombreCliente": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "ApellidosCliente": {
+            "maxLength": 50,
+            "minLength": 5,
+            "type": "string"
+          },
+          "Direccion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "TelefonoCliente": {
+            "type": "integer",
+            "format": "tel",
+            "nullable": true
+          },
+          "LineasPedido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaAlquilerDTO"
+            },
+            "nullable": true
+          },
+          "TipoMetodoPago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          },
+          "Total": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompraPorCrearDTO": {
+        "required": [
+          "apellidosUsuario",
+          "direccionEnvio",
+          "metodoDePago",
+          "nombreUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "direccionEnvio": {
+            "maxLength": 50,
+            "minLength": 10,
+            "type": "string"
+          },
+          "lineaCompra": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaCompraDTO"
+            },
+            "nullable": true
+          },
+          "precioTotal": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "nombreUsuario": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "apellidosUsuario": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "metodoDePago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetalleAlquilerDTO": {
+        "required": [
+          "ApellidosCliente",
+          "Direccion",
+          "EmailCliente",
+          "NombreCliente",
+          "TipoMetodoPago"
+        ],
+        "type": "object",
+        "properties": {
+          "FechaInAlquiler": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "FechaFinAlquiler": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "EmailCliente": {
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "NombreCliente": {
+            "maxLength": 50,
+            "minLength": 3,
+            "type": "string"
+          },
+          "ApellidosCliente": {
+            "maxLength": 50,
+            "minLength": 5,
+            "type": "string"
+          },
+          "Direccion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "TelefonoCliente": {
+            "type": "integer",
+            "format": "tel",
+            "nullable": true
+          },
+          "LineasPedido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaAlquilerDTO"
+            },
+            "nullable": true
+          },
+          "TipoMetodoPago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          },
+          "Total": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FechaAlquiler": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetallePedidoDTO": {
+        "required": [
+          "CodigoEmpleado",
+          "Direccion",
+          "TipoMetodoPago"
+        ],
+        "type": "object",
+        "properties": {
+          "Direccion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "LineasPedido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaPedidoDTO"
+            },
+            "nullable": true
+          },
+          "Total": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "CodigoEmpleado": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "TipoMetodoPago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          },
+          "Comentarios": {
+            "type": "string",
+            "format": "multiline",
+            "nullable": true
+          },
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FechaPedido": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DetallesCompraDTO": {
+        "required": [
+          "apellidosUsuario",
+          "direccionEnvio",
+          "metodoDePago",
+          "nombreUsuario"
+        ],
+        "type": "object",
+        "properties": {
+          "direccionEnvio": {
+            "maxLength": 50,
+            "minLength": 10,
+            "type": "string"
+          },
+          "lineaCompra": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaCompraDTO"
+            },
+            "nullable": true
+          },
+          "precioTotal": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "nombreUsuario": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "apellidosUsuario": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "metodoDePago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fechaCompra": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DevolucionDetailDTO": {
+        "required": [
+          "DireccionRecogida",
+          "MotivoDevolucion"
+        ],
+        "type": "object",
+        "properties": {
+          "MotivoDevolucion": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "DireccionRecogida": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "NotaRepartidor": {
+            "type": "string",
+            "nullable": true
+          },
+          "CuantiaDevolucion": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "LineasDevoluciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DevolucionItemDTO"
+            },
+            "nullable": true
+          },
+          "IdDevolucion": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "FechaDevolucion": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DevolucionForCreateDTO": {
+        "required": [
+          "DireccionRecogida",
+          "MotivoDevolucion"
+        ],
+        "type": "object",
+        "properties": {
+          "MotivoDevolucion": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "DireccionRecogida": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "NotaRepartidor": {
+            "type": "string",
+            "nullable": true
+          },
+          "fecha": {
+            "type": "string",
+            "format": "date"
+          },
+          "CuantiaDevolucion": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "LineasDevoluciones": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DevolucionItemDTO"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DevolucionItemDTO": {
+        "required": [
+          "Cantidad",
+          "PrecioUnitario"
+        ],
+        "type": "object",
+        "properties": {
+          "IdPortatil": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "PrecioUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "Modelo": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "IdCompra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "IdLineaCompra": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LineaAlquilerDTO": {
+        "required": [
+          "Cantidad"
+        ],
+        "type": "object",
+        "properties": {
+          "PortatilID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "PrecioAlquiler": {
+            "type": "number",
+            "format": "double"
+          },
+          "Cantidad": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LineaCompraDTO": {
+        "required": [
+          "Cantidad",
+          "precioUnitario"
+        ],
+        "type": "object",
+        "properties": {
+          "portatilID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "precioUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "ram": {
+            "type": "string",
+            "nullable": true
+          },
+          "procesador": {
+            "type": "string",
+            "nullable": true
+          },
+          "marca": {
+            "type": "string",
+            "nullable": true
+          },
+          "Cantidad": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LineaPedidoDTO": {
+        "required": [
+          "Cantidad"
+        ],
+        "type": "object",
+        "properties": {
+          "PortatilID": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Modelo": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "PrecioUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "Cantidad": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PedidoParaCrearDTO": {
+        "required": [
+          "CodigoEmpleado",
+          "Direccion",
+          "TipoMetodoPago"
+        ],
+        "type": "object",
+        "properties": {
+          "Direccion": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "LineasPedido": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LineaPedidoDTO"
+            },
+            "nullable": true
+          },
+          "Total": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "CodigoEmpleado": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "TipoMetodoPago": {
+            "$ref": "#/components/schemas/TipoMetodoPago"
+          },
+          "Comentarios": {
+            "type": "string",
+            "format": "multiline",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PortatilParaAlquilerDTO": {
+        "required": [
+          "id",
+          "marca",
+          "modelo",
+          "precioAlquiler",
+          "procesador",
+          "ram",
+          "stockAlquilar"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modelo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "marca": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "stockAlquilar": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precioAlquiler": {
+            "type": "number",
+            "format": "currency"
+          },
+          "procesador": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "ram": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PortatilParaComprarDTO": {
+        "required": [
+          "marca",
+          "modelo",
+          "nombre",
+          "precioCompra",
+          "procesador",
+          "ram",
+          "stock"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modelo": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "precioCompra": {
+            "minimum": 1,
+            "type": "number",
+            "format": "currency"
+          },
+          "ram": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "marca": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "nombre": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "procesador": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PortatilParaPedidoDTO": {
+        "required": [
+          "id",
+          "marca",
+          "modelo",
+          "precioCoste",
+          "proveedor",
+          "stock"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "modelo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "marca": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "stock": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "precioCoste": {
+            "type": "number",
+            "format": "currency"
+          },
+          "proveedor": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "PortatilesParaDevolverDTO": {
+        "required": [
+          "Cantidad",
+          "Marca",
+          "Total"
+        ],
+        "type": "object",
+        "properties": {
+          "IdCompra": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Marca": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "Cantidad": {
+            "maximum": 2147483647,
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "FechaCompra": {
+            "type": "string",
+            "format": "date"
+          },
+          "Total": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": { }
+      },
+      "TipoMetodoPago": {
+        "enum": [
+          "TarjetaCredito",
+          "PayPal",
+          "Transferencia"
+        ],
+        "type": "string"
+      },
+      "ValidationProblemDetails": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "detail": {
+            "type": "string",
+            "nullable": true
+          },
+          "instance": {
+            "type": "string",
+            "nullable": true
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": { }
+      }
+    }
+  }
+}
