@@ -1,0 +1,150 @@
+﻿@using PortatilesAPI;
+
+@inject swaggerClient swaggerClient;
+
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/reabastecer"
+
+<h3>Reabastecer Portátiles</h3>
+
+@* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Nombre</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
+    <input type="text" class="form-control" @bind="portatilModelo" id="portatilModelo">
+    <!--<input type="text" class="form-control" @bind="portatilMarca" id="portatilMarca">
+    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMin">
+    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMax">
+    <input type="text" class="form-control" @bind="portatilProveedor" id="portatilProveedor">-->
+
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para color. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Color</span>
+    </div>
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilMarca">
+        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreMarca in nombresMarcas)
+        {
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles" id="portatilMarca_@nombreMarca">@nombreMarca</option>
+        }
+    </select>
+
+    @* Añade el botón para buscar. *@
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="BuscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaDePortatiles">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Stock</th>
+                    <th>PrecioCoste</th>
+                    <th>Proveedor</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Id">
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Stock</td>
+                        <td>@portatil.PrecioCoste</td>
+                        <td>@portatil.Proveedor</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilPedido_@portatil.Id">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit" @*disabled="@comprarButtonDisabled" @onclick="@(()=>NavegarCreateCompra())"*@>
+                                    Hacer Pedido
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+
+@code {
+
+    @* Define variables necesarias para enlazar los datos que se manejan en la IU con tu código de manera sencilla (binding). *@
+    @* En este ejemplo necesito variables para mis dos filtros. *@
+    private string portatilNombre;
+    private string portatilModelo;
+    private string portatilMarca;
+    private int portatilStockMin;
+    private int portatilStockMax;
+    private string portatilProveedor;
+
+    @* Para la lista de artículo que se muestra en la tabla. *@
+    private ICollection<PortatilParaPedidoDTO> Portatiles { get; set; } = new List<PortatilParaPedidoDTO>();
+    private ICollection<string>? nombresMarcas = new List<string>();
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+        @* Cargar los datos de los tipo enumerado *@
+        nombresMarcas = await swaggerClient.GetMarcaAsync(null);
+    }
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+        @*articuloColor = articuloColorSeleccionado == "Todos" ? null : articuloColorSeleccionado;
+
+        try
+        {*@
+        Portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(portatilModelo, portatilMarca, portatilStockMin, portatilStockMax, portatilProveedor, portatilNombre);
+        @*}
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Articulos = new List<ArticuloCompraDTO>();
+        }
+
+        if (Articulos == null)
+        {
+            error = "No se puede conectar con el API.";
+        }*@
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+}
