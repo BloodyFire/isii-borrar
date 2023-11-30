@@ -13,29 +13,46 @@
     @* Etiqueta que aparece para el filtro. *@
     @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
-        <span class="input-group-text" id="">Nombre</span>
+        <span class="input-group-text">Nombre</span>
     </div>
     <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
-    <input type="text" class="form-control" @bind="portatilModelo" id="portatilModelo">
-    <!--<input type="text" class="form-control" @bind="portatilMarca" id="portatilMarca">
-    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMin">
-    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMax">
-    <input type="text" class="form-control" @bind="portatilProveedor" id="portatilProveedor">-->
-
-    @* Etiqueta que aparece para el filtro. *@
-    @* Filtro de selección para color. *@
+    @* Filtro de texto para el modelo. *@
     <div class="input-group-prepend">
-        <span class="input-group-text" id="">Color</span>
+        <span class="input-group-text">Modelo</span>
     </div>
-    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    <input type="text" class="form-control" @bind="portatilModelo" id="portatilModelo">
+    @* Filtro de selección para la marca. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Marca</span>
+    </div>
     <select class="form-select" aria-label="Default select" @bind="portatilMarca">
-        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreMarca in nombresMarcas)
         {
             <option value="@nombreMarca" @onclick="@BuscarPortatiles" id="portatilMarca_@nombreMarca">@nombreMarca</option>
         }
     </select>
-
+    @* Filtro numérico para stock mínimo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Stock Mínimo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMin">
+    @* Filtro numérico para stock máximo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Stock Máximo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMax">
+    @* Filtro de selección para el Proveedor. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Proveedor</span>
+    </div>
+    <select class="form-select" aria-label="Default select" @bind="portatilProveedor">
+        <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreProveedor in nombresProveedores)
+        {
+            <option value="@nombreProveedor" @onclick="@BuscarPortatiles" id="portatilProveedor_@nombreProveedor">@nombreProveedor</option>
+        }
+    </select>
     @* Añade el botón para buscar. *@
     <div class="input-group-append">
         <button class="btn btn-outline-secondary" id="BuscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
@@ -107,13 +124,15 @@ else
     private string portatilNombre;
     private string portatilModelo;
     private string portatilMarca;
-    private int portatilStockMin;
-    private int portatilStockMax;
+    private int portatilStockMin = 0;
+    private int portatilStockMax = 50;
     private string portatilProveedor;
+    private string error;
 
     @* Para la lista de artículo que se muestra en la tabla. *@
     private ICollection<PortatilParaPedidoDTO> Portatiles { get; set; } = new List<PortatilParaPedidoDTO>();
     private ICollection<string>? nombresMarcas = new List<string>();
+    private ICollection<string>? nombresProveedores = new List<string>();
 
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
@@ -122,26 +141,31 @@ else
         BuscarPortatiles();
         @* Cargar los datos de los tipo enumerado *@
         nombresMarcas = await swaggerClient.GetMarcaAsync(null);
+        nombresProveedores = await swaggerClient.GetProveedorAsync(null);
     }
 
     // Hacer el filtro.
     protected async void BuscarPortatiles()
     {
-        @*articuloColor = articuloColorSeleccionado == "Todos" ? null : articuloColorSeleccionado;
-
         try
-        {*@
-        Portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(portatilModelo, portatilMarca, portatilStockMin, portatilStockMax, portatilProveedor, portatilNombre);
-        @*}
+        {
+            Portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(
+                portatilModelo != "" ? portatilModelo : null,
+                portatilMarca != "" ? portatilMarca :null,
+                portatilStockMin >= 0 ? portatilStockMin : null,
+                portatilStockMax >= 0 ? portatilStockMax : null,
+                portatilProveedor != "" ? portatilProveedor : null,
+                portatilNombre != "" ? portatilNombre : null);
+        }
         catch (ApiException e)
         {
-            if (e.StatusCode == 204) Articulos = new List<ArticuloCompraDTO>();
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaPedidoDTO>();
         }
 
-        if (Articulos == null)
+        if (Portatiles == null)
         {
             error = "No se puede conectar con el API.";
-        }*@
+        }
 
 
         @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
