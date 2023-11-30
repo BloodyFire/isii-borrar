@@ -1,0 +1,168 @@
+﻿@using PortatilesAPI;
+
+@inject swaggerClient swaggerClient;
+
+<h3>Comprar Portátiles</h3>
+
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Nombre</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Marca</span>
+        <span class="input-group-text" id="">Ram</span>
+        <span class="input-group-text" id="">Procesador</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilPrecioCompra" id="portatilPrecioCompra">
+    <input type="number" class="form-control" @bind="portatilStock" id="portatilStock">
+
+
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada" id="SeleccionarMarca">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string nombreMarca in nombresMarcas)
+        {
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles" 
+                id="portatilMarca_@nombreMarca">@nombreMarca</option>
+        }
+    </select>
+
+    <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada" id="SeleccionarRam">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string tipoRam in tiposRams)
+        {
+            <option value="@tipoRam" @onclick="@BuscarPortatiles" 
+                id="portatilMarca_@tipoRam">@tipoRam</option>
+        }
+    </select>
+
+    <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado" id="SeleccionarProcesador">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string nombreProcesador in nombresProcesadores)
+        {
+            <option value="@nombreProcesador" @onclick="@BuscarPortatiles"
+                    id="portatilMarca_@nombreProcesador">@nombreProcesador</option>
+        }
+    </select>
+
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div>
+<p></p>
+
+<!-- FIN INPUT-GROUP -->
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaDePortatiles">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Nombre</th>
+                    <th>Modelo</th>
+                    <th>PrecioCompra</th>
+                    <th>Ram</th>
+                    <th>Procesador</th>
+                    <th>Stock</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Nombre">
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Nombre</td>
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.PrecioCompra</td>
+                        <td>@portatil.Ram</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.Stock</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilParaComprar_@portatil.Id">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit">
+                                    Comprar
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+@code {
+    
+    private string portatilNombre;
+    private string portatilModelo;
+    private string portatilMarca;
+    private double portatilPrecioCompra;
+    private string portatilRam;
+    private string portatilProcesador;
+    private int portatilStock;
+
+    private string portatilMarcaSeleccionada;
+    private string portatilRamSeleccionada;
+    private string portatilProcesadorSeleccionado;
+
+    private string error;
+
+    @* Para la lista de artículo que se muestra en la tabla. *@
+    private ICollection<PortatilParaComprarDTO> Portatiles { get; set; } = new List<PortatilParaComprarDTO>();
+    private ICollection<string>? nombresMarcas { get; set; } = new List<string>();
+    private ICollection<string>? tiposRams { get; set; } = new List<string>();
+    private ICollection<string>? nombresProcesadores { get; set; } = new List<string>();
+
+    //private string portatilSeleccionado;
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los tipo enumerado *@
+        nombresMarcas = await swaggerClient.GetMarcaAsync(null);
+        tiposRams = await swaggerClient.GetRamAsync(null);
+        nombresProcesadores = await swaggerClient.GetProcesadorAsync(null);
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+    }
+
+    protected async void BuscarPortatiles()
+    {
+        portatilMarca = portatilMarcaSeleccionada == "Todo" ? null : portatilMarcaSeleccionada;
+
+        Portatiles = await swaggerClient.GetPortatilesParaComprarAsync(portatilNombre, portatilModelo,
+         portatilMarca, portatilProcesador, portatilRam, portatilPrecioCompra, portatilStock);
+
+        if (Portatiles==null)
+        {
+            error = "Error! Ha ocurrido un error de conexión con el servicio de portátiles.";
+        }
+
+        StateHasChanged();
+    }
+}
