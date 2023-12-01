@@ -106,7 +106,7 @@ namespace OneHope.API.Controllers
                 && (marcaPortatil == null || portatil.Marca.NombreMarca.Equals(marcaPortatil))
                 && (procesadorPortatil == null || portatil.Procesador.ModeloProcesador.Equals(procesadorPortatil))
                 && (ramPortatil == null || portatil.Ram.Capacidad.Equals(ramPortatil))
-                && (precioPortatil == null || portatil.PrecioCompra.Equals(precioPortatil))
+                && (precioPortatil == null || portatil.PrecioCompra >= precioPortatil)
                 && (stock==null || portatil.Stock > stock))
                 .OrderBy(p=> p.Nombre)
                 .Select(p => new PortatilParaComprarDTO(p.Id, p.Modelo, p.PrecioCompra,
