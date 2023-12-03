@@ -95,6 +95,8 @@ else
     @* Define variables necesarias para enlazar los datos que se manejan en la IU con tu código de manera sencilla (binding). *@
     @* En este ejemplo necesito variables para mis dos filtros. *@
     private string portatilModelo;
+    private string portatilMarca;
+
     private string portatilMarcaSeleccionada;
 
     private ICollection<string> nombreMarcas { get; set; }
@@ -108,7 +110,7 @@ else
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
     {
-        portatilMarca = portatilMarcaSeleccionada 
+        nombreMarcas = await swaggerClient.GetMarcaAsync(null);
         @* Cargar los datos de los artículos. *@
         BuscarPortatiles();
 
@@ -117,8 +119,16 @@ else
     // Hacer el filtro.
     protected async void BuscarPortatiles()
     {
+        portatilMarca = portatilMarcaSeleccionada == "Todos" ? null : portatilMarcaSeleccionada;
 
-        Portatiles = await swaggerClient.GetPortatilesParaAlquilerAsync(null, null, null, portatilModelo);
+        try
+        {
+            Portatiles = await swaggerClient.GetPortatilesParaAlquilerAsync(portatilMarca, null, null, portatilModelo);
+        }
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaAlquilerDTO>();
+        }
 
         @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
         StateHasChanged();
