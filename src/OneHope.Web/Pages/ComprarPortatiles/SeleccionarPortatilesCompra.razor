@@ -2,6 +2,9 @@
 
 @inject swaggerClient swaggerClient;
 
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/comprar"
+
 <h3>Comprar Portátiles</h3>
 
 <div class="input-group">
@@ -11,34 +14,34 @@
         <span class="input-group-text" id="">Nombre</span>
     </div>
     <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
+
     <div class="input-group-prepend">
         <span class="input-group-text" id="">Marca</span>
-        <span class="input-group-text" id="">Ram</span>
-        <span class="input-group-text" id="">Procesador</span>
     </div>
-    <input type="number" class="form-control" @bind="portatilPrecioCompra" id="portatilPrecioCompra">
-    <input type="number" class="form-control" @bind="portatilStock" id="portatilStock">
-
-
-    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
     <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada" id="SeleccionarMarca">
         <option value="Todos" selected>Todos</option>
         @foreach (string nombreMarca in nombresMarcas)
         {
-            <option value="@nombreMarca" @onclick="@BuscarPortatiles" 
-                id="portatilMarca_@nombreMarca">@nombreMarca</option>
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles"
+                    id="portatilMarca_@nombreMarca">@nombreMarca</option>
         }
     </select>
 
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Ram</span>
+    </div>
     <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada" id="SeleccionarRam">
         <option value="Todos" selected>Todos</option>
         @foreach (string tipoRam in tiposRams)
         {
-            <option value="@tipoRam" @onclick="@BuscarPortatiles" 
-                id="portatilMarca_@tipoRam">@tipoRam</option>
+            <option value="@tipoRam" @onclick="@BuscarPortatiles"
+                    id="portatilRam_@tipoRam">@tipoRam</option>
         }
     </select>
 
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Procesador</span>
+    </div>
     <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado" id="SeleccionarProcesador">
         <option value="Todos" selected>Todos</option>
         @foreach (string nombreProcesador in nombresProcesadores)
@@ -47,6 +50,19 @@
                     id="portatilMarca_@nombreProcesador">@nombreProcesador</option>
         }
     </select>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Precio Mínimo</span>
+    </div>
+    <input type="number" step="0.01" class="form-control" @bind="portatilPrecioCompra" id="portatilPrecioCompra">
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Stock Mínimo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStock" id="portatilStock">
+
+
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
 
     <div class="input-group-append">
         <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
@@ -72,9 +88,9 @@ else
                     <th>Marca</th>
                     <th>Nombre</th>
                     <th>Modelo</th>
-                    <th>PrecioCompra</th>
                     <th>Ram</th>
                     <th>Procesador</th>
+                    <th>PrecioCompra</th>
                     <th>Stock</th>
                     <th align="center">Seleccionado</th>
                 </tr>
@@ -86,9 +102,9 @@ else
                         <td>@portatil.Marca</td>
                         <td>@portatil.Nombre</td>
                         <td>@portatil.Modelo</td>
-                        <td>@portatil.PrecioCompra</td>
                         <td>@portatil.Ram</td>
                         <td>@portatil.Procesador</td>
+                        <td>@portatil.PrecioCompra</td>
                         <td>@portatil.Stock</td>
                         <td align="center">
                             <input type="checkbox" id="portatilParaComprar_@portatil.Id">
@@ -154,6 +170,8 @@ else
     protected async void BuscarPortatiles()
     {
         portatilMarca = portatilMarcaSeleccionada == "Todo" ? null : portatilMarcaSeleccionada;
+        portatilRam = portatilRamSeleccionada == "Todo" ? null : portatilRamSeleccionada;
+        portatilProcesador = portatilProcesadorSeleccionado == "Todo" ? null : portatilProcesadorSeleccionado;
 
         Portatiles = await swaggerClient.GetPortatilesParaComprarAsync(portatilNombre, portatilModelo,
          portatilMarca, portatilProcesador, portatilRam, portatilPrecioCompra, portatilStock);
