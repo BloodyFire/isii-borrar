@@ -25,8 +25,22 @@ namespace OneHope.Web {
             if (!Pedido.LineasPedido.Any(li => li.PortatilID == portatil.Id)) {
                 int cant = (int)(cantidad == null ? 1 : cantidad);  // Si la cantidad es null lo añadimos con cantidad 1.
                 // Si pides directamente en la interfaz de usuario la cantidad, el último párametro en vez de ser 1 sería la propia cantidad.
-                Pedido.LineasPedido.Add(LineaPedido(portatil.Id, portatil.Marca, portatil.PrecioCoste, cant));
+                Pedido.LineasPedido.Add(LineaPedido(portatil.Id, portatil.Modelo, portatil.PrecioCoste, cant));
             }
+        }
+
+        public void SetDireccion(string direccion) {
+            Pedido.Direccion = direccion;
+        }
+
+        public void SetComentarios(string comentarios) { 
+            Pedido.Comentarios = comentarios;
+        }
+
+        //TODO: THIS SHOULD BE DONE OUTSIDE THE FRONTEND
+        public void SetCodigoEmpleado(string codEmpleado)
+        {
+            Pedido.CodigoEmpleado = codEmpleado;
         }
 
         // Se elimina un elemento del carrito de la compra.

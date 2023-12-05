@@ -19,6 +19,15 @@
     @* Etiqueta que aparece para el filtro. *@
     @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Dirección del almacén de entrega</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="direccionAlmacen" @onchange="@((value)=>ActualizaDireccion(value))"/>
+    </div>
+    <div class="input-group-prepend">
+        <input type="hidden" class="form-control" @bind="codEmpleado" id="codEmpleado" />
+    </div>
+    <div class="input-group-prepend">
         <span class="input-group-text" id="">Método de Pago</span>
         <select class="form-select" aria-label="Default select" @bind="metodoPagoSeleccionado">
             @foreach (string metodo in metodosPago)
@@ -30,7 +39,7 @@
         </select>
     </div>
 </div> <!-- FIN INPUT-GROUP -->
-<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+<!-- TABLA CON LA LISTA DE PORTÁTILES -->
 @* Flujo alternativo cuando no hay elementos que mostrar. *@
 @if (Portatiles == null || Portatiles.Count() == 0)
 {
@@ -67,7 +76,7 @@ else
                         @* Botón para navegar introducción de datos. *@
                         <div class="col-md">
                             <div class="form-floating">
-                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
                                 <button class="btn btn-primary" type="submit" id="Volver" @onclick="@(()=>Volver())">
                                     Volver
                                 </button>
@@ -78,9 +87,9 @@ else
                         @* Botón para navegar introducción de datos. *@
                         <div class="col-md">
                             <div class="form-floating">
-                                @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Pedidor" disabled="@completarButtonDisabled" @onclick="@(()=>CreatePedido())">
-                                    Pedidor
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="RealizarPedido" disabled="@completarButtonDisabled" @onclick="@(()=>CreatePedido())">
+                                    Realizar Pedido
                                 </button>
                             </div>
                         </div>
@@ -89,8 +98,16 @@ else
             </tfoot>
         </table>
     </div>
-    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+    <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
 }
+<div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Comentarios</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="comentarios" @onchange="@((value)=>ActualizaComentarios(value))" />
+    </div>
+</div>
 @if (!mensajeError.Equals(""))
 {
     <div class="card-header">
@@ -108,8 +125,15 @@ else
     @* Es el título de la pantalla de error. *@
     private string tituloError = "Error";
 
-    @* Se usa para controlar si el botón de completar pedidor está activo o no. *@
+    @* Se usa para controlar si el botón de realizar pedido está activo o no. *@
     private bool completarButtonDisabled = false;
+
+    @* Se usa para guardar la dirección del almacén de entrega.*@
+    //private string direccionAlmacen;
+    @* Se usa para guardar los comentarios.*@
+    //private string comentarios = "";
+    @* Se usa para guardar el código del empleado.*@
+    private string codEmpleado = "Daniel.Tomas";
 
     @* Para la lista de portátil que se muestra en la tabla. *@
     private ICollection<LineaPedidoDTO> Portatiles { get; set; } =
@@ -133,6 +157,7 @@ else
         bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
         if (parsed) estadoPedido.Pedido.TipoMetodoPago = metodoPago;
         else estadoPedido.Pedido.TipoMetodoPago = TipoMetodoPago.TarjetaCredito;
+        estadoPedido.SetCodigoEmpleado(codEmpleado);
     }
 
     @* Cada vez que se seleciona un método de pago en el desplegable se actualiza la pedido. *@
@@ -210,6 +235,23 @@ else
 
         @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
         completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+    @* Actualiza la dirección de entrega del pedido. *@
+    private void ActualizaDireccion(ChangeEventArgs args)
+    {
+        string direccion = (string)args.Value;
+        estadoPedido.SetDireccion(direccion);
+
+        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
+        //completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+    @* Actualiza el comentarios del pedido. *@
+    private void ActualizaComentarios(ChangeEventArgs args)
+    {
+        string comentarios = (string)args.Value;
+        estadoPedido.SetComentarios(comentarios);
     }
 
 }
