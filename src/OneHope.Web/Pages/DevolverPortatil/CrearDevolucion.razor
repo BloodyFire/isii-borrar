@@ -1,0 +1,56 @@
+﻿@using PortatilesAPI;
+@inject swaggerClient swaggerClient;
+@inject DevolverPortatilesStateContainer estadoDevolucion;
+@inject NavigationManager Navegation;
+@page "/compras/createdevolucion"
+
+<h3>Introduce los datos de la devolucion</h3>
+
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Método de Pago</span>
+        <select class="form-select" aria-label="Default select" @bind="metodoPagoSeleccionado">
+            @foreach (string metodo in metodosPago)
+            {
+                <option value="@metodo" id="metodoPagoSeleccionado_@metodo" @onclick="@(() => ActualizarMetodoPago())">
+                    @metodo
+                </option>
+            }
+        </select>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+
+@code {
+
+    private ICollection<PortatilesParaDevolverDTO> Portatiles { get; set; } =
+                                                    new List<PortatilesParaDevolverDTO>();
+
+
+    protected async void BuscarPortatiles()
+    {
+
+        //Portatiles = estadoDevolucion.Devolucion.LineasDevoluciones;
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+    @* Actualiza la cantidad del artículo en el carrito. *@
+    private void ActualizaCantidad(int id, ChangeEventArgs args)
+    {
+        //cambiar esto conforme a nuestro caso de uso 
+        int cantidad = (int)Int32.Parse((string)args.Value);
+
+        if (cantidad != null)
+            estadoDevolucion.UpdateCarrito(id, cantidad);
+
+        @* Si hay algún artículo con cantidad 0 no se activa el botón de finalizar la compra. *@
+        completarButtonDisabled = (estadoDevolucion.Devolucion.LineasDevoluciones.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+
+}
