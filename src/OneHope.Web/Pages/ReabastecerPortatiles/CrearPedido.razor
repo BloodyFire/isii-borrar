@@ -3,7 +3,7 @@
 @inject swaggerClient swaggerClient;
 
 @* Especifica la ruta en la que se mostrará esta página. *@
-@page "/portatiles/createpedido"
+@page "/portatiles/reabastecer/crearpedido"
 
 @* Inyectar el servicio que gestiona el estado de la pedido (debe ser añadido en Program.cs). *@
 @inject ReabastecerPortatilStateContainer estadoPedido;
@@ -16,8 +16,6 @@
 @* https://getbootstrap.com/docs/4.0/components/input-group/ *@
 @* input-group permite personalizar los controles para introducir datos. *@
 <div class="input-group">
-    @* Etiqueta que aparece para el filtro. *@
-    @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
         <div class="input-group-prepend">
             <span class="input-group-text">Dirección del almacén de entrega</span>
@@ -192,7 +190,7 @@ else
             @* Borrar el carrito *@
             estadoPedido.FinalizarPedido();
 
-            Navigation.NavigateTo($"/pedido/detalle?PedidoId={details.Id}");
+            Navigation.NavigateTo($"/portatiles/reabastecer/detallepedido?PedidoId={details.Id}");
         }
         catch (ApiException<ValidationProblemDetails> apiexceptionvalidation)
         {
@@ -222,7 +220,7 @@ else
     @* Volver a la pantalla anterior conservando los datos para poder modificar la pedido. *@
     private void Volver()
     {
-        Navigation.NavigateTo("/portatiles/pedidor");
+        Navigation.NavigateTo("/portatiles/reabastecer");
     }
 
     @* Actualiza la cantidad del portátil en el carrito. *@

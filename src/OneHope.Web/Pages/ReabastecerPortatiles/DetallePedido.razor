@@ -1,5 +1,5 @@
 ﻿@* Especifica la ruta en la que se mostrará esta página. *@
-@page "/pedido/detalle"
+@page "/portatiles/reabastecer/detallepedido"
 
 @* Espacio de nombres del cliente generado con NSwag. *@
 @using PortatilesAPI;
@@ -30,10 +30,10 @@
         <span class="input-group-text" id="fecha-pedido"><b>Fecha de pedido: </b> @(pedido.FechaPedido.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
     </div>
 </div> <!-- FIN INPUT-GROUP -->
-<!-- TABLA CON LA LISTA DE ARTÍCULOS COMPRADOS -->
+<!-- TABLA CON LA LISTA DE PORTÁTILES PEDIDOS -->
 @if (Portatiles == null || Portatiles.Count() == 0) {
     <br />
-    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
 } else {  
     <div class="mh-100 table-responsive">
         <table class="table table-condensed table-hover" id="TablaPortatiles">
@@ -50,7 +50,7 @@
                         <td>@portatil.Modelo</td>
                         <td>@portatil.PrecioUnitario</td>
                         <td>@portatil.Cantidad</td>
-                        <td>@portatil.PrecioUnitario * @portatil.Cantidad</td>
+                        <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
 
                     </tr>
                 }
@@ -59,7 +59,7 @@
             <tfoot><tr><td /><td /><td><em>Precio Total</em></td><td>@pedido.Total</td></tr></tfoot>
         </table>
     </div>
-    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+    <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
 }
 
 }
@@ -85,9 +85,8 @@
     @* Es el título de la pantalla de error. *@
     private string tituloError = "Error";
 
-    @* Para la lista de artículo que se muestra en la tabla. *@
-    private ICollection<LineaPedidoDTO> Portatiles { get; set; } =
-                                                    new List<LineaPedidoDTO>();
+    @* Para la lista de portátil que se muestra en la tabla. *@
+    private ICollection<LineaPedidoDTO> Portatiles { get; set; } = new List<LineaPedidoDTO>();
 
     private DetallePedidoDTO pedido = new DetallePedidoDTO();
 
@@ -99,7 +98,7 @@
 
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync() {
-        @* Cargar los datos de los artículos. *@
+        @* Cargar los datos de los portátiles. *@
         try {
         pedido = await swaggerClient.GetPedidoAsync(PedidoId);
         Portatiles = pedido.LineasPedido;
