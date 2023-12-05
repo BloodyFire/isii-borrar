@@ -1,6 +1,7 @@
 ﻿@using PortatilesAPI;
 
 @inject swaggerClient swaggerClient;
+@inject ReabastecerPortatilStateContainer estadoPedido;
 
 @* Especifica la ruta en la que se mostrará esta página. *@
 @page "/portatiles/reabastecer"
@@ -91,7 +92,9 @@ else
                         <td>@portatil.PrecioCoste</td>
                         <td>@portatil.Proveedor</td>
                         <td align="center">
-                            <input type="checkbox" id="portatilPedido_@portatil.Id">
+                            <input type="checkbox" id="portatilPedido_@portatil.Id"
+                                   checked="@(estadoPedido.includes(portatil.Id))"
+                            @onchange="@((value)=>ToggleArticulo(portatil, value))">
                         </td>
                     </tr>
                 }
@@ -103,7 +106,7 @@ else
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no laptops in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Submit" @*disabled="@comprarButtonDisabled" @onclick="@(()=>NavegarCreateCompra())"*@>
+                                <button class="btn btn-primary" type="submit" id="Submit" @*disabled="@pedidoButtonDisabled" @onclick="@(()=>NavegarCreatePedido())"*@>
                                     Hacer Pedido
                                 </button>
                             </div>
@@ -129,6 +132,9 @@ else
     private string portatilProveedor;
     private string error;
 
+    private bool pedidoButtonDisabled = true;
+
+
     @* Para la lista de artículo que se muestra en la tabla. *@
     private ICollection<PortatilParaPedidoDTO> Portatiles { get; set; } = new List<PortatilParaPedidoDTO>();
     private ICollection<string>? nombresMarcas = new List<string>();
@@ -142,7 +148,44 @@ else
         @* Cargar los datos de los tipo enumerado *@
         nombresMarcas = await swaggerClient.GetMarcaAsync(null);
         nombresProveedores = await swaggerClient.GetProveedorAsync(null);
+        pedidoButtonDisabled = estadoPedido.isEmpty();
+
     }
+
+
+    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
+    private void ToggleArticulo(PortatilesAPI.PortatilParaPedidoDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddArticuloCompra(portatil);
+        else
+            removeArticuloCompra(portatil);
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void removeArticuloCompra(PortatilesAPI.PortatilParaPedidoDTO portatil)
+    {
+        estadoPedido.RemovePortatilAPedir(portatil.Id);
+
+        if (estadoPedido.isEmpty()) pedidoButtonDisabled = true;
+    }
+
+    @* Añade un artículo al carrito de la compra guardándolo en la estado de la web. *@
+    private void AddArticuloCompra(PortatilesAPI.PortatilParaPedidoDTO portatil)
+    {
+        // portatilCompraDTO(int id, string nombre, float _PVP, string color, int _IVA)
+        var _portatil = new PortatilParaPedidoDTO();
+        _portatil.Id = portatil.Id;
+        _portatil.Modelo = portatil.Modelo;
+        _portatil.PrecioCoste = portatil.PrecioCoste;
+        //_portatil. = 1; //??
+
+        estadoPedido.AddPortatilAPedido(_portatil, 1);
+
+        pedidoButtonDisabled = false;
+    }
+
 
     // Hacer el filtro.
     protected async void BuscarPortatiles()
