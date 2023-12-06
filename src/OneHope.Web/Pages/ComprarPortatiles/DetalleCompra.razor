@@ -1,0 +1,141 @@
+﻿@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/comprar/detallecompra"
+
+@* Espacio de nombres del cliente generado con NSwag. *@
+@using PortatilesAPI;
+@* Espacio de nombres donde están los DTOs. *@
+
+@* Este es el servicio que se ha definido como HttpClient en Program.cs. *@
+@inject swaggerClient swaggerClient;
+
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
+
+
+<h3>Resumen de la Compra</h3>
+
+@if (!mensajeError.Equals("")) {
+    <div class="card-header">
+        @tituloError
+    </div>
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+} else {
+    @* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+    @* input-group permite personalizar los controles para introducir datos. *@
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="metodo-pago"><b>Método de Pago: </b> @(compra.MetodoDePago)</span>
+            <span class="input-group-text" id="fecha-pedido"><b>Fecha de pedido: </b> @(compra.FechaCompra.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
+        </div>
+    </div> <!-- FIN INPUT-GROUP -->
+    <!-- TABLA CON LA LISTA DE PORTÁTILES PEDIDOS -->
+    @if (Portatiles == null || Portatiles.Count() == 0)
+    {
+        <br />
+        <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+    }
+    else
+    {
+        <div class="mh-100 table-responsive">
+            <table class="table table-condensed table-hover" id="TablaPortatiles">
+                <thead>
+                    <tr>
+                        <th>Marca</th>
+                        <th>Nombre</th>
+                        <th>Ram</th>
+                        <th>Procesador</th>
+                        <th>Stock</th>
+                        <th>PVP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var portatil in Portatiles)
+                    {
+                        <tr id="PortatilData_@portatil.PortatilID">
+                            <td>@portatil.Marca</td>
+                            <td>@portatil.Nombre</td>
+                            <td>@portatil.Ram</td>
+                            <td>@portatil.Procesador</td>
+                            <td>@portatil.Cantidad</td>
+                            <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
+                        </tr>
+                    }
+
+                </tbody>
+                <tfoot><tr><td /><td /><td><em>Precio Total</em></td><td>@compra.PrecioTotal</td></tr></tfoot>
+            </table>
+        </div>
+        <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
+    }
+}
+
+@* Botón para navegar de nuevo al inicio. *@
+<div class="col-md">
+    <div class="form-floating">
+        <button class="btn btn-primary" type="submit" id="Submit" @onclick="@(()=>NavegarInicio())">
+            Finalizar
+        </button>
+    </div>
+</div>
+
+@code {
+
+    @* Este es id de la pedido a mostrar que se pasa en el parámetro que se le pasa a la página. *@
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int CompraId { get; set; }
+
+    @* Se usa para almacenar el mensaje de error cuando lo hay. *@
+    private string mensajeError = "";
+    @* Es el título de la pantalla de error. *@
+    private string tituloError = "Error";
+
+    @* Para la lista de portátil que se muestra en la tabla. *@
+    private ICollection<LineaCompraDTO> Portatiles { get; set; } = new List<LineaCompraDTO>();
+
+    private DetallesCompraDTO compra = new DetallesCompraDTO();
+
+    @* Navegar a la página de inicio. *@
+    private void NavegarInicio()
+    {
+        @* Volver al inicio. *@
+        Navigation.NavigateTo("/portatiles/comprar");
+    }
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los portátiles. *@
+        try
+        {
+            compra = await swaggerClient.GetCompraAsync(CompraId);
+            Portatiles = compra.LineaCompra;
+        }
+        catch (ApiException<ValidationProblemDetails> apiexceptionvalidation)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Error: no se pueden mostrar los detalles de la compra.";
+
+            if (apiexceptionvalidation.Result.Errors.Values != null)
+            {
+                mensajeError = "";
+                foreach (var errors in apiexceptionvalidation.Result.Errors.Values)
+                    //https://learn.microsoft.com/en-us/dotnet/api/system.string.join?view=net-7.0
+                    mensajeError = string.Join("(*) ", mensajeError, string.Join(" (*) ", errors));
+            }
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+        catch (ApiException apiexception)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Error";
+            mensajeError = $"No se pueden mostrar los detalles de la compra cuyo id es: {CompraId}.";
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+    }
+}
+}
