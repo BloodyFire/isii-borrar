@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OneHope.Web.Areas.Identity;
 using OneHope.Web.Data;
 using PortatilesAPI;
+using OneHope.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,8 +23,12 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 
-//adding the service created for connecting to the AppForMovies.API
+//adding the service created for connecting to the OneHope.API
 builder.Services.AddHttpClient<swaggerClient>();
+
+//adding an In-memory state container services
+//https://learn.microsoft.com/en-us/aspnet/core/blazor/state-management?view=aspnetcore-6.0&pivots=server#in-memory-state-container-service-server
+builder.Services.AddScoped<ComprarPortatilStateContainer>();
 
 //the environment variable is defined in Properties\launchsettings.json
 builder.Services.AddScoped<swaggerClient>(sp =>
