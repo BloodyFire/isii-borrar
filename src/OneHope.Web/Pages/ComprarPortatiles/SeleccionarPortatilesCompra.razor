@@ -4,6 +4,9 @@
 
 @* Especifica la ruta en la que se mostrará esta página. *@
 @page "/portatiles/comprar"
+@inject swaggerClient swaggerClient;
+@inject NavigationManager Navigation;
+@inject ComprarPortatilStateContainer estadoCompra;
 
 <h3>Comprar Portátiles</h3>
 
@@ -119,7 +122,7 @@ else
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Submit">
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@comprarButtonDisable" @onclick="@(()=>NavegarCreateCompra())">
                                     Comprar
                                 </button>
                             </div>
@@ -133,7 +136,7 @@ else
 }
 
 @code {
-    
+
     private string portatilNombre;
     private string portatilModelo;
     private string portatilMarca;
@@ -147,6 +150,8 @@ else
     private string portatilProcesadorSeleccionado;
 
     private string error;
+
+    private bool comprarButtonDisable = true;
 
     @* Para la lista de artículo que se muestra en la tabla. *@
     private ICollection<PortatilParaComprarDTO> Portatiles { get; set; } = new List<PortatilParaComprarDTO>();
@@ -165,6 +170,12 @@ else
         nombresProcesadores = await swaggerClient.GetProcesadorAsync(null);
         @* Cargar los datos de los portatiles. *@
         BuscarPortatiles();
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreateCompra()
+    {
+        Navigation.NavigateTo($"/portatiles/comprar/crearcompra");
     }
 
     protected async void BuscarPortatiles()
