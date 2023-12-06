@@ -1,0 +1,243 @@
+﻿@using PortatilesAPI;
+
+@* Este es el servicio que se ha definido como HttpClient en Program.cs. *@
+@inject swaggerClient swaggerClient;
+
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/comprar/crearcompra"
+
+@* Inyectar el servicio que gestiona el estado de la compra (debe ser añadido en Program.cs). *@
+@inject ComprarPortatilStateContainer estadoCompra;
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
+
+<h3>Introduce los datos de la Compra</h3>
+@* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <input type="hidden" class="form-control" @bind="idCliente" id="idCliente" />
+    </div>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text">Nombre</span>
+    </div>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text">Apellidos</span>
+    </div>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text">Dirección de entrega</span>
+    </div>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Método de Pago</span>
+        <select class="form-select" aria-label="Default select" @bind="metodoPagoSeleccionado">
+            @foreach (string metodo in metodosPago)
+            {
+                <option value="@metodo" id="metodoPagoSeleccionado_@metodo" @onclick="@(() => ActualizarMetodoPago())">
+                    @metodo
+                </option>
+            }
+        </select>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaPortatiles">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Nombre</th>
+                    <th>Ram</th>
+                    <th>Procesador</th>
+                    <th>Stock</th>
+                    <th>PVP</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Nombre">
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Nombre</td>
+                        <td>@portatil.Ram</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.Cantidad</td>
+                        <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
+                        <td align="center">
+                            <input type="number" id="cantidad_@portatil.PortatilID" value="@portatil.Cantidad"
+                                   @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="left">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Volver" @onclick="(()=>Volver())">
+                                    Volver
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="3" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="RealizarCompra" disabled="@completarButtonDisabled" @onclick="@(()=>CreateCompra())">
+                                    Comprar
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+@if (!mensajeError.Equals(""))
+{
+    <div class="card-header">
+        @tituloError
+    </div>
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+}
+
+
+@code {
+
+    @* Se usa para almacenar el mensaje de error cuando lo hay. *@
+    private string mensajeError = "";
+
+    @* Es el título de la pantalla de error. *@
+    private string tituloError = "Error";
+
+    @* Para la lista de artículo que se muestra en la tabla. *@
+    private ICollection<LineaCompraDTO> Portatiles { get; set; } = new List<LineaCompraDTO>();
+
+    @* Se usa para controlar si el botón de realizar pedido está activo o no. *@
+    private bool completarButtonDisabled = false;
+
+    @* Se usa para guardar la dirección de entrega.*@
+    //private string direccionEntrega;
+
+    @* Se usa para guardar el id del cliente.*@
+    private string idCliente = "Jose.Garcia";
+
+    @* Por defecto el método de pago selecionado es Tarjeta. *@
+    private string metodoPagoSeleccionado = "TarjetaCredito";
+
+    @* Lista con los métodos de pago extraída del tipo enumerado. *@
+    private ICollection<string> metodosPago =
+            ((IEnumerable<OneHope.Shared.TipoMetodoPago>)Enum.GetValues(typeof(OneHope.Shared.TipoMetodoPago)))
+            .Select(m => m.ToString()).ToList();
+
+    @* Detalles de la factura creada. *@
+    private DetallesCompraDTO details;
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los artículos que incluye la compra. *@
+        BuscarPortatiles();
+        bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
+        if (parsed) estadoCompra.Compra.MetodoDePago = metodoPago;
+        else estadoCompra.Compra.MetodoDePago = TipoMetodoPago.TarjetaCredito;
+    }
+
+    @* Cada vez que se seleciona un método de pago en el desplegable se actualiza la compra. *@
+    private void ActualizarMetodoPago()
+    {
+        bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
+        if (parsed) estadoCompra.Compra.MetodoDePago = metodoPago;
+        else estadoCompra.Compra.MetodoDePago = TipoMetodoPago.TarjetaCredito;
+    }
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+        Portatiles = estadoCompra.Compra.LineaCompra;
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+    @* Crear la compra y navegar a detalles. *@
+    private async Task CreateCompra()
+    {
+        @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear la compra
+           no son posibles porque lo evitamos en la vista. *@
+        try
+        {
+            @* Primero guardo la compra llamando al método create del controlador. *@
+            details = await swaggerClient.CrearCompraAsync(estadoCompra.Compra);
+            @* Borrar el carrito *@
+            estadoCompra.FinalizarCompra();
+
+            Navigation.NavigateTo($"/portatiles/comprar/detallecompra?CompraId={details.Id}");
+        }
+        catch (ApiException<ValidationProblemDetails> apiexceptionvalidation)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Ha habido un problema al procesar tu compra.";
+
+            if (apiexceptionvalidation.Result.Errors.Values != null)
+            {
+                mensajeError = "";
+                foreach (var errors in apiexceptionvalidation.Result.Errors.Values)
+                    //https://learn.microsoft.com/en-us/dotnet/api/system.string.join?view=net-7.0
+                    mensajeError = string.Join("(*) ", mensajeError, string.Join(" (*) ", errors));
+            }
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+        catch (ApiException apiexception)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Ha habido un problema al procesar tu compra.";
+            mensajeError = "Por favor,inténtalo más tarde.";
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+    }
+
+    @* Volver a la pantalla anterior conservando los datos para poder modificar la pedido. *@
+    private void Volver()
+    {
+        Navigation.NavigateTo("/portatiles/comprar");
+    }
+
+    @* Actualiza la cantidad del artículo en el carrito. *@
+    private void ActualizaCantidad(int id, ChangeEventArgs args)
+    {
+        int cantidad = (int)Int32.Parse((string)args.Value);
+
+        if (cantidad != null)
+            estadoCompra.UpdateCarrito(id, cantidad);
+
+        @* Si hay algún artículo con cantidad 0 no se activa el botón de finalizar la compra. *@
+        completarButtonDisabled = (estadoCompra.Compra.LineaCompra.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+}
