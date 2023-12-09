@@ -87,9 +87,9 @@ namespace OneHope.UT.PortatilesController_test
             DateTime defaultDate2 = DateTime.Now.Date;
 
             var portatilDTOs = new List<PortatilesParaDevolverDTO>() {
-                new PortatilesParaDevolverDTO(1, "ASUS", 1, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day),  2299.95),
-                new PortatilesParaDevolverDTO(1, "HP", 2, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day), 199.95),
-                new PortatilesParaDevolverDTO(2, "TOASTER", 1, new DateTime(defaultDate2.Year, defaultDate2.Month, defaultDate2.Day), 2099.95),
+                new PortatilesParaDevolverDTO(1, 1, 1, "ASUS", "ASUS-3314", 1, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day),  2299.95),
+                new PortatilesParaDevolverDTO(1, 2, 2, "HP", "HP-1151", 2, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day), 199.95),
+                new PortatilesParaDevolverDTO(2, 3, 3, "TOASTER", "TOASTER-3452", 1, new DateTime(defaultDate2.Year, defaultDate2.Month, defaultDate2.Day), 2099.95),
             }.OrderBy(p => p.FechaCompra).ToList();
 
             var portatilDTOsTC1 = new List<PortatilesParaDevolverDTO>() { portatilDTOs[0], portatilDTOs[1] }

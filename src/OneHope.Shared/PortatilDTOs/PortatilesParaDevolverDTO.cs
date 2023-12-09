@@ -14,10 +14,13 @@ namespace OneHope.Shared.PortatilDTOs
         public PortatilesParaDevolverDTO() { 
         }
 
-        public PortatilesParaDevolverDTO(int id, string marca, int cantidad, DateTime fechaCompra, double total)
+        public PortatilesParaDevolverDTO(int idCompra, int idPortatil, int idLineaCompra, string marca, string modelo, int cantidad, DateTime fechaCompra, double total)
         {
-            Id = id;
+            IdCompra = idCompra;
+            IdPortatil = idPortatil;
+            IdLineaCompra = idLineaCompra;
             Marca = marca;
+            Modelo = modelo;
             Cantidad = cantidad;
             FechaCompra = fechaCompra;
             Total = total;
@@ -25,12 +28,20 @@ namespace OneHope.Shared.PortatilDTOs
 
 
         [JsonPropertyName("IdCompra")]
-        public int Id { get; set; }
+        public int IdCompra { get; set; }
+        [JsonPropertyName("IdPortatil")]
+        public int IdPortatil { get; set; }
+        [JsonPropertyName("IdLineaCompra")]
+        public int IdLineaCompra { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "La marca no puede ser superior a 50 caracteres.")]
         [JsonPropertyName("Marca")]
         public string Marca { get; set; }
+        [Required]
+        [StringLength(50, ErrorMessage = "El modelo no puede ser superior a 50 caracteres.")]
+        [JsonPropertyName("Modelo")]
+        public string Modelo { get; set; }
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Debes introducir una cantidad válida.")]
@@ -50,7 +61,9 @@ namespace OneHope.Shared.PortatilDTOs
         public override bool Equals(object? obj)
         {
             return obj is PortatilesParaDevolverDTO dTO &&
-                   Id == dTO.Id &&
+                   IdCompra == dTO.IdCompra &&
+                   IdPortatil == dTO.IdPortatil &&
+                   IdLineaCompra == dTO.IdLineaCompra &&
                    Marca == dTO.Marca &&
                    Cantidad == dTO.Cantidad &&
                    FechaCompra == dTO.FechaCompra &&
