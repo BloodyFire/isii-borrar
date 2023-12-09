@@ -36,7 +36,8 @@
             }
         </select>
     </div>
-</div> <!-- FIN INPUT-GROUP -->
+</div>
+<!-- FIN INPUT-GROUP -->
 <!-- TABLA CON LA LISTA DE PORTÁTILES -->
 @* Flujo alternativo cuando no hay elementos que mostrar. *@
 @if (Portatiles == null || Portatiles.Count() == 0)
@@ -126,10 +127,6 @@ else
     @* Se usa para controlar si el botón de realizar pedido está activo o no. *@
     private bool completarButtonDisabled = false;
 
-    @* Se usa para guardar la dirección del almacén de entrega.*@
-    //private string direccionAlmacen;
-    @* Se usa para guardar los comentarios.*@
-    //private string comentarios = "";
     @* Se usa para guardar el código del empleado.*@
     private string codEmpleado = "Daniel.Tomas";
 
@@ -138,7 +135,7 @@ else
                                                     new List<LineaPedidoDTO>();
     @* Lista con los métodos de pago extraída del tipo enumerado. *@
     private ICollection<string> metodosPago =
-            ((IEnumerable<OneHope.Shared.TipoMetodoPago>)Enum.GetValues(typeof(OneHope.Shared.TipoMetodoPago)))
+            ((IEnumerable<TipoMetodoPago>)Enum.GetValues(typeof(TipoMetodoPago)))
             .Select(m => m.ToString()).ToList();
 
     @* Por defecto el método de pago selecionado es Tarjeta. *@
@@ -232,7 +229,7 @@ else
             estadoPedido.UpdateCarrito(id, cantidad);
 
         @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
-        completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+        ActualizaBotonPedido();
     }
 
     @* Actualiza la dirección de entrega del pedido. *@
@@ -241,8 +238,8 @@ else
         string direccion = (string)args.Value;
         estadoPedido.SetDireccion(direccion);
 
-        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
-        //completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+        @* Si no se ha rellenado la dirección no se activa el botón de finalizar la pedido. *@
+        ActualizaBotonPedido();
     }
 
     @* Actualiza el comentarios del pedido. *@
@@ -252,4 +249,11 @@ else
         estadoPedido.SetComentarios(comentarios);
     }
 
+    @* Actualiza el estado del botón de realizar pedido*@
+    private void ActualizaBotonPedido()
+    {
+        bool cantidades = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+        bool dirección = (estadoPedido.Pedido.Direccion.Length > 0);
+        completarButtonDisabled = cantidades && dirección;
+    }
 }

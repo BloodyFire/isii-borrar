@@ -12,14 +12,14 @@ namespace OneHope.Web {
     public class ReabastecerPortatilStateContainer {
          
         public PedidoParaCrearDTO Pedido { get; 
-                                            private set;  // El set es privado para evitar que código maligno pueda modificar la compra.
+                                            private set;  // El set es privado para evitar que código maligno pueda modificar el pedido.
                                         } = new PedidoParaCrearDTO() {
             LineasPedido = new List<LineaPedidoDTO>()
         };
 
         
         
-         // Se añade un elemento al carrito de la compra.
+         // Se añade un elemento al carrito.
         public void AddPortatilAPedido(PortatilParaPedidoDTO portatil, int? cantidad) {
             // Se comprueba que ese portatile no se ha añadido ya al carrito.
             if (!Pedido.LineasPedido.Any(li => li.PortatilID == portatil.Id)) {
@@ -43,7 +43,7 @@ namespace OneHope.Web {
             Pedido.CodigoEmpleado = codEmpleado;
         }
 
-        // Se elimina un elemento del carrito de la compra.
+        // Se elimina un elemento del carrito.
 
         public void RemovePortatilAPedir(int portatilId) {
             LineaPedidoDTO lineaPedido =
@@ -61,7 +61,7 @@ namespace OneHope.Web {
             return Pedido.LineasPedido.Any(li => li.PortatilID.Equals(id));
         }
 
-        // Actualiza la cantidad que se quiere comprar del portatil cuyo id es 'id'.
+        // Actualiza la cantidad que se quiere pedir del portatil cuyo id es 'id'.
         public void UpdateCarrito(int id, int cantidad) {
             LineaPedidoDTO? portatil = Pedido.LineasPedido.FirstOrDefault(li => li.PortatilID == id);
 
@@ -80,7 +80,7 @@ namespace OneHope.Web {
             return li;
         }
 
-        // Se ha terminado la compra, así que hay que vaciar el carrito..
+        // Se ha terminado el pedido, vaciamos el carrito.
         public void FinalizarPedido() {
             Pedido = new PedidoParaCrearDTO() {
                 LineasPedido = new List<LineaPedidoDTO>()

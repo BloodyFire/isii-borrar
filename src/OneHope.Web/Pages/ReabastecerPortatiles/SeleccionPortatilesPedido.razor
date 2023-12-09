@@ -64,12 +64,12 @@
 </div> <!-- FIN INPUT-GROUP -->
 
 
-<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+<!-- TABLA CON LA LISTA DE PORTÁTILES -->
 @* Flujo alternativo cuando no hay elementos que mostrar. *@
 @if (Portatiles == null || Portatiles.Count() == 0)
 {
     <br />
-    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
 }
 else
 {  @* Flujo básico y alternativo cuando se filtra. *@
@@ -97,7 +97,7 @@ else
                         <td align="center">
                             <input type="checkbox" id="portatilPedido_@portatil.Id"
                                    checked="@(estadoPedido.includes(portatil.Id))"
-                            @onchange="@((value)=>ToggleArticulo(portatil, value))">
+                            @onchange="@((value)=>TogglePortatil(portatil, value))">
                         </td>
                     </tr>
                 }
@@ -119,7 +119,7 @@ else
             </tfoot>
         </table>
     </div>
-    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+    <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
 }
 
 
@@ -138,7 +138,7 @@ else
     private bool pedidoButtonDisabled = true;
 
 
-    @* Para la lista de artículo que se muestra en la tabla. *@
+    @* Para la lista de portátiles que se muestran en la tabla. *@
     private ICollection<PortatilParaPedidoDTO> Portatiles { get; set; } = new List<PortatilParaPedidoDTO>();
     private ICollection<string>? nombresMarcas = new List<string>();
     private ICollection<string>? nombresProveedores = new List<string>();
@@ -161,33 +161,31 @@ else
         Navigation.NavigateTo($"/portatiles/reabastecer/crearpedido");
     }
 
-    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
-    private void ToggleArticulo(PortatilesAPI.PortatilParaPedidoDTO portatil, ChangeEventArgs args)
+    @* Añade/elimina el portátil al/del carrito al pulsar en la casilla. *@
+    private void TogglePortatil(PortatilParaPedidoDTO portatil, ChangeEventArgs args)
     {
         bool _checked = (bool)args.Value;
         if (_checked)
-            AddArticuloCompra(portatil);
+            AddPortatilPedido(portatil);
         else
-            removeArticuloCompra(portatil);
+            removePortatilapedido(portatil);
     }
 
-    @* Elimina un artículo del carrito. *@
-    private void removeArticuloCompra(PortatilesAPI.PortatilParaPedidoDTO portatil)
+    @* Elimina un portátil del carrito. *@
+    private void removePortatilapedido(PortatilParaPedidoDTO portatil)
     {
         estadoPedido.RemovePortatilAPedir(portatil.Id);
 
         if (estadoPedido.isEmpty()) pedidoButtonDisabled = true;
     }
 
-    @* Añade un artículo al carrito de la compra guardándolo en la estado de la web. *@
-    private void AddArticuloCompra(PortatilesAPI.PortatilParaPedidoDTO portatil)
+    @* Añade un portátil al carrito guardándolo en la estado de la web. *@
+    private void AddPortatilPedido(PortatilParaPedidoDTO portatil)
     {
-        // portatilCompraDTO(int id, string nombre, float _PVP, string color, int _IVA)
         var _portatil = new PortatilParaPedidoDTO();
         _portatil.Id = portatil.Id;
         _portatil.Modelo = portatil.Modelo;
         _portatil.PrecioCoste = portatil.PrecioCoste;
-        //_portatil. = 1; //??
 
         estadoPedido.AddPortatilAPedido(_portatil, 1);
 
