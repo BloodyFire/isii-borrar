@@ -102,7 +102,7 @@
         @* Cargar los datos de los artículos. *@
         try {
         alquiler = await swaggerClient.GetAlquilerAsync(AlquilerId);
-        Portatiles = alquiler.LineasPedido;
+        Portatiles = alquiler.LineasAlquiler;
         } catch (ApiException<ValidationProblemDetails> apiexceptionvalidation) {
             @* Este es el título de la sección de errores que deseamos. *@
             tituloError = "Error: no se pueden mostrar los detalles de la compra.";
