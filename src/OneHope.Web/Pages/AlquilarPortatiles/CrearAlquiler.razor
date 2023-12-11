@@ -18,6 +18,30 @@
 @* https://getbootstrap.com/docs/4.0/components/input-group/ *@
 @* input-group permite personalizar los controles para introducir datos. *@
 <div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Dirección del Cliente</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="direccionCliente" @onchange="@((value)=>ActualizaDireccion(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Nombre</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="nombreCliente" @onchange="@((value)=>ActualizaNombre(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Apellidos</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="apellidosCliente" @onchange="@((value)=>ActualizaApellidos(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Email</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="emailCliente" @onchange="@((value)=>ActualizaEmail(value))" />
+    </div>
     @* Etiqueta que aparece para el filtro. *@
     @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
@@ -43,15 +67,21 @@
         <table class="table table-condensed table-hover" id="TablaPortatiles">
             <thead>
                 <tr>
-                    <th>Portatil</th>
-                    <th>Precio</th>
+                    <th>Portatil Modelo</th>
+                    <th>Marca</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Precio Alquiler</th>
                     <th>Cantidad</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var portatil in Portatiles) {
                     <tr id="PortatilData_@portatil.PortatilID">
-                        <td>@portatil.PortatilID</td>
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.Ram</td>
                         <td>@portatil.PrecioAlquiler</td>
                         <td>
                             <input type="number" id="cantidad_@portatil.PortatilID" value="@portatil.Cantidad"
@@ -78,8 +108,8 @@
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Comprar" disabled="@completarButtonDisabled" @onclick="@(()=>CreateCompra())">
-                                    Comprar
+                                <button class="btn btn-primary" type="submit" id="Alquilar" disabled="@completarButtonDisabled" @onclick="@(()=>CreateCompra())">
+                                    Alquilar
                                 </button>
                             </div>
                         </div>
@@ -120,6 +150,10 @@
     @* Por defecto el método de pago selecionado es Tarjeta. *@
     private string metodoPagoSeleccionado = "Tarjeta";
 
+    private string nombreCliente;
+
+    private string apellidosCliente;
+
     @* Detalles de la factura creada. *@
     private DetalleAlquilerDTO details;
 
@@ -141,7 +175,7 @@
 
     // Hacer el filtro.
     protected async void BuscarArticulos() {
-        Portatiles = estadoAlquiler.Alquiler.LineasPedido;
+        Portatiles = estadoAlquiler.Alquiler.LineasAlquiler;
 
         @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
         StateHasChanged();
@@ -185,7 +219,7 @@
 
     @* Volver a la pantalla anterior conservando los datos para poder modificar la compra. *@
     private void Volver() {
-        Navigation.NavigateTo("/articulos/comprar");
+        Navigation.NavigateTo("/portatiles/alquilar");
     }
 
     @* Actualiza la cantidad del artículo en el carrito. *@
@@ -196,7 +230,39 @@
             estadoAlquiler.UpdateCarrito(id, cantidad);
 
         @* Si hay algún artículo con cantidad 0 no se activa el botón de finalizar la compra. *@
-        completarButtonDisabled = (estadoAlquiler.Alquiler.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
+        completarButtonDisabled = (estadoAlquiler.Alquiler.LineasAlquiler.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+    @* Actualiza la dirección de entrega del alquiler. *@
+    private void ActualizaDireccion(ChangeEventArgs args)
+    {
+        string direccion = (string)args.Value;
+        estadoAlquiler.SetDireccionCliente(direccion);
+
+    }
+
+    @* Actualiza el nombre del cliente. *@
+    private void ActualizaNombre(ChangeEventArgs args)
+    {
+        string nombreCliente = (string)args.Value;
+        estadoAlquiler.SetNombreCliente(nombreCliente);
+
+    }
+
+    @* Actualiza apellidos del cliente. *@
+    private void ActualizaApellidos(ChangeEventArgs args)
+    {
+        string apellidosCliente = (string)args.Value;
+        estadoAlquiler.SetApellidosCliente(apellidosCliente);
+
+    }
+
+    @* Actualiza el telefono del cliente. *@
+    private void ActualizaEmail(ChangeEventArgs args)
+    {
+        string email = (string)args.Value;
+        estadoAlquiler.SetEmailCliente(email);
+
     }
 
 }
