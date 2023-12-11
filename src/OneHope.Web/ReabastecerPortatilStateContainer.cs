@@ -17,9 +17,13 @@ namespace OneHope.Web {
             LineasPedido = new List<LineaPedidoDTO>()
         };
 
-        
-        
-         // Se añade un elemento al carrito.
+
+        public ReabastecerPortatilStateContainer()
+        {
+            Pedido.Direccion = "";
+        }
+
+        // Se añade un elemento al carrito.
         public void AddPortatilAPedido(PortatilParaPedidoDTO portatil, int? cantidad) {
             // Se comprueba que ese portatile no se ha añadido ya al carrito.
             if (!Pedido.LineasPedido.Any(li => li.PortatilID == portatil.Id)) {

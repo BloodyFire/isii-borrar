@@ -229,7 +229,7 @@ else
             estadoPedido.UpdateCarrito(id, cantidad);
 
         @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
-        ActualizaBotonPedido();
+        completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
     }
 
     @* Actualiza la dirección de entrega del pedido. *@
@@ -237,9 +237,6 @@ else
     {
         string direccion = (string)args.Value;
         estadoPedido.SetDireccion(direccion);
-
-        @* Si no se ha rellenado la dirección no se activa el botón de finalizar la pedido. *@
-        ActualizaBotonPedido();
     }
 
     @* Actualiza el comentarios del pedido. *@
@@ -249,11 +246,4 @@ else
         estadoPedido.SetComentarios(comentarios);
     }
 
-    @* Actualiza el estado del botón de realizar pedido*@
-    private void ActualizaBotonPedido()
-    {
-        bool cantidades = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
-        bool dirección = (estadoPedido.Pedido.Direccion.Length > 0);
-        completarButtonDisabled = cantidades && dirección;
-    }
 }
