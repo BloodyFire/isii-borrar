@@ -17,20 +17,26 @@
 <div class="input-group">
     @* Etiqueta que aparece para el filtro. *@
     @* Filtro de texto para nombre. *@
+
     <div class="input-group-prepend">
-        <input type="hidden" class="form-control" @bind="idCliente" id="idCliente" />
+        <div class="input-group-prepend">
+            <span class="input-group-text">Nombre</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="nombre" @onchange="@((value)=>ActualizaNombre(value))" />
     </div>
 
     <div class="input-group-prepend">
-        <span class="input-group-text">Nombre</span>
+        <div class="input-group-prepend">
+            <span class="input-group-text">Apellidos</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="apellidos" @onchange="@((value)=>ActualizaApellidos(value))" />
     </div>
 
     <div class="input-group-prepend">
-        <span class="input-group-text">Apellidos</span>
-    </div>
-
-    <div class="input-group-prepend">
-        <span class="input-group-text">Dirección de entrega</span>
+        <div class="input-group-prepend">
+            <span class="input-group-text">Dirección de entrega</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="direccion" @onchange="@((value)=>ActualizaDireccion(value))" />
     </div>
 
     <div class="input-group-prepend">
@@ -62,14 +68,14 @@ else
                     <th>Nombre</th>
                     <th>Ram</th>
                     <th>Procesador</th>
-                    <th>Stock</th>
+                    <th>Cantidad</th>
                     <th>PVP</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var portatil in Portatiles)
                 {
-                    <tr id="PortatilData_@portatil.Nombre">
+                    <tr id="PortatilData_@portatil.PortatilID">
                         <td>@portatil.Marca</td>
                         <td>@portatil.Nombre</td>
                         <td>@portatil.Ram</td>
@@ -137,12 +143,6 @@ else
 
     @* Se usa para controlar si el botón de realizar pedido está activo o no. *@
     private bool completarButtonDisabled = false;
-
-    @* Se usa para guardar la dirección de entrega.*@
-    //private string direccionEntrega;
-
-    @* Se usa para guardar el id del cliente.*@
-    private string idCliente = "Jose.Garcia";
 
     @* Por defecto el método de pago selecionado es Tarjeta. *@
     private string metodoPagoSeleccionado = "TarjetaCredito";
@@ -235,9 +235,29 @@ else
 
         if (cantidad != null)
             estadoCompra.UpdateCarrito(id, cantidad);
-
-        @* Si hay algún artículo con cantidad 0 no se activa el botón de finalizar la compra. *@
+        
+        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
         completarButtonDisabled = (estadoCompra.Compra.LineaCompra.Any(li => li.Cantidad == 0) ? true : false);
+
+    }
+
+    private void ActualizaDireccion(ChangeEventArgs args)
+    {
+        string direccion = (string)args.Value;
+        estadoCompra.SetDireccion(direccion);
+
+    }
+
+    private void ActualizaApellidos(ChangeEventArgs args)
+    {
+        string apellidos = (string)args.Value;
+        estadoCompra.SetApellidos(apellidos);
+    }
+
+    private void ActualizaNombre(ChangeEventArgs args)
+    {
+        string nombre = (string)args.Value;
+        estadoCompra.SetNombre(nombre);
     }
 
 }
