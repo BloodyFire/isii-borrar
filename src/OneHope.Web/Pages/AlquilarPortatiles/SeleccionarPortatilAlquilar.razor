@@ -1,11 +1,13 @@
 ﻿@using PortatilesAPI;
 
 @inject swaggerClient swaggerClient;
+@* Inyectar el servicio que gestiona el estado de la compra (debe ser añadido en Program.cs). *@
+@inject AlquilarPortatilStateContainer estadoAlquiler;
 
 @* Especifica la ruta en la que se mostrará esta página. *@
 @page "/portatiles/alquilar"
 
-<h3>SeleccionarPortatilAlquilar</h3>
+<h3>Alquilar Portatiles</h3>
 
 @* input-group permite personalizar los controles para introducir datos. *@
 <div class="input-group">
@@ -91,7 +93,10 @@ else
                         <td>@portatil.Ram</td>
                         <td>@portatil.PrecioAlquiler</td>
                         <td align="center">
-                            <input type="checkbox" id="articuloCompra_@portatil.Id">
+                            <input type="checkbox" id="articuloCompra_@portatil.Id"
+                                checked="@(estadoAlquiler.includes(portatil.Id))"
+
+                            @onchange="@((value) => TogglePortatil(portatil, value))">
                         </td>
                     </tr>
                 }
@@ -103,7 +108,7 @@ else
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Submit">
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@alquilarButtonDisabled">
                                     Alquilar
                                 </button>
                             </div>
@@ -124,6 +129,9 @@ else
     private string portatilMarca;
     private string portatilProcesador;
     private string portatilRam;
+
+    @* Se usa para controlar si el botón de comprar está activo o no. *@
+    private bool alquilarButtonDisabled = true;
 
     private string portatilMarcaSeleccionada;
     private string portatilProcesadorSeleccionado;
@@ -153,6 +161,33 @@ else
         @* Cargar los datos de los artículos. *@
         BuscarPortatiles();
 
+    }
+
+    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
+    private void TogglePortatil(PortatilParaAlquilerDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddArticuloCompra(portatil);
+        else
+            removeArticuloCompra(portatil);
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void removeArticuloCompra(PortatilParaAlquilerDTO portatil)
+    {
+        estadoAlquiler.RemoveArticuloACompra(portatil.Id);
+
+        if (estadoAlquiler.isEmpty()) alquilarButtonDisabled = true;
+    }
+
+    @* Añade un artículo al carrito de la compra guardándolo en la estado de la web. *@
+    private void AddArticuloCompra(PortatilParaAlquilerDTO portatil)
+    {
+
+        estadoAlquiler.AddArticuloACompra(portatil, 1);
+
+        alquilarButtonDisabled = false;
     }
 
     // Hacer el filtro.
