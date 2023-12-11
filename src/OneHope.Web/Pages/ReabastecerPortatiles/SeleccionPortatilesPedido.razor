@@ -29,7 +29,7 @@
     <div class="input-group-prepend">
         <span class="input-group-text">Marca</span>
     </div>
-    <select class="form-select" aria-label="Default select" @bind="portatilMarca">
+    <select class="form-select" aria-label="Default select" id="portatilMarca" @bind="portatilMarca">
         <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreMarca in nombresMarcas)
         {
@@ -40,17 +40,17 @@
     <div class="input-group-prepend">
         <span class="input-group-text">Stock Mínimo</span>
     </div>
-    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMin">
+    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMinimo">
     @* Filtro numérico para stock máximo. *@
     <div class="input-group-prepend">
         <span class="input-group-text">Stock Máximo</span>
     </div>
-    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMax">
+    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMaximo">
     @* Filtro de selección para el Proveedor. *@
     <div class="input-group-prepend">
         <span class="input-group-text">Proveedor</span>
     </div>
-    <select class="form-select" aria-label="Default select" @bind="portatilProveedor">
+    <select class="form-select" aria-label="Default select" id="portatilProveedor" @bind="portatilProveedor">
         <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreProveedor in nombresProveedores)
         {
