@@ -110,7 +110,10 @@ else
                         <td>@portatil.PrecioCompra</td>
                         <td>@portatil.Stock</td>
                         <td align="center">
-                            <input type="checkbox" id="portatilParaComprar_@portatil.Id">
+                            <input type="checkbox" id="portatilParaComprar_@portatil.Id"
+                                checked="@(estadoCompra.includes(portatil.Id))"
+                                @onchange="@((value)=>ToggleArticulo(portatil, value))" />
+
                         </td>
                     </tr>
                 }
@@ -164,12 +167,16 @@ else
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
     {
+
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+
         @* Cargar los datos de los tipo enumerado *@
         nombresMarcas = await swaggerClient.GetMarcaAsync(null);
         tiposRams = await swaggerClient.GetRamAsync(null);
         nombresProcesadores = await swaggerClient.GetProcesadorAsync(null);
-        @* Cargar los datos de los portatiles. *@
-        BuscarPortatiles();
+        
+        comprarButtonDisable = estadoCompra.isEmpty();
     }
 
     @* Navegar a la página pedir los datos. *@
@@ -178,20 +185,64 @@ else
         Navigation.NavigateTo($"/portatiles/comprar/crearcompra");
     }
 
+    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
+    private void ToggleArticulo(PortatilParaComprarDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddPortatilACompra(portatil);
+        else
+            RemovePortatilACompra(portatil);
+    }
+
+    public void AddPortatilACompra(PortatilParaComprarDTO portatil)
+    {
+        // Se comprueba que ese artículo no se ha añadido ya al carrito.
+        var _portatil = new PortatilParaComprarDTO();
+        _portatil.Id = portatil.Id;
+        _portatil.Marca = portatil.Marca;
+        _portatil.Procesador = portatil.Procesador;
+        _portatil.Ram = portatil.Ram;
+        _portatil.Nombre = portatil.Nombre;
+        _portatil.PrecioCompra = portatil.PrecioCompra;
+
+        estadoCompra.AddPortatilACompra(_portatil, 1);
+
+        comprarButtonDisable = false;
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void RemovePortatilACompra(PortatilParaComprarDTO portatil)
+    {
+        estadoCompra.RemovePortatilACompra(portatil.Id);
+
+        if (estadoCompra.isEmpty()) comprarButtonDisable = true;
+    }
+
     protected async void BuscarPortatiles()
     {
-        portatilMarca = portatilMarcaSeleccionada == "Todo" ? null : portatilMarcaSeleccionada;
-        portatilRam = portatilRamSeleccionada == "Todo" ? null : portatilRamSeleccionada;
-        portatilProcesador = portatilProcesadorSeleccionado == "Todo" ? null : portatilProcesadorSeleccionado;
-
-        Portatiles = await swaggerClient.GetPortatilesParaComprarAsync(portatilNombre, portatilModelo,
-         portatilMarca, portatilProcesador, portatilRam, portatilPrecioCompra, portatilStock);
-
-        if (Portatiles==null)
+        try
         {
-            error = "Error! Ha ocurrido un error de conexión con el servicio de portátiles.";
+            portatilMarca = portatilMarcaSeleccionada == "Todo" ? null : portatilMarcaSeleccionada;
+            portatilRam = portatilRamSeleccionada == "Todo" ? null : portatilRamSeleccionada;
+            portatilProcesador = portatilProcesadorSeleccionado == "Todo" ? null : portatilProcesadorSeleccionado;
+
+            Portatiles = await swaggerClient.GetPortatilesParaComprarAsync(portatilNombre, portatilModelo,
+            portatilMarca, portatilProcesador, portatilRam, portatilPrecioCompra, portatilStock);
+
+        }
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaComprarDTO>();
         }
 
+        if (Portatiles == null)
+        {
+            error = "No se puede conectar con el API.";
+        }
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
         StateHasChanged();
     }
 }
