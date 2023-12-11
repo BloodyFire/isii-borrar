@@ -46,7 +46,8 @@ namespace OneHope.API.Controllers
                     (Shared.TipoMetodoPago)alquiler.MetodoPago,
                     alquiler.LineasAlquiler
                         .Select(la => new LineaAlquilerDTO(la.Portatil.Id,
-                                la.Portatil.PrecioAlquiler, la.Cantidad)).ToList<LineaAlquilerDTO>()))
+                                la.Portatil.PrecioAlquiler, la.Cantidad, la.Portatil.Marca.NombreMarca, la.Portatil.Modelo, 
+                                la.Portatil.Procesador.ModeloProcesador, la.Portatil.Ram.Capacidad)).ToList<LineaAlquilerDTO>()))
              .FirstOrDefaultAsync();
 
             if (alquilerDTO == null)

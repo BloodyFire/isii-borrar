@@ -50,7 +50,7 @@ namespace OneHope.UT.AlquileresController_test
                  "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", null, new List<LineaAlquilerDTO>(),
                    Shared.TipoMetodoPago.TarjetaCredito);
 
-            var lineasAlquiler = new List<LineaAlquilerDTO>() { new LineaAlquilerDTO( 2, 66.66, 1) };
+            var lineasAlquiler = new List<LineaAlquilerDTO>() { new LineaAlquilerDTO( 2, 66.66, 1, "HP", "DELL-1244", "Intel I5 12500k", "16Gb") };
 
             var alquilerFechaInicioAntes = new AlquilerParaCrearDTO(DateTime.Today, DateTime.Today.AddDays(5),
                  "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", null, lineasAlquiler,
@@ -62,7 +62,7 @@ namespace OneHope.UT.AlquileresController_test
 
             var alquilerPortatilNoDisponible = new AlquilerParaCrearDTO(DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),
                  "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", null, 
-                 new List<LineaAlquilerDTO>() { new LineaAlquilerDTO( 2, 66.66, 5) },
+                 new List<LineaAlquilerDTO>() { new LineaAlquilerDTO( 2, 66.66, 5, "HP", "DELL-1244", "Intel I5 12500k", "16Gb") },
                    Shared.TipoMetodoPago.TarjetaCredito);
 
             var allTest = new List<object[]> {
@@ -113,14 +113,14 @@ namespace OneHope.UT.AlquileresController_test
 
             var alquilerDTO = new AlquilerParaCrearDTO(DateTime.Today.AddDays(2), DateTime.Today.AddDays(5),
                 "juanito@uclm.es", "Juanito", "Golosinas", "Avda. España s/n, Albacete 02071", 0,
-                new List<LineaAlquilerDTO>() { new LineaAlquilerDTO(1, 6.66, 2) }, Shared.TipoMetodoPago.TarjetaCredito);
+                new List<LineaAlquilerDTO>() { new LineaAlquilerDTO(1, 6.66, 2, "HP", "HP-2023", "Ryzen 5 2900", "8Gb") }, Shared.TipoMetodoPago.TarjetaCredito);
 
             var expectedAlquiler = new DetalleAlquilerDTO(id: 1, fechaAlquiler: DateTime.Now, emailCliente: "juanito@uclm.es",
                 nombreCliente: "Juanito", apellidosCliente: "Golosinas",
                         direccionEnvio: "Avda. España s/n, Albacete 02071", telefonoCliente: 0, tipoMetodoPago: Shared.TipoMetodoPago.TarjetaCredito,
                         fechaInAlquiler: DateTime.Today.AddDays(2), fechaFinAlquiler: DateTime.Today.AddDays(5),
                         lineasAlquiler: new List<LineaAlquilerDTO>());
-            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO(1, 6.66, 2));
+            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO(1, 6.66, 2, "HP", "HP-2023", "Ryzen 5 2900", "8Gb"));
 
             // Act
             var result = await controller.CrearAlquiler(alquilerDTO);
