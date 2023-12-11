@@ -3,6 +3,8 @@
 @inject swaggerClient swaggerClient;
 @* Inyectar el servicio que gestiona el estado de la compra (debe ser añadido en Program.cs). *@
 @inject AlquilarPortatilStateContainer estadoAlquiler;
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
 
 @* Especifica la ruta en la que se mostrará esta página. *@
 @page "/portatiles/alquilar"
@@ -108,7 +110,7 @@ else
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@alquilarButtonDisabled">
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@alquilarButtonDisabled" @onclick="@(()=>NavegarCreateAlquiler())">
                                     Alquilar
                                 </button>
                             </div>
@@ -161,6 +163,14 @@ else
         @* Cargar los datos de los artículos. *@
         BuscarPortatiles();
 
+        alquilarButtonDisabled = estadoAlquiler.isEmpty();
+
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreateAlquiler()
+    {
+        Navigation.NavigateTo($"/portatiles/alquiler/createalquiler");
     }
 
     @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
