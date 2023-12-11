@@ -29,6 +29,15 @@
             <span class="input-group-text" id="metodo-pago"><b>Método de Pago: </b> @(compra.MetodoDePago)</span>
             <span class="input-group-text" id="fecha-pedido"><b>Fecha de pedido: </b> @(compra.FechaCompra.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
         </div>
+
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="nombre-cliente"><b>Nombre: </b> @(compra.NombreUsuario)</span>
+            <span class="input-group-text" id="apellidos-cliente"><b>Apellidos: </b> @(compra.ApellidosUsuario)</span>
+        </div>
+
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="direccion-envio"><b>Dirección Envío: </b> @(compra.DireccionEnvio)</span>
+        </div>
     </div> <!-- FIN INPUT-GROUP -->
     <!-- TABLA CON LA LISTA DE PORTÁTILES PEDIDOS -->
     @if (Portatiles == null || Portatiles.Count() == 0)
@@ -46,8 +55,7 @@
                         <th>Nombre</th>
                         <th>Ram</th>
                         <th>Procesador</th>
-                        <th>Stock</th>
-                        <th>PVP</th>
+                        <th>Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +67,6 @@
                             <td>@portatil.Ram</td>
                             <td>@portatil.Procesador</td>
                             <td>@portatil.Cantidad</td>
-                            <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
                         </tr>
                     }
 
@@ -137,5 +144,4 @@
             StateHasChanged();
         }
     }
-}
 }
