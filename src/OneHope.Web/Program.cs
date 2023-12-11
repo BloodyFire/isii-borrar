@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using OneHope.Web.Areas.Identity;
 using OneHope.Web.Data;
 using PortatilesAPI;
+using OneHope.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,9 @@ builder.Services.AddHttpClient<swaggerClient>();
 builder.Services.AddScoped<swaggerClient>(sp =>
         new swaggerClient(Environment.GetEnvironmentVariable("swaggerClient_API"), new HttpClient())
     );
+
+//Servicio para mantener el estado de la página web
+builder.Services.AddScoped<AlquilarPortatilStateContainer>();
 
 var app = builder.Build();
 
