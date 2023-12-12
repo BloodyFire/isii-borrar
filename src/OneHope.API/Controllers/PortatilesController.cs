@@ -127,7 +127,8 @@ namespace OneHope.API.Controllers
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
                                     (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam)) &&
-                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo))
+                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo)) &&
+                                    (portatil.StockAlquilar > 0)
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)
