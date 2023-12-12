@@ -42,6 +42,12 @@
         </div>
         <textarea class="form-control" rows="4" cols="50" id="emailCliente" @onchange="@((value)=>ActualizaEmail(value))" />
     </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Telefono Cliente</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="telefonoCliente" @onchange="@((value)=>ActualizaTelefono(value))" />
+    </div>
     @* Etiqueta que aparece para el filtro. *@
     @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
@@ -148,7 +154,7 @@
             .Select(m => m.ToString()).ToList();
 
     @* Por defecto el método de pago selecionado es Tarjeta. *@
-    private string metodoPagoSeleccionado = "Tarjeta";
+    private string metodoPagoSeleccionado = "TarjetaCredito";
 
     private string nombreCliente;
 
@@ -229,8 +235,8 @@
         if (cantidad!=null)
             estadoAlquiler.UpdateCarrito(id, cantidad);
 
-        @* Si hay algún artículo con cantidad 0 no se activa el botón de finalizar la compra. *@
-        completarButtonDisabled = (estadoAlquiler.Alquiler.LineasAlquiler.Any(li => li.Cantidad == 0) ? true : false);
+        @* Si hay algún artículo con cantidad 0 o menor no se activa el botón de finalizar la compra. *@
+        completarButtonDisabled = (estadoAlquiler.Alquiler.LineasAlquiler.Any(li => li.Cantidad <= 0) ? true : false);
     }
 
     @* Actualiza la dirección de entrega del alquiler. *@
@@ -257,7 +263,7 @@
 
     }
 
-    @* Actualiza el telefono del cliente. *@
+    @* Actualiza el email del cliente. *@
     private void ActualizaEmail(ChangeEventArgs args)
     {
         string email = (string)args.Value;
@@ -265,4 +271,13 @@
 
     }
 
+    @* Actualiza el telefono del cliente. *@
+    private void ActualizaTelefono(ChangeEventArgs args)
+    {
+        int telefono = (int)Int32.Parse((string)args.Value);
+
+        if (telefono != null)
+            estadoAlquiler.SetTelefonoCliente(telefono);
+
+    }
 }
