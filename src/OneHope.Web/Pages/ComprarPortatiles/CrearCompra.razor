@@ -41,7 +41,7 @@
 
     <div class="input-group-prepend">
         <span class="input-group-text" id="">Método de Pago</span>
-        <select class="form-select" aria-label="Default select" @bind="metodoPagoSeleccionado">
+        <select class="form-select" aria-label="Default select" id="selMetodoPago" @bind="metodoPagoSeleccionado">
             @foreach (string metodo in metodosPago)
             {
                 <option value="@metodo" id="metodoPagoSeleccionado_@metodo" @onclick="@(() => ActualizarMetodoPago())">
