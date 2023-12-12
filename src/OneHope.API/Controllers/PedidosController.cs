@@ -106,6 +106,7 @@ namespace OneHope.API.Controllers
              .Select(pedido => new DetallePedidoDTO(pedido.Id, pedido.Direccion,
                     pedido.LineasPedido
                         .Select(lp => new LineaPedidoDTO(lp.Portatil.Id,
+                                lp.Portatil.Marca.NombreMarca,
                                 lp.Portatil.Modelo,lp.PrecioUnitario,
                                 lp.Cantidad)).ToList(),
                     pedido.CodigoEmpleado,

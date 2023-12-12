@@ -1545,6 +1545,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "Marca": {
+            "type": "string",
+            "nullable": true
+          },
           "Modelo": {
             "maxLength": 50,
             "minLength": 0,

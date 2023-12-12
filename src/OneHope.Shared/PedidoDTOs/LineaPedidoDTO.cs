@@ -10,9 +10,10 @@ namespace OneHope.Shared.PedidoDTOs
 {
     public class LineaPedidoDTO
     {
-        public LineaPedidoDTO(int portatilId, string modelo, double precioUnitario, int cantidad)
+        public LineaPedidoDTO(int portatilId, string marca, string modelo, double precioUnitario, int cantidad)
         {
             PortatilID = portatilId;
+            Marca = marca;
             Modelo = modelo ?? throw new ArgumentNullException(nameof(modelo));
             PrecioUnitario = precioUnitario;
             Cantidad = cantidad;
@@ -21,6 +22,8 @@ namespace OneHope.Shared.PedidoDTOs
         [JsonPropertyName("PortatilID")]
         public int PortatilID { get; set; }
 
+        [JsonPropertyName("Marca")]
+        public string Marca { get; set; }
 
         [StringLength(50, ErrorMessage = "El modelo del portatil no puede tener más de 50 characters.")]
         [JsonPropertyName("Modelo")]

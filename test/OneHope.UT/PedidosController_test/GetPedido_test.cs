@@ -52,11 +52,11 @@
 
             DetallePedidoDTO expectedPedidoSinComentarios = new DetallePedidoDTO(1, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
                 "Daniel.Tomas", TipoMetodoPago.Transferencia, new DateTime(1999, 1, 13));
-            expectedPedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "HP-1151", 50.0, 1));
+            expectedPedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "HP", "HP-1151", 50.0, 1));
 
             DetallePedidoDTO expectedPedidoConComentarios = new DetallePedidoDTO(2, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
                 "Daniel.Tomas", TipoMetodoPago.Transferencia, new DateTime(2020, 10, 10), "Aqui un comentario.");
-            expectedPedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "HP-1151", 50.0, 2));
+            expectedPedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "HP", "HP-1151", 50.0, 2));
 
             var allTests = new List<object[]>
             {
