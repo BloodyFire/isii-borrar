@@ -82,6 +82,7 @@ else
                     <th>Procesador</th>
                     <th>RAM</th>
                     <th>Precio</th>
+                    <th>Disponibles</th>
                     <th align="center">Seleccionado</th>
                 </tr>
             </thead>
@@ -94,6 +95,7 @@ else
                         <td>@portatil.Procesador</td>
                         <td>@portatil.Ram</td>
                         <td>@portatil.PrecioAlquiler</td>
+                        <td>@portatil.StockAlquilar</td>
                         <td align="center">
                             <input type="checkbox" id="articuloCompra_@portatil.Id"
                                 checked="@(estadoAlquiler.includes(portatil.Id))"
