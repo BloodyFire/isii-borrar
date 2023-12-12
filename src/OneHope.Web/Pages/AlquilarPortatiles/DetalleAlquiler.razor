@@ -26,8 +26,13 @@
 @* input-group permite personalizar los controles para introducir datos. *@
 <div class="input-group">
     <div class="input-group-prepend">
+        <span class="input-group-text" id="nombre-cliente"><b>Nombre Cliente: </b> @(alquiler.NombreCliente)</span>
+        <span class="input-group-text" id="apellidos-cliente"><b>Apellidos Cliente: </b> @(alquiler.ApellidosCliente)</span>
+        <span class="input-group-text" id="direccion-cliente"><b>Direccion: </b> @(alquiler.Direccion)</span>
         <span class="input-group-text" id="metodo-pago"><b>Método de Pago: </b> @(alquiler.TipoMetodoPago)</span>
-        <span class="input-group-text" id="fecha-compra"><b>Fecha de alquiler: </b> @(alquiler.FechaAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
+        <span class="input-group-text" id="fecha-alquiler"><b>Fecha de alquiler: </b> @(alquiler.FechaAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
+        <span class="input-group-text" id="fechaIn-alquiler"><b>Fecha Inicio de alquiler: </b> @(alquiler.FechaInAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
+        <span class="input-group-text" id="fechaFin-alquiler"><b>Fecha Final de alquiler: </b> @(alquiler.FechaFinAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
     </div>
 </div> <!-- FIN INPUT-GROUP -->
 <!-- TABLA CON LA LISTA DE ARTÍCULOS ALQUILADOS -->
@@ -39,8 +44,8 @@
         <table class="table table-condensed table-hover" id="TablaPortatiles">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Color</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
                     <th>Cantidad</th>
                     <th>PVP</th>
                 </tr>
@@ -48,7 +53,8 @@
             <tbody>
                 @foreach (var portatil in Portatiles) {
                     <tr id="PortatilData_@portatil.PortatilID">
-                        <td>@portatil.PortatilID</td>
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
                         <td>@portatil.PrecioAlquiler</td>
                         <td>@portatil.Cantidad</td>
 
@@ -75,7 +81,7 @@
 
 
 @code {
-    @* Este es id de la compra a mostrar que se pasa en el parámetro que se le pasa a la página. *@
+    @* Este es id del alquiler a mostrar que se pasa en el parámetro que se le pasa a la página. *@
     [Parameter]
     [SupplyParameterFromQuery]
     public int AlquilerId { get; set; }
@@ -105,7 +111,7 @@
         Portatiles = alquiler.LineasAlquiler;
         } catch (ApiException<ValidationProblemDetails> apiexceptionvalidation) {
             @* Este es el título de la sección de errores que deseamos. *@
-            tituloError = "Error: no se pueden mostrar los detalles de la compra.";
+            tituloError = "Error: no se pueden mostrar los detalles del alquiler.";
 
             if (apiexceptionvalidation.Result.Errors.Values != null) {
                 mensajeError = "";
@@ -118,7 +124,7 @@
         } catch (ApiException apiexception) {
             @* Este es el título de la sección de errores que deseamos. *@
             tituloError = "Error";
-            mensajeError = $"No se pueden mostrar los detalles de la compra cuyo id es: {AlquilerId}.";
+            mensajeError = $"No se pueden mostrar los detalles del alquiler cuyo id es: {AlquilerId}.";
             @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
             StateHasChanged();
         }
