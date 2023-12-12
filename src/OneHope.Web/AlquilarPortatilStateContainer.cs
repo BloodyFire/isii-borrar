@@ -15,7 +15,13 @@ namespace OneHope.Web
             LineasAlquiler = new List<LineaAlquilerDTO>()
         };
 
-        
+        public AlquilarPortatilStateContainer()
+        {
+            Alquiler.EmailCliente = "";
+            Alquiler.NombreCliente = "";
+            Alquiler.ApellidosCliente = "";
+            Alquiler.Direccion = "";
+        }
        
          // Se añade un elemento al carrito de la compra.
         public void AddArticuloACompra(PortatilParaAlquilerDTO portatil, int? cantidad) {
@@ -93,7 +99,22 @@ namespace OneHope.Web
         {
             Alquiler.Direccion = direccionCliente;
         }
-        
+
+        public void SetFechaInAlquiler(DateTime fechaInAlquiler)
+        {
+            Alquiler.FechaInAlquiler = fechaInAlquiler;
+        }
+
+        public void SetFechaFinAlquiler(DateTime fechaFinAlquiler)
+        {
+            Alquiler.FechaFinAlquiler = fechaFinAlquiler;
+        }
+
+        public void SetTelefonoCliente(int telefono)
+        {
+            Alquiler.TelefonoCliente = telefono;
+        }
+
         // Se ha terminado la compra, así que hay que vaciar el carrito..
         public void FinalizarCompra() {
             Alquiler = new AlquilerParaCrearDTO() {
