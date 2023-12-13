@@ -8,19 +8,6 @@
 
 <h1>¡Bienvenido!</h1>
 
-@if (_portatiles == null)
-{
-    // Esto hace falta, porque si no la página intentar cargarse y puede que todavía no le haya dado tiempo
-    // a traer los datos desde el API.
-    <p><em>Cargando...</em></p>
-}
-else foreach (var portatil in _portatiles)
-    {
-        @portatil.Modelo
-        <br>
-    }
-
-
 @code {
     private ICollection<PortatilParaPedidoDTO> _portatiles;
 
