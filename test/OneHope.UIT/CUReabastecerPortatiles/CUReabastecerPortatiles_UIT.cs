@@ -30,6 +30,21 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             GC.SuppressFinalize(this);
         }
 
+        // Navegar a la página inicial de la web.
+        private void Inicio()
+        {
+            _driver.Navigate()
+                .GoToUrl(_URI);
+        }
+
+        private void Ir_A_ReabastecerPortatiles()
+        {
+            // Esperar a que se cargue la página.
+            UtilitiesUIT.WaitForBeingVisible(_driver, By.Id("PedirPortatilesNavLink"));
+            // Pulsamos en la opción del menú de navegación de Reabastecer Portátiles.
+            _driver.FindElement(By.Id("PedirPortatilesNavLink")).Click();
+        }
+
         [Fact]
         public void Initial_step_opening_the_web_page()
         {
@@ -37,8 +52,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             string expectedTitle = "Index";
             string expectedText = "Register";
             //Act
-            //El navegador cargará la URI indicada
-            _driver.Navigate().GoToUrl(_URI);
+            Inicio();
 
             //Assert
             //Comprueba que el título coincide con el esperado
@@ -48,10 +62,13 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             Assert.Contains(expectedText, _driver.PageSource);
         }
 
-        [Fact]
-        public void Navigate_step_select_pedido()
-        {
 
-        }
+
+
+
+
+
+
+
     }
 }
