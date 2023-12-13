@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OneHope.UIT.CUReabastecerPortatiles
+namespace OneHope.UIT.Shared
 {
     public class SeleccionPortatilesPedido_PO : PageObject
     {
@@ -22,7 +22,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
         private IWebElement _modeloPortatil() => _driver.FindElement(_modeloPortatilBy);
         private IWebElement _marcaPortatil() => _driver.FindElement(_marcaPortatilBy);
         private IWebElement _stockMinimoPortatil() => _driver.FindElement(_stockMinimoPortatilBy);
-        private IWebElement _stockaMaximoPortatil() => _driver.FindElement(_stockaMaximoPortatilBy);
+        private IWebElement _stockMaximoPortatil() => _driver.FindElement(_stockaMaximoPortatilBy);
         private IWebElement _proveedorPortatil() => _driver.FindElement(_proveedorPortatilBy);
         private IWebElement _nombrePortatil() => _driver.FindElement(_nombrePortatilBy);
         private IWebElement _botonBuscar() => _driver.FindElement(_botonBuscarBy);
@@ -39,38 +39,60 @@ namespace OneHope.UIT.CUReabastecerPortatiles
         {
             SelectElement selectElement;
 
-            // Para poder interaccionar con el elemento debe ser visible.
-            // El método se le pasa el Id, no la referencia.
-            WaitForBeingVisible(_modeloPortatilBy);
-            WaitForBeingVisible(_marcaPortatilBy);
-            WaitForBeingVisible(_stockMinimoPortatilBy);
-            WaitForBeingVisible(_stockaMaximoPortatilBy);
-            WaitForBeingVisible(_proveedorPortatilBy);
-            WaitForBeingVisible(_nombrePortatilBy);
+            if (portatilModelo != null)
+            {
+                WaitForBeingVisible(_modeloPortatilBy);
+                _modeloPortatil().SendKeys(portatilModelo);
+            }
+            if (portatilStockMinimo != null)
+            {
+                WaitForBeingVisible(_stockMinimoPortatilBy);
+                _stockMinimoPortatil().SendKeys(Keys.Backspace);
+                _stockMinimoPortatil().SendKeys(portatilStockMinimo.ToString());
+            }
+            if (portatilStockMaximo != null)
+            {
+                WaitForBeingVisible(_stockaMaximoPortatilBy);
+                _stockMaximoPortatil().SendKeys($"{Keys.Backspace}{Keys.Backspace}");
+                _stockMaximoPortatil().SendKeys(portatilStockMaximo.ToString());
+            }
+            if (portatilNombre != null)
+            {
+                WaitForBeingVisible(_nombrePortatilBy);
+                _nombrePortatil().SendKeys(portatilNombre);
+            }
+            if (portatilMarca != null)
+            {
+                // Si no se ha seleccionado ningún color, entonces debe seleccionarse "Todos".
+                if (portatilMarca == "") 
+                {
+                    portatilMarca = "Todos";
+                    WaitForBeingVisible(_marcaPortatilBy);
+                }
+                else
+                {
+                    WaitForBeingVisible(By.Id($"portatilMarca_{portatilMarca}"));
+                }
 
-            // Se simula que se escribe en la cuadro de texto el filtro del nombre del artículo.
-            _driver.FindElement(_modeloPortatilBy).SendKeys(portatilModelo);
-            //_driver.FindElement(_marcaPortatilBy).SendKeys(portatilMarca);
-            _driver.FindElement(_stockMinimoPortatilBy).SendKeys(portatilStockMinimo.ToString());
-            _driver.FindElement(_stockaMaximoPortatilBy).SendKeys(portatilStockMaximo.ToString());
-            //_driver.FindElement(_proveedorPortatilBy).SendKeys(portatilProveedor);
-            _driver.FindElement(_nombrePortatilBy).SendKeys(portatilNombre);
-
-
-            // Si no se ha seleccionado ningún color, entonces debe seleccionarse "Todos".
-            if (portatilMarca == "") portatilMarca = "Todos";
-
-            WaitForBeingVisible(_marcaPortatilBy);
-            // Se crea la lista desplegable.
-            selectElement = new SelectElement(_marcaPortatil());
-            // Selecciona la opción que se ha indicado en el parámetro para el filtro.
-            selectElement.SelectByText(portatilMarca);
-
-
-            if (portatilProveedor == "") portatilProveedor = "Todos";
-            WaitForBeingVisible(_proveedorPortatilBy);
-            selectElement = new SelectElement(_proveedorPortatil());
-            selectElement.SelectByText(portatilProveedor);
+                // Se crea la lista desplegable.
+                selectElement = new SelectElement(_marcaPortatil());
+                // Selecciona la opción que se ha indicado en el parámetro para el filtro.
+                selectElement.SelectByText(portatilMarca);
+            }
+            if (portatilProveedor != null)
+            {
+                if (portatilProveedor == "") {
+                    portatilProveedor = "Todos";
+                    WaitForBeingVisible(_proveedorPortatilBy);
+                }
+                else
+                {
+                    WaitForBeingVisible(By.Id($"portatilProveedor_{portatilProveedor}"));
+                }
+                
+                selectElement = new SelectElement(_proveedorPortatil());
+                selectElement.SelectByText(portatilProveedor);
+            }
 
             _botonBuscar().Click();
             // Se espera 2000 milisegundos para esperar a que la tabla se recargue.
@@ -88,6 +110,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
         // Devuelve si el botón Pedir está activo o no.
         public bool isEnabledPedir()
         {
+            WaitForBeingVisible(_botonPedirBy);
             IWebElement botonPedir = _botonPedir();
 
             return botonPedir.Enabled;
