@@ -7,7 +7,7 @@
 
 @* Este es el servicio que se ha definido como HttpClient en Program.cs. *@
 @inject swaggerClient swaggerClient;
-@* Inyectar el servicio que gestiona el estado de la compra (debe ser añadido en Program.cs). *@
+@* Inyectar el servicio que gestiona el estado del alquiler (debe ser añadido en Program.cs). *@
 @inject AlquilarPortatilStateContainer estadoAlquiler;
 @* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
 @inject NavigationManager Navigation;
@@ -48,8 +48,6 @@
         </div>
         <textarea class="form-control" rows="4" cols="50" id="telefonoCliente" @onchange="@((value)=>ActualizaTelefono(value))" />
     </div>
-    @* Etiqueta que aparece para el filtro. *@
-    @* Filtro de texto para nombre. *@
     <div class="input-group-prepend">
         <span class="input-group-text" id="">Método de Pago</span>
         <select class="form-select" aria-label="Default select" @bind="metodoPagoSeleccionado">
@@ -59,6 +57,15 @@
                 </option>
             }
         </select>
+    </div>
+    <p></p>
+    <div class="input-group-prepend">
+        <span class="input-group-text">Fecha Inicio Alquiler</span>
+        <input type="date" class="form-control" @bind="estadoAlquiler.Alquiler.FechaInAlquiler" id="fechaInAlquiler">
+    </div>
+    <div class="input-group-prepend">
+        <span class="input-group-text">Fecha Final Alquiler</span>
+        <input type="date" class="form-control" @bind="estadoAlquiler.Alquiler.FechaFinAlquiler" id="fechaFinAlquiler">
     </div>
 </div> <!-- FIN INPUT-GROUP -->
 
@@ -114,7 +121,7 @@
                         <div class="col-md">
                             <div class="form-floating">
                                 @*this button will be disabled if there are no movies in the shopping cart*@
-                                <button class="btn btn-primary" type="submit" id="Alquilar" disabled="@completarButtonDisabled" @onclick="@(()=>CreateCompra())">
+                                <button class="btn btn-primary" type="submit" id="Alquilar" disabled="@completarButtonDisabled" @onclick="@(()=>CreateAlquiler())">
                                     Alquilar
                                 </button>
                             </div>
@@ -187,23 +194,23 @@
         StateHasChanged();
     }
 
-    @* Crear la compra y navegar a detalles. *@
-    private async Task CreateCompra() {
+    @* Crear el alquiler y navegar a detalles. *@
+    private async Task CreateAlquiler() {
        
 
         @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
-        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear la compra
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear el alquiler
            no son posibles porque lo evitamos en la vista. *@
         try {  
             @* Primero guardo la compra llamando al método create del controlador. *@
             details = await swaggerClient.CrearAlquilerAsync(estadoAlquiler.Alquiler);
             @* Borrar el carrito *@
-            estadoAlquiler.FinalizarCompra();
+            estadoAlquiler.FinalizarAlquiler();
 
-            Navigation.NavigateTo($"/portatiles/alquiler/detalle?CompraId={details.Id}");
+            Navigation.NavigateTo($"/portatiles/alquiler/detalle?AlquilerId={details.Id}");
         } catch (ApiException<PortatilesAPI.ValidationProblemDetails> apiexceptionvalidation) {
              @* Este es el título de la sección de errores que deseamos. *@
-             tituloError = "Ha habido un problema al procesar tu compra.";
+             tituloError = "Ha habido un problema al procesar tu alquiler.";
 
             if (apiexceptionvalidation.Result.Errors.Values != null)
             {
@@ -216,7 +223,7 @@
             StateHasChanged();
         } catch (ApiException apiexception) {
             @* Este es el título de la sección de errores que deseamos. *@
-            tituloError = "Ha habido un problema al procesar tu compra.";
+            tituloError = "Ha habido un problema al procesar tu alquiler.";
             mensajeError = "Por favor,inténtalo más tarde.";
             @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
             StateHasChanged();
@@ -280,4 +287,5 @@
             estadoAlquiler.SetTelefonoCliente(telefono);
 
     }
+
 }
