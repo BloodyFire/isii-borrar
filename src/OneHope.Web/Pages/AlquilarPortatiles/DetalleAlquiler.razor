@@ -30,9 +30,9 @@
         <span class="input-group-text" id="apellidos-cliente"><b>Apellidos Cliente: </b> @(alquiler.ApellidosCliente)</span>
         <span class="input-group-text" id="direccion-cliente"><b>Direccion: </b> @(alquiler.Direccion)</span>
         <span class="input-group-text" id="metodo-pago"><b>Método de Pago: </b> @(alquiler.TipoMetodoPago)</span>
-        <span class="input-group-text" id="fecha-alquiler"><b>Fecha de alquiler: </b> @(alquiler.FechaAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
-        <span class="input-group-text" id="fechaIn-alquiler"><b>Fecha Inicio de alquiler: </b> @(alquiler.FechaInAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
-        <span class="input-group-text" id="fechaFin-alquiler"><b>Fecha Final de alquiler: </b> @(alquiler.FechaFinAlquiler.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
+        <span class="input-group-text" id="fecha-alquiler"><b>Fecha de alquiler: </b> @(alquiler.FechaAlquiler.ToString("dd-MMM-yyyy HH").ToUpper())</span>
+        <span class="input-group-text" id="fechaIn-alquiler"><b>Fecha Inicio de alquiler: </b> @(alquiler.FechaInAlquiler.ToString("dd-MMM-yyyy").ToUpper())</span>
+        <span class="input-group-text" id="fechaFin-alquiler"><b>Fecha Final de alquiler: </b> @(alquiler.FechaFinAlquiler.ToString("dd-MMM-yyyy").ToUpper())</span>
     </div>
 </div> <!-- FIN INPUT-GROUP -->
 <!-- TABLA CON LA LISTA DE ARTÍCULOS ALQUILADOS -->
