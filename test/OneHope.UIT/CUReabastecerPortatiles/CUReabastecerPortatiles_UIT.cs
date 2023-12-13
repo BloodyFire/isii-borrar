@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -183,6 +184,33 @@ namespace OneHope.UIT.CUReabastecerPortatiles
 
         }
 
+        [Theory]
+        //--------- (Modelo, Marca, StockMin, StockMax, Proveedor, Nombre, Portatiles)
+        [InlineData(null, null, null, null, null, "Tostadora", "[[ \"TOASTER-3452\", \"TOASTER\", \"23\", \"1050\", \"Portatiles Mayorista\" ]]")]
+        [InlineData("DELL-1244", null, null, null, null, null, "[[ \"DELL-1244\", \"DELL\", \"18\", \"1000\", \"Empresaurio genérico S.A.\" ]]")]
+        [InlineData(null, "ASUS", null, null, null, null, "[[ \"ASUS-3314\", \"ASUS\", \"16\", \"1150\", \"Empresaurio genérico S.A.\"], [\"ASUS-2371\", \"ASUS\", \"24\", \"300\", \"Proveedores S.L.\" ]]")]
+        [InlineData(null, null, 25, null, null, null, "[[ \"DELL-2222\", \"DELL\", \"29\", \"250\", \"Portatiles Mayorista\" ]]")]
+        [InlineData(null, null, null, 0, null, null, "[[ \"DELL-5211\", \"DELL\", \"0\", \"1000\", \"Proveedores S.L.\" ]]")]
+        [InlineData(null, null, null, null, "Portatiles Mayorista", null, "[[ \"HP-5132\", \"HP\", \"9\", \"1000\", \"Portatiles Mayorista\"], [\"TOASTER-3452\", \"TOASTER\", \"23\", \"1050\", \"Portatiles Mayorista\"], [\"DELL-2222\", \"DELL\", \"29\", \"250\", \"Portatiles Mayorista\" ]]")]
+        public void CU1_2_FA0_Filtrado(string? portatilModelo, string? portatilMarca, int? portatilStockMinimo, int? portatilStockMaximo, string? portatilProveedor, string? portatilNombre, string portatilesJson)
+        {
+            // Arrange -----------
+            var seleccionarPortatiles_PO = new SeleccionPortatilesPedido_PO(_driver, _output);
+            //Utilizamos una estructura serializada en json para poder introducir un número variable de portátiles.
+            var expectedPortatiles = JsonConvert.DeserializeObject<List<string[]>>(portatilesJson);
+            
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Pedir Portátiles.
+            Ir_A_ReabastecerPortatiles();
+            // Filtrar los portátiles.
+            seleccionarPortatiles_PO.FiltrarPortatiles(portatilModelo, portatilMarca, portatilStockMinimo, portatilStockMaximo, portatilProveedor, portatilNombre);
+            
+            // Assert ----------
+            // Comprobar que la lista de portátiles que ha devuelto es la correcta.
+            Assert.True(seleccionarPortatiles_PO.CompruebaListaPortatiles(expectedPortatiles));
+        }
 
 
 
