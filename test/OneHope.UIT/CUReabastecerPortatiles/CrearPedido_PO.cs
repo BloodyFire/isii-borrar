@@ -29,13 +29,13 @@ namespace OneHope.UIT.Shared {
         // Pulsar el botón volver.
         public void Volver() {
             _botonVolver().Click();
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(300);
         }
 
         // Pulsar el botón realizar pedido.
         public void Pedir() {
             _botonPedir().Click();
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(300);
         }
 
         // Fija la cantidad que se desea pedir para el portátil cuyo id es Id.
@@ -50,24 +50,22 @@ namespace OneHope.UIT.Shared {
         public void setDireccion(string direccion)
         {
             _direccionPedido().SendKeys(direccion);
-            _direccionPedido().SendKeys(Keys.Enter);
         }
 
-        public void serComentarios(string comentrarios)
+        public void setComentarios(string comentrarios)
         {
             _comentariosPedido().SendKeys(comentrarios);
-            _comentariosPedido().SendKeys(Keys.Enter);
         }
 
         // Hay un problema, no salta el evento onChange por lo que no se actualiza correctamente el contenedor del estado.
         public void setMetodoPago(string metodoPago) {
             WaitForBeingClickable(_seleccionarMetodoPagoBy);
+            WaitForBeingVisible(By.Id($"metodoPagoSeleccionado_{metodoPago}"));
+
             // Se crea la lista desplegable.
             SelectElement selectElement = new SelectElement(_metodoPago());
             // Selecciona la opción que se ha indicado en el parámetro.
             selectElement.SelectByText(metodoPago);
-            //TODO:Check if this fix the onChangeMethod
-            //_metodoPago().SendKeys(Keys.Enter);
         }
 
         // Devuelve si el botón Pedir está activo o no.
