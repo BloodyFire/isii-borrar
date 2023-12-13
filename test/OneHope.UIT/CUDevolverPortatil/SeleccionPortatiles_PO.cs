@@ -17,41 +17,45 @@ namespace OneHope.UIT.Shared
     public class SeleccionPortatiles_PO : PageObject
     {
         // Se definen los localizadores de cada uno de los elementos de la página con el que se a interactuar usando su id.
-        private By _nombreArticuloBy = By.Id("articuloNombre");
-        private By _colorArticuloBy = By.Id("selectColor");
-        private By _botonBuscarBy = By.Id("botonBuscarArticulos");
-        private By _botonComprarBy = By.Id("botonComprar");
-        private By _tablaArticulosBy = By.Id("TablaArticulos");
+        private By _idCompraBy = By.Id("portatilIdCompra");
+        private By _fechaBy = By.Id("fecha");
+        private By _precioBy = By.Id("precio");
+        private By _botonBuscarBy = By.Id("BuscarPortatiles");
+        private By _botonDevolverBy = By.Id("Sumit");
+        private By _tablaPortatilesBy = By.Id("TableOfPortatiles");
 
 
         // Este código es equivalente a: // private IWebElement _nombreArticulo() { return _driver.FindElement(By.Id("_nombreArticuloBy")); }
-        private IWebElement _nombreArticulo() => _driver.FindElement(_nombreArticuloBy);
-        private IWebElement _colorArticulo() => _driver.FindElement(_colorArticuloBy);
+        private IWebElement _idCompra() => _driver.FindElement(_idCompraBy);
+        private IWebElement _fecha() => _driver.FindElement(_fechaBy);
+        private IWebElement _precio() => _driver.FindElement(_precioBy);
         private IWebElement _botonBuscar() => _driver.FindElement(_botonBuscarBy);
-        private IWebElement _botonComprar() => _driver.FindElement(_botonComprarBy);
+        private IWebElement _botonDevolver() => _driver.FindElement(_botonDevolverBy);
+        private IWebElement _tablaPortatiles() => _driver.FindElement(_tablaPortatilesBy);
 
-        public SeleccionarArticulos_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output)
+        public SeleccionPortatiles_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output)
         {
         }
 
-        // Simular el paso de filtrar los artículos. El método tendrá un parámetro por cada uno de los filtros que tengas.
-        public void FiltrarArticulos(string nombreArticulo, string colorArticulo)
+        // Simular el paso de filtrar los portátiles. El método tendrá un parámetro por cada uno de los filtros que tengas.
+        public void FiltrarPortatiles(string idCompra, DateTime fecha, double precio)
         {
             // Para poder interaccionar con el elemento debe ser visible.
             // El método se le pasa el Id, no la referencia.
-            WaitForBeingVisible(_nombreArticuloBy);
+            WaitForBeingVisible(_idCompraBy);
 
-            // Se simula que se escribe en la cuadro de texto el filtro del nombre del artículo.
-            _driver.FindElement(_nombreArticuloBy).SendKeys(nombreArticulo);
+            // Se simula que se escribe en la cuadro de texto el filtro del id de la compra del portátil.
+            _driver.FindElement(_idCompraBy).SendKeys(idCompra);
 
-            // Si no se ha seleccionado ningún color, entonces debe seleccionarse "Todos".
-            if (colorArticulo == "") colorArticulo = "Todos";
+            //AÑADIR FILTRO FECHA
 
-            WaitForBeingVisible(_colorArticuloBy);
-            // Se crea la lista desplegable.
-            SelectElement selectElement = new SelectElement(_colorArticulo());
-            // Selecciona la opción que se ha indicado en el parámetro para el filtro.
-            selectElement.SelectByText(colorArticulo);
+
+            WaitForBeingVisible(_precioBy);
+
+            // Se simula que se escribe en la cuadro de texto el filtro del precio del portátil.
+            _driver.FindElement(_precioBy).SendKeys(precio.ToString());
+
+            
 
             _botonBuscar().Click();
             // Se espera 2000 milisegundos para esperar a que la tabla se recargue.
@@ -59,52 +63,52 @@ namespace OneHope.UIT.Shared
         }
 
         // Este método permite comprobar si la lista de artículos mostrada en la tabla coincide con la esperada o no.
-        public bool CompruebaListaArticulos(List<string[]> expectedArticulos)
+        public bool CompruebaListaPortatiles(List<string[]> expectedPortatiles)
         {
 
-            return CheckBodyTable(expectedArticulos, _tablaArticulosBy);
+            return CheckBodyTable(expectedPortatiles, _tablaPortatilesBy);
         }
 
-        // Devuelve si el botón Comprar está activo o no.
-        public bool isEnabledComprar()
+        // Devuelve si el botón Devolver está activo o no.
+        public bool isEnabledDevolver()
         {
-            IWebElement botonComprar = _botonComprar();
+            IWebElement botonDevolver = _botonDevolver();
 
-            return botonComprar.Enabled;
+            return botonDevolver.Enabled;
         }
 
         // Selecciona los artículos cuyos Ids aparecen en la lista.
-        // Recuerda que en la tabla los Ids del input para seleccionar se han generado como: articuloCompra_@articulo.Id
-        public void SeleccionarArticulos(List<string> articulosIds)
+        // Recuerda que en la tabla los Ids del input para seleccionar se han generado como: portatilDevolver_@portatil.IdCompra
+        public void SeleccionarPortatiles(List<string> portatilesIds)
         {
             //we wait for till the movies are available to be selected 
-            foreach (var articuloId in articulosIds)
+            foreach (var portatilId in portatilesIds)
             {
-                WaitForBeingVisible(By.Id($"articuloCompra_{articuloId}"));
-                _driver.FindElement(By.Id($"articuloCompra_{articuloId}")).Click();
+                WaitForBeingVisible(By.Id($"portatilDevolver_{portatilId}"));
+                _driver.FindElement(By.Id($"PortatilDevolver_{portatilId}")).Click();
             }
         }
 
         // Comprueba si los artículos cuyos Ids parecen en la lista están todos seleccionados.
         // En caso contrario devuelve false.
-        public bool ComprobarSeleccionArticulos(List<string> articulosIds)
+        public bool ComprobarSeleccionPortatiles(List<string> portatilesIds)
         {
 
             //we wait for till the movies are available to be selected 
-            foreach (var articuloId in articulosIds)
+            foreach (var portatilId in portatilesIds)
             {
-                WaitForBeingVisible(By.Id($"articuloCompra_{articuloId}"));
-                string value = _driver.FindElement(By.Id($"articuloCompra_{articuloId}")).GetAttribute("checked");
+                WaitForBeingVisible(By.Id($"portatilDevolver_{portatilId}"));
+                string value = _driver.FindElement(By.Id($"portatilDevolver_{portatilId}")).GetAttribute("checked");
                 if (value.Equals("false")) return false;
             }
 
             return true;
         }
 
-        // Pulsar el botón comprar.
-        public void Comprar()
+        // Pulsar el botón devolver.
+        public void Devolver()
         {
-            _botonComprar().Click();
+            _botonDevolver().Click();
             System.Threading.Thread.Sleep(200); // Si no añado este retardo no funcionan las pruebas.
         }
 
