@@ -232,9 +232,44 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             Assert.Contains(expectedText, _driver.PageSource);
         }
 
+        [Fact]
+        public void CU1_6_FA4_Carrito_Vacio()
+        {
+            // Arrange
+            var seleccionarPortatiles_PO = new SeleccionPortatilesPedido_PO(_driver, _output);
+            
+            // Act
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Pedir Portátiles.
+            Ir_A_ReabastecerPortatiles();
+            
+            // Assert
+            Assert.False(seleccionarPortatiles_PO.isEnabledPedir());
+        }
 
-
-
+        [Fact]
+        public void CU1_7_FA5_Volver_Atras()
+        {
+            // Arrange
+            var seleccionarPortatiles_PO = new SeleccionPortatilesPedido_PO(_driver, _output);
+            var crearPedido_PO = new CrearPedido_PO(_driver, _output);
+            
+            // Act
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Pedir Portátiles.
+            Ir_A_ReabastecerPortatiles();
+            // Seleccionar los portátiles 9 y 5.
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "9", "5" });
+            // Pulsar el botón de pedir.
+            seleccionarPortatiles_PO.Pedir();
+            // Ahora volver.
+            crearPedido_PO.Volver();
+            
+            // Assert
+            Assert.True(seleccionarPortatiles_PO.ComprobarSeleccionPortatiles(new List<string>() { "9", "5" }));
+        }
 
 
     }
