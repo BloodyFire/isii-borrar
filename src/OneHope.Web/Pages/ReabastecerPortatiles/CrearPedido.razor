@@ -74,8 +74,9 @@ else
                         <td>@portatil.Modelo</td>
                         <td>@portatil.PrecioUnitario</td>
                         <td>
-                            <input type="number" id="cantidad_@portatil.PortatilID" value="@portatil.Cantidad"
-                            @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
+                            <input type="number" id="cantidad_@portatil.PortatilID" min="1" value="@portatil.Cantidad"
+                                   oninput="if(parseInt(this.value) < 1) this.value = 1;"
+                                   @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
                         </td>
                         <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
                         <td>
