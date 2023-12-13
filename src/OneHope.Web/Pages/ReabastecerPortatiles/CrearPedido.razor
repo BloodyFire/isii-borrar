@@ -10,7 +10,11 @@
 @* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
 @inject NavigationManager Navigation;
 
-
+<style>
+    .input-group > .input-group-prepend{
+        padding: 5px;
+    }
+</style>
 
 <h3>Introduce los datos del Pedido</h3>
 @* https://getbootstrap.com/docs/4.0/components/input-group/ *@
@@ -22,9 +26,7 @@
         </div>
         <textarea class="form-control" rows="4" cols="50" id="direccionAlmacen" @onchange="@((value)=>ActualizaDireccion(value))"/>
     </div>
-    <div class="input-group-prepend">
-        <input type="hidden" class="form-control" @bind="codEmpleado" id="codEmpleado" />
-    </div>
+    <input type="hidden" class="form-control" @bind="codEmpleado" id="codEmpleado" />
     <div class="input-group-prepend">
         <span class="input-group-text" id="">Método de Pago</span>
         <select class="form-select" aria-label="Default select" id="selMetodoPago" @bind="metodoPagoSeleccionado">
@@ -35,6 +37,12 @@
                 </option>
             }
         </select>
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Observaciones</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="comentarios" @onchange="@((value)=>ActualizaComentarios(value))" />
     </div>
 </div>
 <!-- FIN INPUT-GROUP -->
@@ -122,14 +130,6 @@ else
     </div>
     <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
 }
-<div class="input-group">
-    <div class="input-group-prepend">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Comentarios</span>
-        </div>
-        <textarea class="form-control" rows="4" cols="50" id="comentarios" @onchange="@((value)=>ActualizaComentarios(value))" />
-    </div>
-</div>
 @if (!mensajeError.Equals(""))
 {
     <div class="card-header">
