@@ -51,25 +51,34 @@ else
         <table class="table table-condensed table-hover" id="TablaPortatiles">
             <thead>
                 <tr>
+                    <th>Marca</th>
                     <th>Modelo</th>
-                    <th>PrecioUnitario</th>
+                    <th>Precio/Unidad</th>
                     <th>Cantidad</th>
+                    <th>Precio</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var portatil in Portatiles)
                 {
                     <tr id="PortatilData_@portatil.PortatilID">
+                        <td>@portatil.Marca</td>
                         <td>@portatil.Modelo</td>
                         <td>@portatil.PrecioUnitario</td>
                         <td>
                             <input type="number" id="cantidad_@portatil.PortatilID" value="@portatil.Cantidad"
                             @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
                         </td>
+                        <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
                     </tr>
                 }
             </tbody>
             <tfoot>
+                <tr><td /><td /><td />
+                    <td align="right"><b>Precio Total: </b></td>
+                    <td>@Portatiles.Sum(p => p.PrecioUnitario * p.Cantidad)</td>
+                </tr>
+
                 <tr>
                     <td colspan="2" align="left">
                         @* Botón para navegar introducción de datos. *@

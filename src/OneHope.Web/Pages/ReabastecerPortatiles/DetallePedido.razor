@@ -26,9 +26,25 @@
 @* input-group permite personalizar los controles para introducir datos. *@
 <div class="input-group">
     <div class="input-group-prepend">
+        <span class="input-group-text" id="codigo-empleado"><b>Codigo de empleado: </b> @(pedido.CodigoEmpleado)</span>
+        <span class="input-group-text" id="fecha-pedido"><b>Fecha de pedido: </b> @(pedido.FechaPedido.ToString("dd-MM-yyyy HH:mm:ss").ToUpper())</span>
         <span class="input-group-text" id="metodo-pago"><b>Método de Pago: </b> @(pedido.TipoMetodoPago)</span>
-        <span class="input-group-text" id="fecha-pedido"><b>Fecha de pedido: </b> @(pedido.FechaPedido.ToString("dd-MMM-yyyy HH:mm:ss").ToUpper())</span>
     </div>
+    @if (pedido.Comentarios != null && pedido.Comentarios != "")
+    {
+        <div class="input-group-prepend" style="max-width: 35%;">
+                <span class="input-group-text" id="direccion" style="align-items: unset; text-align: unset; white-space: unset;"><b>Dirección: </b> @(pedido.Direccion)</span>
+        </div>
+        <div class="input-group-prepend" style="max-width: 35%;">
+                <span class="input-group-text" id="comentarios" style="align-items: unset; text-align: unset; white-space: unset;"><b>Comentarios: </b> @(pedido.Comentarios)</span>
+        </div>
+    }
+    else
+    {
+        <div class="input-group-prepend" style="max-width: 70%;">
+            <span class="input-group-text" id="direccion" style="align-items: unset; text-align: unset; white-space: unset;"><b>Comentarios: </b> @(pedido.Comentarios)</span>
+    </div>
+    }
 </div> <!-- FIN INPUT-GROUP -->
 <!-- TABLA CON LA LISTA DE PORTÁTILES PEDIDOS -->
 @if (Portatiles == null || Portatiles.Count() == 0) {
@@ -39,9 +55,11 @@
         <table class="table table-condensed table-hover" id="TablaPortatiles">
             <thead>
                 <tr>
+                    <th>Marca</th>
                     <th>Modelo</th>
                     <th>Cantidad</th>
-                    <th>PVP</th>
+                    <th>Precio/Unidad</th>
+                    <th>Precio</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +74,7 @@
                 }
                 
             </tbody>
-            <tfoot><tr><td /><td /><td><em>Precio Total</em></td><td>@pedido.Total</td></tr></tfoot>
+                <tfoot><tr><td /><td /><td align="right"><b>Precio Total: </b></td><td>@pedido.Total</td></tr></tfoot>
         </table>
     </div>
     <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
