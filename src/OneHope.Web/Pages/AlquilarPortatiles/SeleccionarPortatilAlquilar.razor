@@ -188,7 +188,7 @@ else
     @* Elimina un artículo del carrito. *@
     private void removeArticuloCompra(PortatilParaAlquilerDTO portatil)
     {
-        estadoAlquiler.RemoveArticuloACompra(portatil.Id);
+        estadoAlquiler.RemoveArticuloAAlquiler(portatil.Id);
 
         if (estadoAlquiler.isEmpty()) alquilarButtonDisabled = true;
     }
@@ -197,7 +197,7 @@ else
     private void AddArticuloCompra(PortatilParaAlquilerDTO portatil)
     {
 
-        estadoAlquiler.AddArticuloACompra(portatil, 1);
+        estadoAlquiler.AddArticuloAAlquiler(portatil, 1);
 
         alquilarButtonDisabled = false;
     }
