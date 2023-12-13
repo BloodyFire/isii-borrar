@@ -212,6 +212,25 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             Assert.True(seleccionarPortatiles_PO.CompruebaListaPortatiles(expectedPortatiles));
         }
 
+        [Fact]
+        public void CU1_3_FA1_No_Hay_Portatiles()
+        {
+            // Arrange -----------
+            var expectedText = "No hay portátiles que cumplan los criterios seleccionados.";
+            var seleccionarPortatiles_PO = new SeleccionPortatilesPedido_PO(_driver, _output);
+            
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Reabastecer Portátiles.
+            Ir_A_ReabastecerPortatiles();
+            // Filtrar los artículos.
+            seleccionarPortatiles_PO.FiltrarPortatiles(null, null, null, null, null, "No hay ninguno");
+            
+            // Assert ----------
+            // Comprobar que la lista de portátiles que ha devuelto es la correcta.
+            Assert.Contains(expectedText, _driver.PageSource);
+        }
 
 
 
