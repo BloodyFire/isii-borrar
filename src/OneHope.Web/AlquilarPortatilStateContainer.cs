@@ -24,7 +24,7 @@ namespace OneHope.Web
         }
        
          // Se añade un elemento al carrito de la compra.
-        public void AddArticuloACompra(PortatilParaAlquilerDTO portatil, int? cantidad) {
+        public void AddArticuloAAlquiler(PortatilParaAlquilerDTO portatil, int? cantidad) {
             // Se comprueba que ese artículo no se ha añadido ya al carrito.
             if (!Alquiler.LineasAlquiler.Any(li => li.PortatilID == portatil.Id)) {
                 int cant = (int)(cantidad == null ? 1 : cantidad);  // Si la cantidad es null lo añadimos con cantidad 1.
@@ -53,7 +53,7 @@ namespace OneHope.Web
         
         // Se elimina un elemento del carrito de la compra.
 
-        public void RemoveArticuloACompra(int articuloId) {
+        public void RemoveArticuloAAlquiler(int articuloId) {
 
             LineaAlquilerDTO lineaAlquiler =
                 Alquiler.LineasAlquiler.FirstOrDefault(li => li.PortatilID.Equals(articuloId));
@@ -100,23 +100,13 @@ namespace OneHope.Web
             Alquiler.Direccion = direccionCliente;
         }
 
-        public void SetFechaInAlquiler(DateTime fechaInAlquiler)
-        {
-            Alquiler.FechaInAlquiler = fechaInAlquiler;
-        }
-
-        public void SetFechaFinAlquiler(DateTime fechaFinAlquiler)
-        {
-            Alquiler.FechaFinAlquiler = fechaFinAlquiler;
-        }
-
         public void SetTelefonoCliente(int telefono)
         {
             Alquiler.TelefonoCliente = telefono;
         }
 
         // Se ha terminado la compra, así que hay que vaciar el carrito..
-        public void FinalizarCompra() {
+        public void FinalizarAlquiler() {
             Alquiler = new AlquilerParaCrearDTO() {
                 LineasAlquiler = new List<LineaAlquilerDTO>()
             };
