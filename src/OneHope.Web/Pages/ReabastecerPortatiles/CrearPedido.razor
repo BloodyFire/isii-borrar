@@ -44,6 +44,13 @@
 {
     <br />
     <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+
+    <div class="form-floating">
+        @*this button will be disabled if there are no laptops in the shopping cart*@
+        <button class="btn btn-primary" type="submit" id="Volver" @onclick="@(()=>Volver())">
+            Volver
+        </button>
+    </div>
 }
 else
 {  @* Flujo básico y alternativo cuando se filtra. *@
@@ -56,6 +63,7 @@ else
                     <th>Precio/Unidad</th>
                     <th>Cantidad</th>
                     <th>Precio</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -70,6 +78,11 @@ else
                             @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
                         </td>
                         <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
+                        <td>
+                            <button class="btn btn-secondary" type="action" @onclick="@(()=>removePortatilapedido(portatil.PortatilID))">
+                                Eliminar
+                            </button>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -91,7 +104,7 @@ else
                             </div>
                         </div>
                     </td>
-                    <td colspan="3" align="right">
+                    <td colspan="4" align="right">
                         @* Botón para navegar introducción de datos. *@
                         <div class="col-md">
                             <div class="form-floating">
@@ -255,4 +268,11 @@ else
         estadoPedido.SetComentarios(comentarios);
     }
 
+    @* Elimina un portátil del carrito. *@
+    private void removePortatilapedido(int id)
+    {
+        estadoPedido.RemovePortatilAPedir(id);
+
+        BuscarPortatiles();
+    }
 }
