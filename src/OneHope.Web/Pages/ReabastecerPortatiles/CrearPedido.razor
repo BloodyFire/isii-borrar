@@ -88,9 +88,7 @@ else
                         </td>
                         <td>@(portatil.PrecioUnitario * portatil.Cantidad)</td>
                         <td>
-                            <button class="btn btn-secondary" type="action" @onclick="@(()=>removePortatilapedido(portatil.PortatilID))">
-                                Eliminar
-                            </button>
+                            <button class="btn btn-secondary eliminar" type="action" id="eliminar_@portatil.PortatilID" @onclick="@(()=>removePortatilapedido(portatil.PortatilID))">Eliminar</button>
                         </td>
                     </tr>
                 }

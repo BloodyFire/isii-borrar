@@ -233,6 +233,42 @@ namespace OneHope.UIT.CUReabastecerPortatiles
         }
 
         [Fact]
+        public void CU1_4_FA2_Eliminar()
+        {
+            // Arrange -----------
+            var seleccionarPortatiles_PO = new SeleccionPortatilesPedido_PO(_driver, _output);
+            var crearPedido_PO = new CrearPedido_PO(_driver, _output);
+            var expectedPortatiles = new List<string[]>
+            {
+                //CompruebaListaPortatiles() no comprueba la columna de cantidad en esta vista, asi que no la introducimos.
+                new string[] { "TOASTER", "TOASTER-4461", "850", "850", "Eliminar" } 
+            };
+
+            var expectedTotal = new List<string[]>
+            {
+                new string[] { "Precio Total:", "850" },
+                new string[] { "Volver\r\nRealizar Pedido" } //Los botones hay que ponerlos así o el CompruebaTotal() falla.
+            };
+
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Reabastecer Portátiles.
+            Ir_A_ReabastecerPortatiles();
+            // Seleccionar los portátiles 4 y 10.
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "4", "10" });
+            // Pulsar el botón de pedir.
+            seleccionarPortatiles_PO.Pedir();
+            // Eliminar portatil 10
+            crearPedido_PO.Eliminar("10");
+
+            // Assert ----------
+            // Comprobar que la lista de portátiles que ha devuelto es la correcta.
+            Assert.True(crearPedido_PO.CompruebaListaPortatiles(expectedPortatiles));
+            Assert.True(crearPedido_PO.CompruebaTotal(expectedTotal));
+        }
+
+        [Fact]
         public void CU1_6_FA4_Carrito_Vacio()
         {
             // Arrange

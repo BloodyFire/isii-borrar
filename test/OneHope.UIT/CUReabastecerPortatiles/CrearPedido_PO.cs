@@ -68,6 +68,22 @@ namespace OneHope.UIT.Shared {
             selectElement.SelectByText(metodoPago);
         }
 
+        public void Eliminar(string portatilId)
+        {
+            _driver.FindElement(By.Id($"eliminar_{portatilId}")).Click();
+        }
+
+        // Este método permite comprobar si la lista de portátiles mostrada en la tabla coincide con la esperada o no.
+        public bool CompruebaListaPortatiles(List<string[]> expectedPortatiles)
+        {
+            return CheckBodyTable(expectedPortatiles, _tablaPortatilesBy);
+        }
+        public bool CompruebaTotal(List<string[]> expectedPortatiles)
+        {
+
+            return CheckFooterTable(expectedPortatiles, _tablaPortatilesBy);
+        }
+
         // Devuelve si el botón Pedir está activo o no.
         public bool isEnabledPedir() {
             IWebElement botonPedir = _botonPedir();
