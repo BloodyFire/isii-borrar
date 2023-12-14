@@ -105,18 +105,18 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             // Poner las cantidades.
             crearPedido_PO.setCantidad("4", "4");
             crearPedido_PO.setCantidad("10", "2");
-            // Pulsar pedir para finalizar la pedido.
+            // Pulsar Realizar pedido para finalizar la pedido.
             expectedFecha += DateTime.Now.ToString("dd-MM-yyyy HH:mm").ToUpper();
             crearPedido_PO.Pedir();
             // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
 
             // Assert
-            Assert.True(_driver.PageSource.Contains(expectedCabecera));
-            Assert.True(_driver.PageSource.Contains(expectedCodigoEmpleado));
-            Assert.True(_driver.PageSource.Contains(expectedMetodoPago));
-            Assert.True(_driver.PageSource.Contains(expectedFecha));
-            Assert.True(_driver.PageSource.Contains(expectedDireccion));
-            Assert.False(_driver.PageSource.Contains(unespectedField));
+            Assert.Contains(expectedCabecera,_driver.PageSource);
+            Assert.Contains(expectedCodigoEmpleado, _driver.PageSource);
+            Assert.Contains(expectedMetodoPago, _driver.PageSource);
+            Assert.Contains(expectedFecha, _driver.PageSource);
+            Assert.Contains(expectedDireccion, _driver.PageSource);
+            Assert.DoesNotContain(unespectedField, _driver.PageSource);
             Assert.True(detallePedido_PO.CompruebaListaPortatiles(expectedPortatiles));
             Assert.True(detallePedido_PO.CompruebaTotal(expectedTotal));
 
@@ -173,12 +173,12 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
 
             // Assert
-            Assert.True(_driver.PageSource.Contains(expectedCabecera));
-            Assert.True(_driver.PageSource.Contains(expectedCodigoEmpleado));
-            Assert.True(_driver.PageSource.Contains(expectedMetodoPago));
-            Assert.True(_driver.PageSource.Contains(expectedFecha));
-            Assert.True(_driver.PageSource.Contains(expectedDireccion));
-            Assert.True(_driver.PageSource.Contains(expectedObservaciones));
+            Assert.Contains(expectedCabecera, _driver.PageSource);
+            Assert.Contains(expectedCodigoEmpleado, _driver.PageSource);
+            Assert.Contains(expectedMetodoPago, _driver.PageSource);
+            Assert.Contains(expectedFecha, _driver.PageSource);
+            Assert.Contains(expectedDireccion, _driver.PageSource);
+            Assert.Contains(expectedObservaciones, _driver.PageSource);
             Assert.True(detallePedido_PO.CompruebaListaPortatiles(expectedPortatiles));
             Assert.True(detallePedido_PO.CompruebaTotal(expectedTotal));
 
