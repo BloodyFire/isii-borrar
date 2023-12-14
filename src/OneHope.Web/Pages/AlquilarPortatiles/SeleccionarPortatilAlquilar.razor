@@ -25,7 +25,7 @@
         <span class="input-group-text" id="">Marca</span>
     </div>
     @*<input type="text" class="form-control" @bind="@portatilMarca" id="portatilMarca">*@
-    <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada">
+    <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada" id="portatilMarcaSeleccionada">
         <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreMarca in nombreMarcas)
         {
@@ -38,7 +38,7 @@
         <span class="input-group-text" id="">Procesador</span>
     </div>
     @*<input type="text" class="form-control" @bind="@portatilProcesador" id="portatilProcesador">*@
-    <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado">
+    <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado" id="portatilProcesadorSeleccionado">
         <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreProcesador in nombreProcesadores)
         {
@@ -51,7 +51,7 @@
         <span class="input-group-text" id="">Ram</span>
     </div>
     @*<input type="text" class="form-control" @bind="@portatilRam" id="portatilRam">*@
-    <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada">
+    <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada" id="portatilRamSeleccionada">
         <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
         @foreach (string nombreRam in nombreRams)
         {
@@ -74,7 +74,7 @@
 else
 {  @* Flujo básico y alternativo cuando se filtra. *@
     <div class="mh-100 table-responsive">
-        <table class="table table-condensed table-hover" id="TableOfMovies">
+        <table class="table table-condensed table-hover" id="TablaPortatiles">
             <thead>
                 <tr>
                     <th>Modelo</th>
@@ -97,7 +97,7 @@ else
                         <td>@portatil.PrecioAlquiler</td>
                         <td>@portatil.StockAlquilar</td>
                         <td align="center">
-                            <input type="checkbox" id="articuloCompra_@portatil.Id"
+                            <input type="checkbox" id="portatilAlquiler_@portatil.Id"
                                 checked="@(estadoAlquiler.includes(portatil.Id))"
 
                             @onchange="@((value) => TogglePortatil(portatil, value))">
