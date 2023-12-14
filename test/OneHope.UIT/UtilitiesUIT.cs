@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppForMovies.UIT
+namespace OneHope.UIT
 {
     public class UtilitiesUIT
     {
