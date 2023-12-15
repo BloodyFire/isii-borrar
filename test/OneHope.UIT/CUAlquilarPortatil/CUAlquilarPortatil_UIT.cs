@@ -233,6 +233,11 @@ namespace OneHope.UIT.CUAlquilarPortatil
         [Theory]
         //--------- (Modelo, Marca, Procesador, Ram, Precio Alquiler, Stock Alquiler, filtroModelo, filtroMarca, filtroProcesador, filtroRam)
         [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Por favor, introduzca su nombre (*) Su nombre debe tener al menos 3 caracteres", "", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "21/12/2023", "23/12/2023")]
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Por favor, introduzca sus apellidos (*) Sus apellidos deben tener al menos 5 caracteres", "Antonio", "", "Calle avenida", "antonio@email.com", "TarjetaCredito", "21/12/2023", "23/12/2023")]
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) The EmailCliente field is required. (*) The EmailCliente field is not a valid e-mail address.", "Antonio", "Rosendo", "Calle avenida", "", "TarjetaCredito", "21/12/2023", "23/12/2023")]
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Por favor, indica una dirección de entrega.", "Antonio", "Rosendo", "", "antonio@email.com", "TarjetaCredito", "21/12/2023", "23/12/2023")]
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Error! Tu fecha de inicio de alquiler no puede empezar ni hoy ni antes", "Antonio", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "01/01/0001", "23/12/2023")]
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Error! Tu fecha de fin de alquiler no puede acabar antes o el mismo dia que tu fecha de inicio", "Antonio", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "21/12/2023", "01/01/0001")]
         public void AP_9_FA1_Filtrado(string tituloError, string alerta, string nombreCliente, string apellidosCliente, string direccion, string email, string metodoPago, string fechaIn, string fechaFin)
         {
             // Arrange -----------
