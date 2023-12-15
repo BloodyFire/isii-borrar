@@ -92,25 +92,11 @@ namespace OneHope.UIT.Shared {
         //Establece la fecha de inicio de alquiler
         public void setFechaInAlquiler(DateTime fechaInAlquiler)
         {
-            /*
-            WaitForBeingClickable(_fechaInAlquilerBy);
-            // Se crea la lista desplegable.
-            SelectElement selectElement = new SelectElement(_fechaInAlquiler());
-            // Selecciona la opción que se ha indicado en el parámetro.
-            selectElement.SelectByText(fechaInAlquiler);
-            */
             InputDateInDatePicker(_fechaInAlquilerBy, fechaInAlquiler);
         }
         //Establece la fecha del final del alquiler
         public void setFechaFinAlquiler(DateTime fechaFinAlquiler)
         {
-            /*
-            WaitForBeingClickable(_fechaFinAlquilerBy);
-            // Se crea la lista desplegable.
-            SelectElement selectElement = new SelectElement(_fechaFinAlquiler());
-            // Selecciona la opción que se ha indicado en el parámetro.
-            selectElement.SelectByText(fechaFinAlquiler);
-            */
             InputDateInDatePicker(_fechaFinAlquilerBy, fechaFinAlquiler);
         }
 

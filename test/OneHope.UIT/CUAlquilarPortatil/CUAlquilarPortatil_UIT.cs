@@ -213,7 +213,7 @@ namespace OneHope.UIT.CUAlquilarPortatil
         {
             // Arrange
             var seleccionarArticulos_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
-            var crearCompra_PO = new CrearAlquiler_PO(_driver, _output);
+            var crearAlquiler_PO = new CrearAlquiler_PO(_driver, _output);
             // Act
             // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
             Inicio();
@@ -224,10 +224,51 @@ namespace OneHope.UIT.CUAlquilarPortatil
             // Pulsar el botón de comprar.
             seleccionarArticulos_PO.Alquilar();
             // Ahora volver.
-            crearCompra_PO.Volver();
+            crearAlquiler_PO.Volver();
 
             // Assert
             Assert.True(seleccionarArticulos_PO.ComprobarSeleccionPortatiles(new List<string>() { "1", "7" }));
+        }
+
+        [Theory]
+        //--------- (Modelo, Marca, Procesador, Ram, Precio Alquiler, Stock Alquiler, filtroModelo, filtroMarca, filtroProcesador, filtroRam)
+        [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Por favor, introduzca su nombre (*) Su nombre debe tener al menos 3 caracteres", "", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "21/12/2023", "23/12/2023")]
+        public void AP_9_FA1_Filtrado(string tituloError, string alerta, string nombreCliente, string apellidosCliente, string direccion, string email, string metodoPago, string fechaIn, string fechaFin)
+        {
+            // Arrange -----------
+            var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
+            var crearAlquiler_PO = new CrearAlquiler_PO(_driver, _output);
+            var fechaInDateTime = DateTime.Parse(fechaIn);
+            var fechaFinDateTime = DateTime.Parse(fechaFin);
+
+
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Comprar Artículos.
+            Ir_A_AlquilarPortatiles();
+            // Seleccionar el portatil 1
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "1" });
+            // Pulsar el botón de alquilar.
+            seleccionarPortatiles_PO.Alquilar();
+            // Seleccionar como método de pago TarjetaCredito.
+            crearAlquiler_PO.setMetodoPago(metodoPago);
+            //Rellenar los datos del cliente.
+            crearAlquiler_PO.setNombre(nombreCliente);
+            crearAlquiler_PO.setApellidos(apellidosCliente);
+            crearAlquiler_PO.setDireccion(direccion);
+            crearAlquiler_PO.setEmailCliente(email);
+            crearAlquiler_PO.setFechaInAlquiler(fechaInDateTime);
+            crearAlquiler_PO.setFechaFinAlquiler(fechaFinDateTime);
+            // Poner las cantidades.
+            crearAlquiler_PO.setCantidad("1", "1");
+            // Pulsar alquilar para que salte el aviso.
+            crearAlquiler_PO.Alquilar();
+
+
+            Assert.True(_driver.PageSource.Contains(tituloError));
+            Assert.True(_driver.PageSource.Contains(alerta));
+
         }
 
         private void Ir_A_AlquilarPortatiles()
