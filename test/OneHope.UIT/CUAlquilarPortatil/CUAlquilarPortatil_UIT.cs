@@ -208,6 +208,28 @@ namespace OneHope.UIT.CUAlquilarPortatil
             Assert.False(seleccionarPortatiles_PO.isEnabledAlquilar());
         }
 
+        [Fact]
+        public void AP_8_Volver_Atras()
+        {
+            // Arrange
+            var seleccionarArticulos_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
+            var crearCompra_PO = new CrearAlquiler_PO(_driver, _output);
+            // Act
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Comprar Artículos.
+            Ir_A_AlquilarPortatiles();
+            // Seleccionar los artículos 3 y 5.
+            seleccionarArticulos_PO.SeleccionarPortatiles(new List<string>() { "1", "7" });
+            // Pulsar el botón de comprar.
+            seleccionarArticulos_PO.Alquilar();
+            // Ahora volver.
+            crearCompra_PO.Volver();
+
+            // Assert
+            Assert.True(seleccionarArticulos_PO.ComprobarSeleccionPortatiles(new List<string>() { "1", "7" }));
+        }
+
         private void Ir_A_AlquilarPortatiles()
         {
             // Esperar a que se cargue la página.
