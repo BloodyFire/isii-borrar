@@ -127,7 +127,7 @@ namespace OneHope.API.Controllers
                     new List<LineaAlquiler>());
             }
 
-            idAlquiler++;
+            //idAlquiler++;
 
             Portatil portatil;
             foreach (var linea in alquilerParaCrear.LineasAlquiler)
@@ -142,7 +142,7 @@ namespace OneHope.API.Controllers
                 {
                     // Alquiler no existe, debemos crearlo con un id valido igual que la linea de pedido
                     alquiler.LineasAlquiler.Add(new LineaAlquiler(idLinea, linea.Cantidad, portatil, alquiler));
-                    idLinea++;
+                    //idLinea++;
                 }
             }
 
