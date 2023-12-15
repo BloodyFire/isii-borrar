@@ -164,6 +164,32 @@ namespace OneHope.UIT.CUAlquilarPortatil
             Assert.Contains(expectedText, _driver.PageSource);
         }
 
+        [Theory]
+        //--------- (Modelo, Marca, Procesador, Ram, Precio Alquiler, Stock Alquiler, filtroModelo, filtroMarca, filtroProcesador, filtroRam)
+        [InlineData("HP-1151", "HP", "Intel 80486", "8Gb", "6,66", "5", "1151", "", "", "")]
+        [InlineData("TOASTER-4461", "TOASTER", "Pentium 4", "32Gb", "56,66", "2", "", "TOASTER", "", "")]
+        [InlineData("HP-1151", "HP", "Intel 80486", "8Gb", "6,66", "5", "", "", "Intel 80486", "")]
+        [InlineData("TOASTER-4461", "TOASTER", "Pentium 4", "32Gb", "56,66", "2", "", "", "", "32Gb")]
+        public void AP_3_FA1_Filtrado(string modelo, string marca, string procesador, string ram, string precioAlquiler, string stockAlquiler, string filtroModelo, 
+            string filtroMarca, string filtroProcesador, string filtroRam)
+        {
+            // Arrange -----------
+            var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
+            var expectedPortatiles = new List<string[]> { new string[] { modelo, marca, procesador, ram, precioAlquiler, stockAlquiler } };
+
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Comprar Artículos.
+            Ir_A_AlquilarPortatiles();
+            // Filtrar los artículos.
+            seleccionarPortatiles_PO.FiltrarPortatiles(filtroModelo, filtroMarca, filtroProcesador, filtroRam);
+
+            // Assert ----------
+            // Comprobar que la lista de artículos que ha devuelto es la correcta.
+            Assert.True(seleccionarPortatiles_PO.CompruebaListaPortatiles(expectedPortatiles));
+        }
+
         private void Ir_A_AlquilarPortatiles()
         {
             // Esperar a que se cargue la página.
