@@ -144,6 +144,26 @@ namespace OneHope.UIT.CUAlquilarPortatil
 
         }
 
+        [Fact]
+        public void AP_2_FA0_No_Hay_Portatiles()
+        {
+            // Arrange -----------
+            var expectedText = "No hay portátiles que cumplan los criterios seleccionados.";
+            var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
+
+            // Act ---------
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Alquilar Portatiles.
+            Ir_A_AlquilarPortatiles();
+            // Filtrar los artículos.
+            seleccionarPortatiles_PO.FiltrarPortatiles("No hay", "", "", "");
+
+            // Assert ----------
+            // Comprobar que la lista de artículos que ha devuelto es la correcta.
+            Assert.Contains(expectedText, _driver.PageSource);
+        }
+
         private void Ir_A_AlquilarPortatiles()
         {
             // Esperar a que se cargue la página.
