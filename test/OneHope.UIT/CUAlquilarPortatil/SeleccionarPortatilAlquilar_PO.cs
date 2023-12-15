@@ -29,7 +29,7 @@ namespace OneHope.UIT.Shared {
         }
 
         // Simular el paso de filtrar los portatiles. El método tendrá un parámetro por cada uno de los filtros que tengas.
-        public void FiltrarArticulos(string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil) {
+        public void FiltrarPortatiles(string? modeloPortatil, string? marcaPortatil, string? procesadorPortatil, string? ramPortatil) {
             // Para poder interaccionar con el elemento debe ser visible.
             // El método se le pasa el Id, no la referencia.
             WaitForBeingVisible(_modeloPortatilBy);
@@ -70,7 +70,7 @@ namespace OneHope.UIT.Shared {
         }
 
         // Devuelve si el botón Alquilar está activo o no.
-        public bool isEnabledComprar() {
+        public bool isEnabledAlquilar() {
             IWebElement botonAlquilar = _botonAlquilar();
             
             return botonAlquilar.Enabled;
