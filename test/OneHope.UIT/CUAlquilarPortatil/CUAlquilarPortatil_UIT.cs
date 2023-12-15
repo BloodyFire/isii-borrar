@@ -61,7 +61,7 @@ namespace OneHope.UIT.CUAlquilarPortatil
             string marca = "HP";
             string procesador = "Intel 80486";
             string ram = "8Gb";
-            string precioAlquiler = "6.66";
+            string precioAlquiler = "6,66";
             string stockAlquiler = "5";
 
             var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);

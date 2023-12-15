@@ -66,7 +66,7 @@ namespace OneHope.UIT.Shared {
         // Este método permite comprobar si la lista de portatiles mostrada en la tabla coincide con la esperada o no.
         public bool CompruebaListaPortatiles(List<string[]> expectedPortatiles) {
 
-            return CheckBodyTable(expectedPortatiles, _botonBuscarBy);
+            return CheckBodyTable(expectedPortatiles, _tablaArticulosBy);
         }
 
         // Devuelve si el botón Alquilar está activo o no.
