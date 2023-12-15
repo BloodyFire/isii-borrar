@@ -99,9 +99,10 @@ namespace OneHope.UIT.CUAlquilarPortatil
 
             var expectedPortatiles = new List<string[]>();
             expectedPortatiles.Add(new string[] { "HP-1151", "HP", "6,66", "1" });
+            expectedPortatiles.Add(new string[] { "ASUS-2371", "ASUS", "20", "2" });
 
             var expectedTotal = new List<string[]>();
-            expectedTotal.Add(new string[] { "Precio Alquiler Total", "13,32" });
+            expectedTotal.Add(new string[] { "Precio Alquiler Total", "93,32" });
 
 
             // Act
@@ -109,8 +110,9 @@ namespace OneHope.UIT.CUAlquilarPortatil
             Inicio();
             // Navegar hasta la página de Alquilar Portatiles.
             Ir_A_AlquilarPortatiles();
-            // Seleccionar el portatil 1
+            // Seleccionar el portatil 1 y 7
             seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "1" });
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "7" });
             // Pulsar el botón de alquilar.
             seleccionarPortatiles_PO.Alquilar();
             // Seleccionar como método de pago TarjetaCredito.
@@ -124,6 +126,7 @@ namespace OneHope.UIT.CUAlquilarPortatil
             crearAlquiler_PO.setFechaFinAlquiler(new DateTime(year: 2023, 12, 23));
             // Poner las cantidades.
             crearAlquiler_PO.setCantidad("1", "1");
+            crearAlquiler_PO.setCantidad("7", "2");
             // Pulsar alquilar para finalizar el alquiler.
             crearAlquiler_PO.Alquilar();
             // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
@@ -238,7 +241,7 @@ namespace OneHope.UIT.CUAlquilarPortatil
         [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Por favor, indica una dirección de entrega.", "Antonio", "Rosendo", "", "antonio@email.com", "TarjetaCredito", "21/12/2023", "23/12/2023")]
         [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Error! Tu fecha de inicio de alquiler no puede empezar ni hoy ni antes", "Antonio", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "01/01/0001", "23/12/2023")]
         [InlineData("Ha habido un problema al procesar tu alquiler.", "(*) Error! Tu fecha de fin de alquiler no puede acabar antes o el mismo dia que tu fecha de inicio", "Antonio", "Rosendo", "Calle avenida", "antonio@email.com", "TarjetaCredito", "21/12/2023", "01/01/0001")]
-        public void AP_9_FA1_Filtrado(string tituloError, string alerta, string nombreCliente, string apellidosCliente, string direccion, string email, string metodoPago, string fechaIn, string fechaFin)
+        public void AP_9_FA4y2(string tituloError, string alerta, string nombreCliente, string apellidosCliente, string direccion, string email, string metodoPago, string fechaIn, string fechaFin)
         {
             // Arrange -----------
             var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);

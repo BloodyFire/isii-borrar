@@ -33,11 +33,17 @@ SET IDENTITY_INSERT [dbo].[Proveedores] OFF
 SET IDENTITY_INSERT [dbo].[Portatiles] ON
 INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
 VALUES 
-	(1, N'HP-1151', 199.95, 1, 6.66, 1, N'HP 486 del pleistoceno', 100, 5, 13, 5, 1),
-	(2, N'DELL-2222', 499.95, 2, 1/1, 2, N'DELL I5 para ofimatica', 250, 2, 29, 7, 2),
-	(3, N'ASUS-3314', 2299.95, 3, 76.66, 3, N'ASUS PRO STATION 3000', 1150, 1, 16, 5, 4),
-	(4, N'TOASTER-4461', 1699.95, 4, 56.66, 4, N'Pentium 4 fiable de toda la vida', 850, 6, 5, 2, 1),
-	(5, N'HP-5132', 1999.95, 5, 66.66, 1, N'HP Quantum singstar edition plus', 1000, 3, 9, 9, 2),
-	(6, N'DELL-1244', 1999.95, 1, 66.66, 2, N'DELL R5 gama alta', 1000, 4, 18, 1, 4),
-	(7, N'ASUS-2371', 599.95, 2, 20, 3, N'ASUS workstation con procesador de movil', 300, 7, 24, 7, 1),
+	(1, N'HP-1151', 199.95, 1, 6.66, 1, N'HP 486 del pleistoceno', 100, 5, 13, 5, 1)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(2, N'DELL-2222', 499.95, 2, 1/1, 2, N'DELL I5 para ofimatica', 250, 2, 29, 7, 2)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(3, N'ASUS-3314', 2299.95, 3, 76.66, 3, N'ASUS PRO STATION 3000', 1150, 1, 16, 5, 4)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(4, N'TOASTER-4461', 1699.95, 4, 56.66, 4, N'Pentium 4 fiable de toda la vida', 850, 6, 5, 2, 1)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(5, N'HP-5132', 1999.95, 5, 66.66, 1, N'HP Quantum singstar edition plus', 1000, 3, 9, 9, 2)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(6, N'DELL-1244', 1999.95, 1, 66.66, 2, N'DELL R5 gama alta', 1000, 4, 18, 1, 4)
+INSERT INTO [dbo].[Portatiles] ([Id], [Modelo], [PrecioCompra], [RamId], [PrecioAlquiler], [MarcaId], [Nombre], [PrecioCoste], [ProcesadorId], [Stock], [StockAlquilar], [ProveedorId]) 
+VALUES	(7, N'ASUS-2371', 599.95, 2, 20, 3, N'ASUS workstation con procesador de movil', 300, 7, 24, 7, 1)
 SET IDENTITY_INSERT [dbo].[Portatiles] OFF
