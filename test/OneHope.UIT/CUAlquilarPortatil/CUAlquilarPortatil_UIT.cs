@@ -80,6 +80,70 @@ namespace OneHope.UIT.CUAlquilarPortatil
             Assert.True(seleccionarPortatiles_PO.CompruebaListaPortatiles(expectedArticulos));
         }
 
+        [Fact]
+        public void AP_1_Flujo_Basico()
+        {
+            // Arrange
+            var seleccionarPortatiles_PO = new SeleccionarPortatilAlquilar_PO(_driver, _output);
+            var crearAlquiler_PO = new CrearAlquiler_PO(_driver, _output);
+            var detalleAlquiler_PO = new DetalleAlquiler_PO(_driver, _output);
+
+            string expectedCabecera = "Resumen del Alquiler";
+            string expectedNombreCliente = "<b>Nombre Cliente: </b> Antonio";
+            string expectedApellidosCliente = "<b>Apellidos Cliente: </b> Rosendo";
+            string expectedDireccion = "<b>Direccion: </b> Calle avenida";
+            string expectedMetodoPago = "<b>Método de Pago: </b> Tarjeta";
+            string expectedFecha = "<b>Fecha de alquiler: </b> " + DateTime.Now.ToString("dd-MMM-yyyy HH").ToUpper();
+            string expectedFechaIn = "<b>Fecha Inicio de alquiler: </b> " + new DateTime(year: 2023, 12, 21).ToString("dd-MMM-yyyy").ToUpper();
+            string expectedFechaFin = "<b>Fecha Final de alquiler: </b> " + new DateTime(year: 2023, 12, 23).ToString("dd-MMM-yyyy").ToUpper();
+
+            var expectedPortatiles = new List<string[]>();
+            expectedPortatiles.Add(new string[] { "HP-1151", "HP", "6,66", "1" });
+
+            var expectedTotal = new List<string[]>();
+            expectedTotal.Add(new string[] { "Precio Alquiler Total", "13,32" });
+
+
+            // Act
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Alquilar Portatiles.
+            Ir_A_AlquilarPortatiles();
+            // Seleccionar el portatil 1
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "1" });
+            // Pulsar el botón de alquilar.
+            seleccionarPortatiles_PO.Alquilar();
+            // Seleccionar como método de pago TarjetaCredito.
+            crearAlquiler_PO.setMetodoPago("TarjetaCredito");
+            //Rellenar los datos del cliente.
+            crearAlquiler_PO.setNombre("Antonio");
+            crearAlquiler_PO.setApellidos("Rosendo");
+            crearAlquiler_PO.setDireccion("Calle avenida");
+            crearAlquiler_PO.setEmailCliente("antonio@email.com");
+            crearAlquiler_PO.setFechaInAlquiler(new DateTime(year: 2023, 12, 21));
+            crearAlquiler_PO.setFechaFinAlquiler(new DateTime(year: 2023, 12, 23));
+            // Poner las cantidades.
+            crearAlquiler_PO.setCantidad("1", "1");
+            // Pulsar alquilar para finalizar el alquiler.
+            crearAlquiler_PO.Alquilar();
+            // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
+
+            //Esperar a que cargue el detalle
+            UtilitiesUIT.WaitForBeingVisible(_driver, By.Id("Submit"));
+            // Assert
+            Assert.True(_driver.PageSource.Contains(expectedCabecera));
+            Assert.True(_driver.PageSource.Contains(expectedNombreCliente));
+            Assert.True(_driver.PageSource.Contains(expectedApellidosCliente));
+            Assert.True(_driver.PageSource.Contains(expectedDireccion));
+            Assert.True(_driver.PageSource.Contains(expectedMetodoPago));
+            Assert.True(_driver.PageSource.Contains(expectedFecha));
+            Assert.True(_driver.PageSource.Contains(expectedFechaIn));
+            Assert.True(_driver.PageSource.Contains(expectedFechaFin));
+            Assert.True(detalleAlquiler_PO.CompruebaListaPortatiles(expectedPortatiles));
+            Assert.True(detalleAlquiler_PO.CompruebaTotal(expectedTotal));
+
+        }
+
         private void Ir_A_AlquilarPortatiles()
         {
             // Esperar a que se cargue la página.

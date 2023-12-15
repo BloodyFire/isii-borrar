@@ -51,31 +51,26 @@ namespace OneHope.UIT.Shared {
         public void setNombre(string nombreCliente)
         {
             _nombreCliente().SendKeys(nombreCliente);
-            _nombreCliente().SendKeys(Keys.Enter);
         }
         //Fija los apellidos del cliente
         public void setApellidos(string apellidosCliente)
         {
-            _nombreCliente().SendKeys(apellidosCliente);
-            _nombreCliente().SendKeys(Keys.Enter);
+            _apellidosCliente().SendKeys(apellidosCliente);
         }
         //Fija la direccion del cliente
         public void setDireccion(string direccion)
         {
-            _nombreCliente().SendKeys(direccion);
-            _nombreCliente().SendKeys(Keys.Enter);
+            _direccionAlquiler().SendKeys(direccion);
         }
         //Fija el email del cliente
         public void setEmailCliente(string emailCliente)
         {
-            _nombreCliente().SendKeys(emailCliente);
-            _nombreCliente().SendKeys(Keys.Enter);
+            _emailCliente().SendKeys(emailCliente);
         }
         //Fija el telefono del cliente
         public void setTelefono(string telefono)
         {
-            _nombreCliente().SendKeys(telefono);
-            _nombreCliente().SendKeys(Keys.Enter);
+            _telefonoCliente().SendKeys(telefono);
         }
         // Fija la cantidad que se desea alquilar para el artículo cuyo id es Id.
         // El Id del input de la cantidad está generado como: id="cantidad_@portatil.PortatilID"
@@ -95,22 +90,28 @@ namespace OneHope.UIT.Shared {
             selectElement.SelectByText(metodoPago);
         }
         //Establece la fecha de inicio de alquiler
-        public void setFechaInAlquiler(string fechaInAlquiler)
+        public void setFechaInAlquiler(DateTime fechaInAlquiler)
         {
+            /*
             WaitForBeingClickable(_fechaInAlquilerBy);
             // Se crea la lista desplegable.
             SelectElement selectElement = new SelectElement(_fechaInAlquiler());
             // Selecciona la opción que se ha indicado en el parámetro.
             selectElement.SelectByText(fechaInAlquiler);
+            */
+            InputDateInDatePicker(_fechaInAlquilerBy, fechaInAlquiler);
         }
         //Establece la fecha del final del alquiler
-        public void setFechaFinAlquiler(string fechaFinAlquiler)
+        public void setFechaFinAlquiler(DateTime fechaFinAlquiler)
         {
+            /*
             WaitForBeingClickable(_fechaFinAlquilerBy);
             // Se crea la lista desplegable.
             SelectElement selectElement = new SelectElement(_fechaFinAlquiler());
             // Selecciona la opción que se ha indicado en el parámetro.
             selectElement.SelectByText(fechaFinAlquiler);
+            */
+            InputDateInDatePicker(_fechaFinAlquilerBy, fechaFinAlquiler);
         }
 
         // Devuelve si el botón Comprar está activo o no.
