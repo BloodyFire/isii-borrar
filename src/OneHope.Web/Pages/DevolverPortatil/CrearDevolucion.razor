@@ -52,12 +52,12 @@ else
             <tbody>
                 @foreach (var portatil in Portatiles)
                 {
-                    <tr id="PortatilData_@portatil.IdPortatil">
+                    <tr id="portatilDevolver_@portatil.IdPortatil">
                         <td>@portatil.Modelo</td>
                         <td>@portatil.IdCompra</td>
                         <td>
-                            <input type="number" id="cantidad_@portatil.IdPortatil" value="@portatil.Cantidad"
-                            @onchange="@((value)=>ActualizaCantidad(portatil.IdPortatil, value))" />
+                            <input type="number" id="cantidad_@portatil.IdCompra" value="@portatil.Cantidad"
+                            @onchange="@((value)=>ActualizaCantidad(portatil.IdCompra, value))" />
                         </td>
                     </tr>
                 }
