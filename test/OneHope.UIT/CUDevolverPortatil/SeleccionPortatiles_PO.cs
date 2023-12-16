@@ -20,8 +20,8 @@ namespace OneHope.UIT.Shared
         private By _idCompraBy = By.Id("portatilIdCompra");
         private By _fechaBy = By.Id("fecha");
         private By _precioBy = By.Id("precio");
-        private By _botonBuscarBy = By.Id("BuscarPortatiles");
-        private By _botonDevolverBy = By.Id("Sumit");
+        private By _botonBuscarBy = By.Id("buscarPortatiles");
+        private By _botonDevolverBy = By.Id("Submit");
         private By _tablaPortatilesBy = By.Id("TableOfPortatiles");
 
 
@@ -38,24 +38,35 @@ namespace OneHope.UIT.Shared
         }
 
         // Simular el paso de filtrar los portátiles. El método tendrá un parámetro por cada uno de los filtros que tengas.
-        public void FiltrarPortatiles(string idCompra, DateTime fecha, double precio)
+        public void FiltrarPortatiles(string? idCompra, string? fecha, string? precio)
         {
             // Para poder interaccionar con el elemento debe ser visible.
             // El método se le pasa el Id, no la referencia.
-            WaitForBeingVisible(_idCompraBy);
+            //WaitForBeingVisible(_idCompraBy);
 
             // Se simula que se escribe en la cuadro de texto el filtro del id de la compra del portátil.
-            _driver.FindElement(_idCompraBy).SendKeys(idCompra);
+            //_driver.FindElement(_idCompraBy).SendKeys(idCompra);
 
-            //AÑADIR FILTRO FECHA
+            //AÑADIR FILTROs
+            if (idCompra != "")
+            {
+                WaitForBeingVisible(_idCompraBy);
+                _idCompra().SendKeys($"{Keys.Backspace}{Keys.Backspace}");
+                _idCompra().SendKeys(idCompra.ToString());
+            }
 
+            if (fecha != "")
+            {
+                WaitForBeingVisible(_fechaBy);
+                var fecha_ = DateTime.Parse(fecha);
+                InputDateInDatePicker(_fechaBy, fecha_);
+                //_fecha().SendKeys($"{Keys.Backspace}{Keys.Backspace}");
+               // _fecha().SendKeys(fecha.ToString());
+            }
 
             WaitForBeingVisible(_precioBy);
-
             // Se simula que se escribe en la cuadro de texto el filtro del precio del portátil.
             _driver.FindElement(_precioBy).SendKeys(precio.ToString());
-
-            
 
             _botonBuscar().Click();
             // Se espera 2000 milisegundos para esperar a que la tabla se recargue.
@@ -79,13 +90,13 @@ namespace OneHope.UIT.Shared
 
         // Selecciona los artículos cuyos Ids aparecen en la lista.
         // Recuerda que en la tabla los Ids del input para seleccionar se han generado como: portatilDevolver_@portatil.IdCompra
-        public void SeleccionarPortatiles(List<string> portatilesIds)
+        public void SeleccionarPortatiles(List<string> comprasIds)
         {
             //we wait for till the movies are available to be selected 
-            foreach (var portatilId in portatilesIds)
+            foreach (var compraId in comprasIds)
             {
-                WaitForBeingVisible(By.Id($"portatilDevolver_{portatilId}"));
-                _driver.FindElement(By.Id($"PortatilDevolver_{portatilId}")).Click();
+                WaitForBeingVisible(By.Id($"portatilDevolver_{compraId}"));
+                _driver.FindElement(By.Id($"portatilDevolver_{compraId}")).Click();
             }
         }
 
