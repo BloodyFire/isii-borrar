@@ -46,7 +46,8 @@ namespace OneHope.API.Controllers
                     (Shared.TipoMetodoPago)alquiler.MetodoPago,
                     alquiler.LineasAlquiler
                         .Select(la => new LineaAlquilerDTO(la.Portatil.Id,
-                                la.Portatil.PrecioAlquiler, la.Cantidad)).ToList<LineaAlquilerDTO>()))
+                                la.Portatil.PrecioAlquiler, la.Cantidad, la.Portatil.Marca.NombreMarca, la.Portatil.Modelo, 
+                                la.Portatil.Procesador.ModeloProcesador, la.Portatil.Ram.Capacidad)).ToList<LineaAlquilerDTO>()))
              .FirstOrDefaultAsync();
 
             if (alquilerDTO == null)
@@ -126,7 +127,7 @@ namespace OneHope.API.Controllers
                     new List<LineaAlquiler>());
             }
 
-            idAlquiler++;
+            //idAlquiler++;
 
             Portatil portatil;
             foreach (var linea in alquilerParaCrear.LineasAlquiler)
@@ -141,7 +142,7 @@ namespace OneHope.API.Controllers
                 {
                     // Alquiler no existe, debemos crearlo con un id valido igual que la linea de pedido
                     alquiler.LineasAlquiler.Add(new LineaAlquiler(idLinea, linea.Cantidad, portatil, alquiler));
-                    idLinea++;
+                    //idLinea++;
                 }
             }
 

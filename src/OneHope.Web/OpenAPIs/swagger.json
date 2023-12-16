@@ -1129,7 +1129,7 @@
             "format": "tel",
             "nullable": true
           },
-          "LineasPedido": {
+          "LineasAlquiler": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineaAlquilerDTO"
@@ -1231,7 +1231,7 @@
             "format": "tel",
             "nullable": true
           },
-          "LineasPedido": {
+          "LineasAlquiler": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineaAlquilerDTO"
@@ -1490,6 +1490,22 @@
             "minimum": 1,
             "type": "integer",
             "format": "int32"
+          },
+          "Marca": {
+            "type": "string",
+            "nullable": true
+          },
+          "Modelo": {
+            "type": "string",
+            "nullable": true
+          },
+          "Procesador": {
+            "type": "string",
+            "nullable": true
+          },
+          "Ram": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false

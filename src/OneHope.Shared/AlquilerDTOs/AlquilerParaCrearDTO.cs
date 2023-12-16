@@ -54,7 +54,7 @@ namespace OneHope.Shared.AlquilerDTOs
 
 
         [ValidateComplexType]
-        [JsonPropertyName("LineasPedido")]
+        [JsonPropertyName("LineasAlquiler")]
         public IList<LineaAlquilerDTO> LineasAlquiler { get; set; }
 
         [Required]

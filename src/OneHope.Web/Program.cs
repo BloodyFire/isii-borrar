@@ -32,6 +32,9 @@ builder.Services.AddScoped<swaggerClient>(sp =>
     );
 builder.Services.AddScoped<DevolverPortatilesStateContainer>();
 
+//Servicio para mantener el estado de la página web
+builder.Services.AddScoped<AlquilarPortatilStateContainer>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -83,7 +83,7 @@ namespace OneHope.UT.AlquileresController_test
                         direccionEnvio: "Avda. España s/n, Albacete 02071", telefonoCliente: 0, tipoMetodoPago: Shared.TipoMetodoPago.TarjetaCredito,
                         fechaInAlquiler: DateTime.Today.AddDays(2), fechaFinAlquiler: DateTime.Today.AddDays(5),
                         lineasAlquiler: new List<LineaAlquilerDTO>()); 
-            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO( 1, 6.66, 2));
+            expectedAlquiler.LineasAlquiler.Add(new LineaAlquilerDTO( 1, 6.66, 2, "HP", "HP-2023", "Ryzen 5 2900", "8Gb"));
 
             // Act 
             var result = await controller.GetAlquiler(1);
