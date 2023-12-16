@@ -69,7 +69,7 @@ namespace OneHope.Web {
         public void RemovePortatilADevolver(int portatilId) {
 
             DevolucionItemDTO lineaDevolucion =
-                  Devolucion.LineasDevoluciones.FirstOrDefault(li => li.IdPortatil.Equals(portatilId));
+                  Devolucion.LineasDevoluciones.FirstOrDefault(li => li.IdCompra.Equals(portatilId));
                   Devolucion.LineasDevoluciones.Remove(lineaDevolucion);
         }
 
@@ -82,13 +82,13 @@ namespace OneHope.Web {
        
         // Devuelve si el carrito incluye o no un portátil.
         public bool includes(int id) {
-              if (Devolucion.LineasDevoluciones.Any(li => li.IdPortatil.Equals(id))) return true; 
+              if (Devolucion.LineasDevoluciones.Any(li => li.IdCompra.Equals(id))) return true; 
               else return false;
         }
 
                 // Actualiza la cantidad que se quiere comprar del portátil cuyo id es 'id'.
          public void UpdateCarrito(int id, int cantidad) {
-               DevolucionItemDTO? portatil = Devolucion.LineasDevoluciones.FirstOrDefault(li => li.IdPortatil == id);
+               DevolucionItemDTO? portatil = Devolucion.LineasDevoluciones.FirstOrDefault(li => li.IdCompra == id);
 
                if (portatil != null) portatil.Cantidad = cantidad;
          }
