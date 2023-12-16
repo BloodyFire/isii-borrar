@@ -47,19 +47,16 @@ namespace OneHope.UIT.Shared
         public void setDireccionRecogida(string direccionRecogida)
         {
             _direccionRecogida().SendKeys(direccionRecogida);
-            _direccionRecogida().SendKeys(Keys.Enter);
         }
 
         public void setMotivoDevolucion(string motivoDevolucion)
         {
             _motivoDevolucion().SendKeys(motivoDevolucion);
-            _motivoDevolucion().SendKeys(Keys.Enter);
         }
 
         public void setNotaRepartidor(string notaRepartidor)
         {
             _notaRepartidor().SendKeys(notaRepartidor);
-            _notaRepartidor().SendKeys(Keys.Enter);
         }
 
         // Fija la cantidad que se desea comprar para el artículo cuyo id es Id.
