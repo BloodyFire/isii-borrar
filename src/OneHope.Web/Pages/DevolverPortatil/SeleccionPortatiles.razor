@@ -64,7 +64,7 @@ else
                         <td>@portatil.FechaCompra</td>
                         <td>@portatil.Total</td>
                         <td align="center">
-                            <input type="checkbox" id="portatilDevolver_@portatil.IdCompra" checked="@(estadoDevolucion.includes(portatil.IdPortatil))" @onchange="@((value)=>TogglePortatil(portatil, value))">
+                            <input type="checkbox" id="portatilDevolver_@portatil.IdCompra" checked="@(estadoDevolucion.includes(portatil.IdCompra))" @onchange="@((value)=>TogglePortatil(portatil, value))">
                                    
                         </td>
                     </tr>
