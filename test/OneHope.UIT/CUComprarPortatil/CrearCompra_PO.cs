@@ -41,28 +41,25 @@ namespace OneHope.UIT.CUComprarPortatil
         }
 
         // Pulsar el botón realizar pedido.
-        public void Pedir()
+        public void Comprar()
         {
             _botonComprar().Click();
-            System.Threading.Thread.Sleep(200);
+            System.Threading.Thread.Sleep(2000);
         }
 
         public void setNombre(string nombre)
         {
             _nombreCliente().SendKeys(nombre);
-            _nombreCliente().SendKeys(Keys.Enter);
         }
 
         public void setApellidos(string apellidos)
         {
             _apellidosCliente().SendKeys(apellidos);
-            _apellidosCliente().SendKeys(Keys.Enter);
         }
 
         public void setDireccion(string direccion)
         {
             _direccionCompra().SendKeys(direccion);
-            _direccionCompra().SendKeys(Keys.Enter);
         }
 
         // Fija la cantidad que se desea pedir para el portátil cuyo id es Id.
