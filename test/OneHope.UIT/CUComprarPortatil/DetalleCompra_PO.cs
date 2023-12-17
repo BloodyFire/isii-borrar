@@ -11,7 +11,7 @@ namespace OneHope.UIT.CUComprarPortatil
 {
     public class DetalleCompra_PO : PageObject
     {
-        private By _tablaPortatilesBy = By.Id("TablaPoratiles");
+        private By _tablaPortatilesBy = By.Id("TablaPortatiles");
 
         public DetalleCompra_PO(IWebDriver driver, ITestOutputHelper output) : base(driver, output)
         {
