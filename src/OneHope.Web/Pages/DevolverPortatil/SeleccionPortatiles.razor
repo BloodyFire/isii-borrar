@@ -1,0 +1,198 @@
+﻿
+@using PortatilesAPI;
+@inject swaggerClient swaggerClient;
+@inject DevolverPortatilesStateContainer estadoDevolucion;
+@inject NavigationManager Navegation;
+@page "/compras/devolver"
+
+<h3>Devolver Portátiles</h3>
+
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para el idCompra. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">IdCompra</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilIdCompra" id="portatilIdCompra">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para la fecha *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Fecha</span>
+    </div>
+    <input type="date" class="form-control" @bind="fecha" id="fecha">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Precio</span>
+    </div>
+    <input type="number" step="0.01" class="form-control" @bind="precio" id="precio">
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+    @* Añade el botón para buscar. *@
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay portatiles que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TableOfPortatiles">
+            <thead>
+                <tr>
+                    <th>Id Compra</th>
+                    <th>Marca</th>
+                    <th>Cantidad</th>
+                    <th>Fecha Compra</th>
+                    <th>Precio Unitario</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.IdCompra">
+                        <td>@portatil.IdCompra</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Cantidad</td>
+                        <td>@portatil.FechaCompra</td>
+                        <td>@portatil.Total</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilDevolver_@portatil.IdCompra" checked="@(estadoDevolucion.includes(portatil.IdCompra))" @onchange="@((value)=>TogglePortatil(portatil, value))">
+                                   
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@devolverButtonDisabled" @onclick="@(()=>NavegarCreateDevolucion())">
+                                    Devolver
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+@code {
+    private bool devolverButtonDisabled = true; //para saber si está activo
+    private int portatilIdCompra;
+    private string error;
+    private DetallesCompraDTO devolucion;
+    private double precio; 
+
+    private DateTime fecha = DateTime.Today;
+    
+   /* private DateTimeOffset Fecha
+    {
+        get { return fecha; }
+        set
+        {
+            if (fecha != value)
+            {
+                fecha = value;
+                devolucion.FechaCompra = value;
+                devolucion.LineaCompra.Clear();
+            }
+        }
+    }*/
+    
+
+    @* Añade/elimina el portatil al carrito al pulsar en la casilla. *@
+    private void TogglePortatil(PortatilesParaDevolverDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddPortatilDevolver(portatil);
+        else
+            removePortatilDevolver(portatil);
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreateDevolucion()
+    {
+        Navegation.NavigateTo($"/compras/devolver/createdevolucion");
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void removePortatilDevolver(PortatilesParaDevolverDTO portatil)
+    {
+        estadoDevolucion.RemovePortatilADevolver(portatil.IdCompra);
+
+        if (estadoDevolucion.isEmpty()) devolverButtonDisabled = true;
+    }
+
+    @* Añade un artículo al carrito de la compra guardándolo en la estado de la web. *@
+    private void AddPortatilDevolver(PortatilesParaDevolverDTO portatil)
+    {
+        //articuloCompraDTO(int id, string nombre, float _PVP, string color, int _IVA)
+        var _portatil = new PortatilesParaDevolverDTO();
+        _portatil.IdCompra = portatil.IdCompra;
+        _portatil.IdPortatil = portatil.IdPortatil;
+        _portatil.IdLineaCompra = portatil.IdLineaCompra;
+        _portatil.Marca = portatil.Marca;
+        _portatil.Modelo = portatil.Modelo;
+        _portatil.Cantidad = portatil.Cantidad;
+        _portatil.FechaCompra = portatil.FechaCompra;
+        _portatil.Total= portatil.Total;
+        //añadir modelo
+
+        estadoDevolucion.AddPortatilADevolver(_portatil, 1);
+
+        devolverButtonDisabled = false;
+    }
+
+    private ICollection<PortatilesParaDevolverDTO> Portatiles { get; set; } =
+                                                    new List<PortatilesParaDevolverDTO>();
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        
+        //devolucion.FechaCompra = devolucion.FechaCompra == new DateTime(1, 1, 1) ? DateTime.Now : devolucion.FechaCompra;
+        //fecha = devolucion.FechaCompra;
+        
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+
+        devolverButtonDisabled = estadoDevolucion.isEmpty();
+    }
+
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+
+        Portatiles = await swaggerClient.GetPortatilesParaDevolverAsync(portatilIdCompra>0 ? portatilIdCompra: null ,
+                                                                         fecha< DateTime.Today ? fecha: null , 
+                                                                        3, precio>= 0 ? precio: null);
+        
+        if (Portatiles == null)
+        {
+            //Portatiles = new List<PortatilesParaDevolverDTO>();
+
+            error = "Error! Hay un error en la conexion";
+        }
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+}
+

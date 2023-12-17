@@ -1,0 +1,224 @@
+﻿@using PortatilesAPI;
+
+@inject swaggerClient swaggerClient;
+@inject ReabastecerPortatilStateContainer estadoPedido;
+
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/reabastecer"
+
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
+
+<h3>Reabastecer Portátiles</h3>
+
+@* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Nombre</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
+    @* Filtro de texto para el modelo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Modelo</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilModelo" id="portatilModelo">
+    @* Filtro de selección para la marca. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Marca</span>
+    </div>
+    <select class="form-select" aria-label="Default select" id="portatilMarca" @bind="portatilMarca">
+        <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreMarca in nombresMarcas)
+        {
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles" id="portatilMarca_@nombreMarca">@nombreMarca</option>
+        }
+    </select>
+    @* Filtro numérico para stock mínimo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Stock Mínimo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStockMin" id="portatilStockMinimo">
+    @* Filtro numérico para stock máximo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Stock Máximo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStockMax" id="portatilStockMaximo">
+    @* Filtro de selección para el Proveedor. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text">Proveedor</span>
+    </div>
+    <select class="form-select" aria-label="Default select" id="portatilProveedor" @bind="portatilProveedor">
+        <option value="" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreProveedor in nombresProveedores)
+        {
+            <option value="@nombreProveedor" @onclick="@BuscarPortatiles" id="portatilProveedor_@nombreProveedor">@nombreProveedor</option>
+        }
+    </select>
+    @* Añade el botón para buscar. *@
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="BuscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+
+<!-- TABLA CON LA LISTA DE PORTÁTILES -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaDePortatiles">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Stock</th>
+                    <th>PrecioCoste</th>
+                    <th>Proveedor</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Id">
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Stock</td>
+                        <td>@portatil.PrecioCoste</td>
+                        <td>@portatil.Proveedor</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilPedido_@portatil.Id"
+                                   checked="@(estadoPedido.includes(portatil.Id))"
+                            @onchange="@((value)=>TogglePortatil(portatil, value))">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@pedidoButtonDisabled" @onclick="@(()=>NavegarCreatePedido())">
+                                    Hacer Pedido
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
+}
+
+
+@code {
+
+    @* Define variables necesarias para enlazar los datos que se manejan en la IU con tu código de manera sencilla (binding). *@
+    @* En este ejemplo necesito variables para mis dos filtros. *@
+    private string portatilNombre;
+    private string portatilModelo;
+    private string portatilMarca;
+    private int portatilStockMin = 0;
+    private int portatilStockMax = 50;
+    private string portatilProveedor;
+    private string error;
+
+    private bool pedidoButtonDisabled = true;
+
+
+    @* Para la lista de portátiles que se muestran en la tabla. *@
+    private ICollection<PortatilParaPedidoDTO> Portatiles { get; set; } = new List<PortatilParaPedidoDTO>();
+    private ICollection<string>? nombresMarcas = new List<string>();
+    private ICollection<string>? nombresProveedores = new List<string>();
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+        @* Cargar los datos de los tipo enumerado *@
+        nombresMarcas = await swaggerClient.GetMarcaAsync(null);
+        nombresProveedores = await swaggerClient.GetProveedorAsync(null);
+        pedidoButtonDisabled = estadoPedido.isEmpty();
+
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreatePedido()
+    {
+        Navigation.NavigateTo($"/portatiles/reabastecer/crearpedido");
+    }
+
+    @* Añade/elimina el portátil al/del carrito al pulsar en la casilla. *@
+    private void TogglePortatil(PortatilParaPedidoDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddPortatilPedido(portatil);
+        else
+            removePortatilapedido(portatil);
+    }
+
+    @* Elimina un portátil del carrito. *@
+    private void removePortatilapedido(PortatilParaPedidoDTO portatil)
+    {
+        estadoPedido.RemovePortatilAPedir(portatil.Id);
+
+        if (estadoPedido.isEmpty()) pedidoButtonDisabled = true;
+    }
+
+    @* Añade un portátil al carrito guardándolo en la estado de la web. *@
+    private void AddPortatilPedido(PortatilParaPedidoDTO portatil)
+    {
+        var _portatil = new PortatilParaPedidoDTO();
+        _portatil.Id = portatil.Id;
+        _portatil.Marca = portatil.Marca;
+        _portatil.Modelo = portatil.Modelo;
+        _portatil.PrecioCoste = portatil.PrecioCoste;
+
+        estadoPedido.AddPortatilAPedido(_portatil, 1);
+
+        pedidoButtonDisabled = false;
+    }
+
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+        try
+        {
+            Portatiles = await swaggerClient.GetPortatilesParaPedidoAsync(
+                portatilModelo != "" ? portatilModelo : null,
+                portatilMarca != "" ? portatilMarca :null,
+                portatilStockMin >= 0 ? portatilStockMin : null,
+                portatilStockMax >= 0 ? portatilStockMax : null,
+                portatilProveedor != "" ? portatilProveedor : null,
+                portatilNombre != "" ? portatilNombre : null);
+        }
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaPedidoDTO>();
+        }
+
+        if (Portatiles == null)
+        {
+            error = "No se puede conectar con el API.";
+        }
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+}

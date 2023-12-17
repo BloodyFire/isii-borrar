@@ -20,23 +20,17 @@ namespace OneHope.Shared.DevolucionDTOs
             base( motivoDevolucion, direccionRecogida, fecha, lineasDevoluciones, notaRepartidor)
         {
             IdDevolucion = idDevolucion;
-            Fecha = fecha;
         }
 
         [JsonPropertyName("IdDevolucion")]
         public int IdDevolucion { get; set; }
 
 
-        [Display(Name = "Fecha de devolución")]
-        [JsonPropertyName("FechaDevolucion")]
-        public DateTime Fecha { get; set; }
-
 
         public override bool Equals(object? obj)
         {
             return obj is DevolucionDetailDTO dTO &&
-                   IdDevolucion == dTO.IdDevolucion &&
-                   Fecha == dTO.Fecha;
+                   IdDevolucion == dTO.IdDevolucion;
         }
 
        

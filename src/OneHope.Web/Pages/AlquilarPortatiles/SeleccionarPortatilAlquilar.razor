@@ -1,0 +1,225 @@
+﻿@using PortatilesAPI;
+
+@inject swaggerClient swaggerClient;
+@* Inyectar el servicio que gestiona el estado de la compra (debe ser añadido en Program.cs). *@
+@inject AlquilarPortatilStateContainer estadoAlquiler;
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
+
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/alquilar"
+
+<h3>Alquilar Portatiles</h3>
+
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para modelo. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Modelo</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilModelo" id="portatilModelo">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para marca. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Marca</span>
+    </div>
+    @*<input type="text" class="form-control" @bind="@portatilMarca" id="portatilMarca">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada" id="portatilMarcaSeleccionada">
+        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreMarca in nombreMarcas)
+        {
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles" id="portatilMarcaSeleccionada_@nombreMarca">@nombreMarca</option>
+        }
+    </select>
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para procesador. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Procesador</span>
+    </div>
+    @*<input type="text" class="form-control" @bind="@portatilProcesador" id="portatilProcesador">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado" id="portatilProcesadorSeleccionado">
+        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreProcesador in nombreProcesadores)
+        {
+            <option value="@nombreProcesador" @onclick="@BuscarPortatiles" id="portatilProcesadorSeleccionado_@nombreProcesador">@nombreProcesador</option>
+        }
+    </select>
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de selección para marca. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Ram</span>
+    </div>
+    @*<input type="text" class="form-control" @bind="@portatilRam" id="portatilRam">*@
+    <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada" id="portatilRamSeleccionada">
+        <option value="Todos" selected @onclick="@BuscarPortatiles">Todos</option>
+        @foreach (string nombreRam in nombreRams)
+        {
+            <option value="@nombreRam" @onclick="@BuscarPortatiles" id="portatilRamSeleccionada_@nombreRam">@nombreRam</option>
+        }
+    </select>
+    @* Añade el botón para buscar. *@
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaPortatiles">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Precio</th>
+                    <th>Disponibles</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Id">
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.Ram</td>
+                        <td>@portatil.PrecioAlquiler</td>
+                        <td>@portatil.StockAlquilar</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilAlquiler_@portatil.Id"
+                                checked="@(estadoAlquiler.includes(portatil.Id))"
+
+                            @onchange="@((value) => TogglePortatil(portatil, value))">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@alquilarButtonDisabled" @onclick="@(()=>NavegarCreateAlquiler())">
+                                    Alquilar
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+
+@code {
+    @* Define variables necesarias para enlazar los datos que se manejan en la IU con tu código de manera sencilla (binding). *@
+    @* En este ejemplo necesito variables para mis dos filtros. *@
+    private string portatilModelo;
+    private string portatilMarca;
+    private string portatilProcesador;
+    private string portatilRam;
+
+    @* Se usa para controlar si el botón de comprar está activo o no. *@
+    private bool alquilarButtonDisabled = true;
+
+    private string portatilMarcaSeleccionada;
+    private string portatilProcesadorSeleccionado;
+    private string portatilRamSeleccionada;
+
+    private ICollection<string> nombreMarcas { get; set; }
+                    = new List<string>(); 
+
+    private ICollection<string> nombreProcesadores { get; set; }
+                    = new List<string>();
+
+    private ICollection<string> nombreRams { get; set; }
+                    = new List<string>();
+
+    private ICollection<PortatilParaAlquilerDTO>
+                Portatiles { get; set; } =
+                            new List<PortatilParaAlquilerDTO>();
+
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        nombreMarcas = await swaggerClient.GetMarcaAsync(null);
+        nombreProcesadores = await swaggerClient.GetProcesadorAsync(null);
+        nombreRams = await swaggerClient.GetRamAsync(null);
+
+        @* Cargar los datos de los artículos. *@
+        BuscarPortatiles();
+
+        alquilarButtonDisabled = estadoAlquiler.isEmpty();
+
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreateAlquiler()
+    {
+        Navigation.NavigateTo($"/portatiles/alquiler/createalquiler");
+    }
+
+    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
+    private void TogglePortatil(PortatilParaAlquilerDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddArticuloCompra(portatil);
+        else
+            removeArticuloCompra(portatil);
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void removeArticuloCompra(PortatilParaAlquilerDTO portatil)
+    {
+        estadoAlquiler.RemoveArticuloAAlquiler(portatil.Id);
+
+        if (estadoAlquiler.isEmpty()) alquilarButtonDisabled = true;
+    }
+
+    @* Añade un artículo al carrito de la compra guardándolo en la estado de la web. *@
+    private void AddArticuloCompra(PortatilParaAlquilerDTO portatil)
+    {
+
+        estadoAlquiler.AddArticuloAAlquiler(portatil, 1);
+
+        alquilarButtonDisabled = false;
+    }
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+        portatilMarca = portatilMarcaSeleccionada == "Todos" ? null : portatilMarcaSeleccionada;
+        portatilProcesador = portatilProcesadorSeleccionado == "Todos" ? null : portatilProcesadorSeleccionado;
+        portatilRam = portatilRamSeleccionada == "Todos" ? null : portatilRamSeleccionada;
+
+        try
+        {
+            Portatiles = await swaggerClient.GetPortatilesParaAlquilerAsync(portatilMarca, portatilProcesador, portatilRam, portatilModelo);
+        }
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaAlquilerDTO>();
+        }
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+}

@@ -22,20 +22,20 @@
         {
             PedidoParaCrearDTO pedidoSinComentarios = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
                 "Daniel.Tomas", TipoMetodoPago.Transferencia);
-            pedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER-1421", 325.0, 1));
+            pedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER", "TOASTER-1421", 325.0, 1));
 
             PedidoParaCrearDTO pedidoConComentarios = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.",
                 new List<LineaPedidoDTO>(),
                  "Daniel.Tomas", TipoMetodoPago.Transferencia, "Tengo comentarios al respecto.");
-            pedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER-1421", 325.0, 1));
+            pedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER", "TOASTER-1421", 325.0, 1));
 
             DetallePedidoDTO expectedPedidoSinComentarios = new DetallePedidoDTO(1, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
                 "Daniel.Tomas", TipoMetodoPago.Transferencia, DateTime.Now);
-            expectedPedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER-1421", 325.0, 1));
+            expectedPedidoSinComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER", "TOASTER-1421", 325.0, 1));
 
             DetallePedidoDTO expectedPedidoConComentarios = new DetallePedidoDTO(1, "Calle falsa, 123. Ciudad de la piruleta.", new List<LineaPedidoDTO>(),
                 "Daniel.Tomas", TipoMetodoPago.Transferencia, DateTime.Now, "Tengo comentarios al respecto.");
-            expectedPedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER-1421", 325.0, 1));
+            expectedPedidoConComentarios.LineasPedido.Add(new LineaPedidoDTO(1, "TOASTER", "TOASTER-1421", 325.0, 1));
 
             var allTests = new List<object[]>
             {
@@ -76,7 +76,7 @@
             PedidoParaCrearDTO pedidoPortatilNoExiste = new PedidoParaCrearDTO("Calle falsa, 123. Ciudad de la piruleta.",
                 new List<LineaPedidoDTO>(),
                  "Daniel.Tomas", TipoMetodoPago.Transferencia);
-            pedidoPortatilNoExiste.LineasPedido.Add(new LineaPedidoDTO(15, "NOEXISTE", 1325.0, 10));
+            pedidoPortatilNoExiste.LineasPedido.Add(new LineaPedidoDTO(15, "HP", "NOEXISTE", 1325.0, 10));
 
             var allTests = new List<object[]>
             {

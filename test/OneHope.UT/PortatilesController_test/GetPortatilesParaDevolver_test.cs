@@ -24,8 +24,7 @@ namespace OneHope.UT.PortatilesController_test
                 new Procesador("Pentium 4")
             };
 
-            var rams = new List<Ram>() { 
-            
+            var rams = new List<Ram>() {
                 new Ram("4Gb"),
                 new Ram("8Gb"),
                 new Ram("16Gb"),
@@ -33,8 +32,7 @@ namespace OneHope.UT.PortatilesController_test
                 new Ram("128Mb")
             };
 
-            var marcas = new List<Marca>() { 
-            
+            var marcas = new List<Marca>() {
                 new Marca("HP"),
                 new Marca("DELL"),
                 new Marca("ASUS"),
@@ -56,12 +54,11 @@ namespace OneHope.UT.PortatilesController_test
 
 
 
-
             var compras = new List<Compra>()
             {
-                new Compra (1, 3, new DateTime(2023, 10, 29), "c/Circunvalacion, nº 23", TipoMetodoPago.PayPal, 2499.90, "Nombre Generico","Apellido"),
-                new Compra (2, 3, new DateTime(2023, 10, 30), "c/Circunvalacion, nº 23", TipoMetodoPago.PayPal, 2099.95, "Nombre Generico","Apellido"),
-                new Compra (3, 8, new DateTime(2023, 10, 02), "c/Simon Abril, nº 8", TipoMetodoPago.Transferencia, 1799.85, "Ser Humano","Nada Sospechoso")
+                new Compra (1, 3, DateTime.Now.Date.AddDays(-1), "c/Circunvalacion, nº 23", TipoMetodoPago.PayPal, 2499.90, "Nombre Generico","Apellido"),
+                new Compra (2, 3, DateTime.Now.Date, "c/Circunvalacion, nº 23", TipoMetodoPago.PayPal, 2099.95, "Nombre Generico","Apellido"),
+                new Compra (3, 8, DateTime.Now.Date.AddDays(-31), "c/Simon Abril, nº 8", TipoMetodoPago.Transferencia, 1799.85, "Ser Humano","Nada Sospechoso")
             };
 
             var lineasCompra = new List<LineaCompra>()
@@ -84,14 +81,15 @@ namespace OneHope.UT.PortatilesController_test
         }
 
 
-
         public static IEnumerable<object[]> TestCasesPara_GetPortatilesParaDevolver()
         {
+            DateTime defaultDate = DateTime.Now.Date.AddDays(-1);
+            DateTime defaultDate2 = DateTime.Now.Date;
 
             var portatilDTOs = new List<PortatilesParaDevolverDTO>() {
-                new PortatilesParaDevolverDTO(1, "ASUS", 1, new DateTime(2023, 10, 29),  2299.95),
-                new PortatilesParaDevolverDTO(1, "HP", 2, new DateTime(2023, 10, 29), 199.95),
-                new PortatilesParaDevolverDTO(2, "TOASTER", 1, new DateTime(2023, 10, 30), 2099.95),
+                new PortatilesParaDevolverDTO(1, 1, 1, "ASUS", "ASUS-3314", 1, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day),  2299.95),
+                new PortatilesParaDevolverDTO(1, 2, 2, "HP", "HP-1151", 2, new DateTime(defaultDate.Year, defaultDate.Month, defaultDate.Day), 199.95),
+                new PortatilesParaDevolverDTO(2, 3, 3, "TOASTER", "TOASTER-3452", 1, new DateTime(defaultDate2.Year, defaultDate2.Month, defaultDate2.Day), 2099.95),
             }.OrderBy(p => p.FechaCompra).ToList();
 
             var portatilDTOsTC1 = new List<PortatilesParaDevolverDTO>() { portatilDTOs[0], portatilDTOs[1] }
@@ -107,10 +105,10 @@ namespace OneHope.UT.PortatilesController_test
             {             //filters to apply - expected laptops
                 new object[] { null, null, 3, null, portatilDTOs },
                 new object[] { 1, null, 3, null, portatilDTOsTC1 },
-                new object[] { null, new DateTime(2023, 10, 30), 3, null, portatilDTOsTC2 },
+                new object[] { null, new DateTime(defaultDate2.Year, defaultDate2.Month, defaultDate2.Day), 3, null, portatilDTOsTC2 },
                 new object[] { null, null, 8, null, portatilDTOsTC3 },
-                new object[] {null, null, 3, 2099.95, portatilDTOsTC4}
-        };
+                new object[] {null, null, 3, 2099.95, portatilDTOsTC4 }
+            };
 
             return allTests;
         }
@@ -118,7 +116,7 @@ namespace OneHope.UT.PortatilesController_test
         [Theory]
         [MemberData(nameof(TestCasesPara_GetPortatilesParaDevolver))]
         [Trait("LevelTesting", "Unit Testing")]
-        public async Task GetPortatilesParaDevolver_testcase(int? idCompra, DateTime? fecha, int CustomerId, double precio,
+        public async Task GetPortatilesParaDevolver_testcase(int? idCompra, DateTime? fecha, int CustomerId, double? precio,
             IList<PortatilesParaDevolverDTO> expectedPortatiles)
         {
             // Arrange
@@ -135,7 +133,6 @@ namespace OneHope.UT.PortatilesController_test
             Assert.Equal(expectedPortatiles, PortatilDTOsActual);
 
         }
-
 
 
 
