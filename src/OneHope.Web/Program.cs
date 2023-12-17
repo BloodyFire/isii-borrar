@@ -34,6 +34,10 @@ builder.Services.AddScoped<ReabastecerPortatilStateContainer>();
 builder.Services.AddScoped<swaggerClient>(sp =>
         new swaggerClient(Environment.GetEnvironmentVariable("swaggerClient_API"), new HttpClient())
     );
+builder.Services.AddScoped<DevolverPortatilesStateContainer>();
+
+//Servicio para mantener el estado de la página web
+builder.Services.AddScoped<AlquilarPortatilStateContainer>();
 
 var app = builder.Build();
 

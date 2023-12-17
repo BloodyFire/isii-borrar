@@ -79,7 +79,7 @@ namespace OneHope.API.Controllers
                                         portatil.Compra.FechaCompra >= defaultDate)
                                        )
                     .OrderBy(portatil => portatil.Compra.FechaCompra)
-                    .Select(portatil => new PortatilesParaDevolverDTO(portatil.IdCompra, portatil.Portatil.Marca.NombreMarca, portatil.Cantidad,
+                    .Select(portatil => new PortatilesParaDevolverDTO(portatil.IdCompra, portatil.IdPortatil, portatil.IdLinea, portatil.Portatil.Marca.NombreMarca, portatil.Portatil.Modelo, portatil.Cantidad,
                     portatil.Compra.FechaCompra, portatil.PrecioUnitario)
                      ).ToListAsync();
             return Ok(portatiles);
@@ -127,7 +127,8 @@ namespace OneHope.API.Controllers
                 .Where(portatil => ((filtroMarca == null || portatil.Marca.NombreMarca.Equals(filtroMarca)) &&
                                     (filtroProcesador == null || portatil.Procesador.ModeloProcesador.Equals(filtroProcesador)) &&
                                     (filtroRam == null || portatil.Ram.Capacidad.Equals(filtroRam)) &&
-                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo))
+                                    (filtroModelo == null || portatil.Modelo.Contains(filtroModelo)) &&
+                                    (portatil.StockAlquilar > 0)
                                     ))
                 .Include(portatil => portatil.Ram)
                 .Include(portatil => portatil.Procesador)

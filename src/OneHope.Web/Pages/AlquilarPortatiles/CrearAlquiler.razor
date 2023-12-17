@@ -1,0 +1,291 @@
+﻿@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/alquiler/createalquiler"
+
+@* Espacio de nombres del cliente generado con NSwag. *@
+@using PortatilesAPI;
+@* Espacio de nombres donde están los DTOs. *@
+
+@* Este es el servicio que se ha definido como HttpClient en Program.cs. *@
+@inject swaggerClient swaggerClient;
+@* Inyectar el servicio que gestiona el estado del alquiler (debe ser añadido en Program.cs). *@
+@inject AlquilarPortatilStateContainer estadoAlquiler;
+@* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
+@inject NavigationManager Navigation;
+
+
+
+<h3>Introduce los datos del Alquiler</h3>
+@* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Dirección del Cliente</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="direccionCliente" @onchange="@((value)=>ActualizaDireccion(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Nombre</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="nombreCliente" @onchange="@((value)=>ActualizaNombre(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Apellidos</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="apellidosCliente" @onchange="@((value)=>ActualizaApellidos(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Email</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="emailCliente" @onchange="@((value)=>ActualizaEmail(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Telefono Cliente</span>
+        </div>
+        <textarea class="form-control" rows="4" cols="50" id="telefonoCliente" @onchange="@((value)=>ActualizaTelefono(value))" />
+    </div>
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Método de Pago</span>
+        <select class="form-select" aria-label="Default select" id="metodoPagoSel" @bind="metodoPagoSeleccionado">
+            @foreach (string metodo in metodosPago) {
+                <option value="@metodo" id="metodoPagoSeleccionado_@metodo" @onclick="@(() => ActualizarMetodoPago())">
+                    @metodo
+                </option>
+            }
+        </select>
+    </div>
+    <p></p>
+    <div class="input-group-prepend">
+        <span class="input-group-text">Fecha Inicio Alquiler</span>
+        <input type="date" class="form-control" @bind="estadoAlquiler.Alquiler.FechaInAlquiler" id="fechaInAlquiler">
+    </div>
+    <div class="input-group-prepend">
+        <span class="input-group-text">Fecha Final Alquiler</span>
+        <input type="date" class="form-control" @bind="estadoAlquiler.Alquiler.FechaFinAlquiler" id="fechaFinAlquiler">
+    </div>
+</div> <!-- FIN INPUT-GROUP -->
+
+@*Aqui tengo que poner la tabla segun ponga que se muestra en el caso de uso*@
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0) {
+    <br />
+    <p><em>No hay artículos que cumplan los criterios seleccionados.</em></p>
+} else {  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaPortatiles">
+            <thead>
+                <tr>
+                    <th>Portatil Modelo</th>
+                    <th>Marca</th>
+                    <th>Procesador</th>
+                    <th>RAM</th>
+                    <th>Precio Alquiler</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles) {
+                    <tr id="PortatilData_@portatil.PortatilID">
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.Ram</td>
+                        <td>@portatil.PrecioAlquiler</td>
+                        <td>
+                            <input type="number" id="cantidad_@portatil.PortatilID" value="@portatil.Cantidad"
+                                        @onchange="@((value)=>ActualizaCantidad(portatil.PortatilID, value))" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="left">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Volver" @onclick="@(()=>Volver())">
+                                    Volver
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                <td colspan="3" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Alquilar" disabled="@completarButtonDisabled" @onclick="@(()=>CreateAlquiler())">
+                                    Alquilar
+                                </button>
+                            </div>
+                        </div>
+                </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+@if (!mensajeError.Equals("")) {
+    <div class="card-header">
+            @tituloError
+    </div>
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+}
+
+
+@code {
+    @* Se usa para almacenar el mensaje de error cuando lo hay. *@
+    private string mensajeError="";
+    @* Es el título de la pantalla de error. *@
+    private string tituloError="Error";
+
+    @* Se usa para controlar si el botón de completar comprar está activo o no. *@
+    private bool completarButtonDisabled = false;
+
+    @* Para la lista de artículo que se muestra en la tabla. *@
+    private ICollection<LineaAlquilerDTO> Portatiles { get; set; } =
+                                                    new List<LineaAlquilerDTO>();
+    @* Lista con los métodos de pago extraída del tipo enumerado. *@
+    private ICollection<string> metodosPago = 
+            ((IEnumerable<OneHope.Shared.TipoMetodoPago>) Enum.GetValues(typeof(OneHope.Shared.TipoMetodoPago)))
+            .Select(m => m.ToString()).ToList();
+
+    @* Por defecto el método de pago selecionado es Tarjeta. *@
+    private string metodoPagoSeleccionado = "TarjetaCredito";
+
+    private string nombreCliente;
+
+    private string apellidosCliente;
+
+    @* Detalles de la factura creada. *@
+    private DetalleAlquilerDTO details;
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync() {
+        @* Cargar los datos de los artículos que incluye la compra. *@
+        BuscarArticulos();
+        bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
+        if (parsed) estadoAlquiler.Alquiler.TipoMetodoPago = metodoPago;
+        else estadoAlquiler.Alquiler.TipoMetodoPago = TipoMetodoPago.TarjetaCredito;
+    }
+
+    @* Cada vez que se seleciona un método de pago en el desplegable se actualiza la compra. *@
+    private void ActualizarMetodoPago() {
+        bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
+        if (parsed) estadoAlquiler.Alquiler.TipoMetodoPago = metodoPago;
+        else estadoAlquiler.Alquiler.TipoMetodoPago = TipoMetodoPago.TarjetaCredito;
+    }
+
+    // Hacer el filtro.
+    protected async void BuscarArticulos() {
+        Portatiles = estadoAlquiler.Alquiler.LineasAlquiler;
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+    @* Crear el alquiler y navegar a detalles. *@
+    private async Task CreateAlquiler() {
+       
+
+        @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear el alquiler
+           no son posibles porque lo evitamos en la vista. *@
+        try {  
+            @* Primero guardo la compra llamando al método create del controlador. *@
+            details = await swaggerClient.CrearAlquilerAsync(estadoAlquiler.Alquiler);
+            @* Borrar el carrito *@
+            estadoAlquiler.FinalizarAlquiler();
+
+            Navigation.NavigateTo($"/portatiles/alquiler/detalle?AlquilerId={details.Id}");
+        } catch (ApiException<PortatilesAPI.ValidationProblemDetails> apiexceptionvalidation) {
+             @* Este es el título de la sección de errores que deseamos. *@
+             tituloError = "Ha habido un problema al procesar tu alquiler.";
+
+            if (apiexceptionvalidation.Result.Errors.Values != null)
+            {
+                mensajeError = "";
+                foreach (var errors in apiexceptionvalidation.Result.Errors.Values)
+                    //https://learn.microsoft.com/en-us/dotnet/api/system.string.join?view=net-7.0
+                    mensajeError = string.Join("(*) ", mensajeError, string.Join(" (*) ", errors));
+            }
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        } catch (ApiException apiexception) {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Ha habido un problema al procesar tu alquiler.";
+            mensajeError = "Por favor,inténtalo más tarde.";
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+    }
+
+    @* Volver a la pantalla anterior conservando los datos para poder modificar la compra. *@
+    private void Volver() {
+        Navigation.NavigateTo("/portatiles/alquilar");
+    }
+
+    @* Actualiza la cantidad del artículo en el carrito. *@
+    private void ActualizaCantidad(int id, ChangeEventArgs args) {
+        int cantidad = (int) Int32.Parse((string) args.Value);
+
+        if (cantidad!=null)
+            estadoAlquiler.UpdateCarrito(id, cantidad);
+
+        @* Si hay algún artículo con cantidad 0 o menor no se activa el botón de finalizar la compra. *@
+        completarButtonDisabled = (estadoAlquiler.Alquiler.LineasAlquiler.Any(li => li.Cantidad <= 0) ? true : false);
+    }
+
+    @* Actualiza la dirección de entrega del alquiler. *@
+    private void ActualizaDireccion(ChangeEventArgs args)
+    {
+        string direccion = (string)args.Value;
+        estadoAlquiler.SetDireccionCliente(direccion);
+
+    }
+
+    @* Actualiza el nombre del cliente. *@
+    private void ActualizaNombre(ChangeEventArgs args)
+    {
+        string nombreCliente = (string)args.Value;
+        estadoAlquiler.SetNombreCliente(nombreCliente);
+
+    }
+
+    @* Actualiza apellidos del cliente. *@
+    private void ActualizaApellidos(ChangeEventArgs args)
+    {
+        string apellidosCliente = (string)args.Value;
+        estadoAlquiler.SetApellidosCliente(apellidosCliente);
+
+    }
+
+    @* Actualiza el email del cliente. *@
+    private void ActualizaEmail(ChangeEventArgs args)
+    {
+        string email = (string)args.Value;
+        estadoAlquiler.SetEmailCliente(email);
+
+    }
+
+    @* Actualiza el telefono del cliente. *@
+    private void ActualizaTelefono(ChangeEventArgs args)
+    {
+        int telefono = (int)Int32.Parse((string)args.Value);
+
+        if (telefono != null)
+            estadoAlquiler.SetTelefonoCliente(telefono);
+
+    }
+
+}

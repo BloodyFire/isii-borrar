@@ -76,7 +76,7 @@ namespace OneHope.API.Controllers
             }
 
 
-            Devolucion devolucion = new Devolucion(devolucionForCreate.Fecha,
+            Devolucion devolucion = new Devolucion(DateTime.Now,
                 devolucionForCreate.CuantiaDevolucion, devolucionForCreate.DireccionRecogida, devolucionForCreate.NotaRepartidor,
                 devolucionForCreate.MotivoDevolucion);
 

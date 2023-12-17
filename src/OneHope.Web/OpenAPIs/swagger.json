@@ -1129,7 +1129,7 @@
             "format": "tel",
             "nullable": true
           },
-          "LineasPedido": {
+          "LineasAlquiler": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineaAlquilerDTO"
@@ -1231,7 +1231,7 @@
             "format": "tel",
             "nullable": true
           },
-          "LineasPedido": {
+          "LineasAlquiler": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/LineaAlquilerDTO"
@@ -1374,6 +1374,10 @@
             "type": "string",
             "nullable": true
           },
+          "fecha": {
+            "type": "string",
+            "format": "date"
+          },
           "CuantiaDevolucion": {
             "type": "number",
             "format": "float",
@@ -1389,10 +1393,6 @@
           "IdDevolucion": {
             "type": "integer",
             "format": "int32"
-          },
-          "FechaDevolucion": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1490,6 +1490,22 @@
             "minimum": 1,
             "type": "integer",
             "format": "int32"
+          },
+          "Marca": {
+            "type": "string",
+            "nullable": true
+          },
+          "Modelo": {
+            "type": "string",
+            "nullable": true
+          },
+          "Procesador": {
+            "type": "string",
+            "nullable": true
+          },
+          "Ram": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1741,6 +1757,7 @@
         "required": [
           "Cantidad",
           "Marca",
+          "Modelo",
           "Total"
         ],
         "type": "object",
@@ -1749,7 +1766,20 @@
             "type": "integer",
             "format": "int32"
           },
+          "IdPortatil": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "IdLineaCompra": {
+            "type": "integer",
+            "format": "int32"
+          },
           "Marca": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string"
+          },
+          "Modelo": {
             "maxLength": 50,
             "minLength": 0,
             "type": "string"

@@ -11,11 +11,15 @@ namespace OneHope.Shared.AlquilerDTOs
 {
     public class LineaAlquilerDTO
     {
-        public LineaAlquilerDTO( int portatilID, double precioAlquiler, int cantidad) 
+        public LineaAlquilerDTO( int portatilID, double precioAlquiler, int cantidad, string marca, string modelo, string procesador, string ram) 
         { 
             PortatilID = portatilID;
             PrecioAlquiler = precioAlquiler;
             Cantidad = cantidad;
+            Marca = marca;
+            Modelo = modelo;
+            Procesador = procesador;
+            Ram = ram;
         }
 
         [JsonPropertyName("PortatilID")]
@@ -29,6 +33,22 @@ namespace OneHope.Shared.AlquilerDTOs
         [JsonPropertyName("Cantidad")]
         [Range(1, Double.MaxValue, ErrorMessage = "No se ha introducido una cantidad válida.")]
         public int Cantidad { get; set; }
+
+        [Display(Name = "Marca")]
+        [JsonPropertyName("Marca")]
+        public string Marca { get; set; }
+
+        [Display(Name = "Modelo")]
+        [JsonPropertyName("Modelo")]
+        public string Modelo { get; set; }
+
+        [Display(Name = "Procesador")]
+        [JsonPropertyName("Procesador")]
+        public string Procesador { get; set; }
+
+        [Display(Name = "Memoria RAM")]
+        [JsonPropertyName("Ram")]
+        public string Ram { get; set; }
 
         public override bool Equals(object obj)
         {

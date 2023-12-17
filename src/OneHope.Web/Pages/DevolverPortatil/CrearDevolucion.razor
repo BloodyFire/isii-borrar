@@ -1,0 +1,229 @@
+﻿@using PortatilesAPI;
+@inject swaggerClient swaggerClient;
+@inject DevolverPortatilesStateContainer estadoDevolucion;
+@inject NavigationManager Navegation;
+@page "/compras/devolver/createdevolucion"
+
+<h3>Introduce los datos de la devolucion</h3>
+
+@* https://getbootstrap.com/docs/4.0/components/input-group/ *@
+@* input-group permite personalizar los controles para introducir datos. *@
+<div class="input-group">
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Dirección de Recogida</span>
+        </div>
+        <textarea class="form-control" rows="2" cols="50" id="direccionRecogida" @onchange="@((value)=>ActualizaDireccion(value))" />
+    </div>
+
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Motivo de la devolución</span>
+        </div>
+        <textarea class="form-control" rows="2" cols="50" id="motivoDevolucion" @onchange="@((value)=>ActualizaMotivos(value))" />
+    </div>
+
+    <div class="input-group-prepend">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Nota al repartidor</span>
+        </div>
+        <textarea class="form-control" rows="2" cols="50" id="notaRepartidor" @onchange="@((value)=>ActualizaNota(value))" />
+    </div>
+</div>
+<!-- FIN INPUT-GROUP -->
+<!-- TABLA CON LA LISTA DE PORTÁTILES -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaPortatiles">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Id Compra</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="portatilDevolver_@portatil.IdPortatil">
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.IdCompra</td>
+                        <td>
+                            <input type="number" id="cantidad_@portatil.IdCompra" value="@portatil.Cantidad"
+                            @onchange="@((value)=>ActualizaCantidad(portatil.IdCompra, value))" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2" align="left">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Volver" @onclick="@(()=>Volver())">
+                                    Volver
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                    <td colspan="3" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no laptops in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="RealizarDevolucion" disabled="@completarButtonDisabled" @onclick="@(()=>CreateDevolucion())">
+                                    Realizar Devolucion
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE PORTÁTILES -->
+}
+
+@if (!mensajeError.Equals(""))
+{
+    <div class="card-header">
+        @tituloError
+    </div>
+    <div class="alert alert-danger">
+        @mensajeError
+    </div>
+}
+
+
+@code {
+    @* Se usa para almacenar el mensaje de error cuando lo hay. *@
+    private string mensajeError = "";
+    @* Es el título de la pantalla de error. *@
+    private string tituloError = "Error";
+
+    @* Se usa para controlar si el botón de realizar pedido está activo o no. *@
+    private bool completarButtonDisabled = false;
+
+    @* Se usa para guardar el código del empleado.*@
+    private int idCliente = 3;
+
+    @* Para la lista de portátil que se muestra en la tabla. *@
+    private ICollection<DevolucionItemDTO> Portatiles { get; set; } =
+                                                    new List<DevolucionItemDTO>();
+    @* Lista con los métodos de pago extraída del tipo enumerado. *@
+    
+
+  
+
+    @* Detalles de la factura creada. *@
+    private DevolucionDetailDTO details;
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+        @* Cargar los datos de los portátiles que incluye la pedido. *@
+        BuscarPortatiles();
+    }
+   
+
+    // Hacer el filtro.
+    protected async void BuscarPortatiles()
+    {
+        Portatiles = estadoDevolucion.Devolucion.LineasDevoluciones;
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+
+    @* Crear la pedido y navegar a detalles. *@
+    private async Task CreateDevolucion()
+    {
+
+
+        @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear la pedido
+           no son posibles porque lo evitamos en la vista. *@
+        try
+        {
+            @* Primero guardo la pedido llamando al método create del controlador. *@
+            details = await swaggerClient.CreateDevolucionAsync(estadoDevolucion.Devolucion);
+            @* Borrar el carrito *@
+            estadoDevolucion.FinalizarDevolver();
+
+            Navegation.NavigateTo($"/compras/devolver/detalledevolucion?DevolucionId={details.IdDevolucion}");
+        }
+        catch (ApiException<ValidationProblemDetails> apiexceptionvalidation)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Ha habido un problema al procesar tu devolución.";
+
+            if (apiexceptionvalidation.Result.Errors.Values != null)
+            {
+                mensajeError = "";
+                foreach (var errors in apiexceptionvalidation.Result.Errors.Values)
+                    //https://learn.microsoft.com/en-us/dotnet/api/system.string.join?view=net-7.0
+                    mensajeError = string.Join("(*) ", mensajeError, string.Join(" (*) ", errors));
+            }
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+        catch (ApiException apiexception)
+        {
+            @* Este es el título de la sección de errores que deseamos. *@
+            tituloError = "Ha habido un problema al procesar tu devolución.";
+            //mensajeError = "Por favor,inténtalo más tarde.";
+            mensajeError = apiexception.ToString();
+            @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+            StateHasChanged();
+        }
+    }
+
+    @* Volver a la pantalla anterior conservando los datos para poder modificar la pedido. *@
+    private void Volver()
+    {
+        Navegation.NavigateTo("/compras/devolver");
+    }
+
+    @* Actualiza la cantidad del portátil en el carrito. *@
+    private void ActualizaCantidad(int id, ChangeEventArgs args)
+    {
+        int cantidad = (int)Int32.Parse((string)args.Value);
+
+        if (cantidad != null)
+            estadoDevolucion.UpdateCarrito(id, cantidad);
+
+        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
+        completarButtonDisabled = (estadoDevolucion.Devolucion.LineasDevoluciones.Any(li => li.Cantidad == 0) ? true : false);
+    }
+
+    @* Actualiza la dirección de entrega del pedido. *@
+    private void ActualizaDireccion(ChangeEventArgs args)
+    {
+        string direccion = (string)args.Value;
+        estadoDevolucion.SetDireccionRecogida(direccion);
+
+    }
+
+    @* Actualiza el comentarios del pedido. *@
+    private void ActualizaMotivos(ChangeEventArgs args)
+    {
+        string motivos = (string)args.Value;
+        estadoDevolucion.SetMotivoDevolucion(motivos);
+    }
+
+    @* Actualiza el estado del botón de realizar pedido*@
+    private void ActualizaNota(ChangeEventArgs args)
+    {
+        string nota = (string)args.Value;
+        estadoDevolucion.SetNotaRepartidor(nota);
+    }
+}
