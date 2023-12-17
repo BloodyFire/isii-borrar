@@ -24,7 +24,7 @@ namespace OneHope.UIT.CUComprarPortatil
         {
             //it is needed to run the browser and
             //know the URI of your app
-            Shared.UtilitiesUIT.SetUp_UIT(out _driver, out _URI);
+            UtilitiesUIT.SetUp_UIT(out _driver, out _URI);
 
             //it is initialized using the logger provided by xUnit
             this._output = output;
