@@ -36,7 +36,7 @@ namespace OneHope.UIT.CUComprarPortatil
         }
 
         // Simular el paso de filtrar los portátiles. El método tendrá un parámetro por cada uno de los filtros que tengas.
-        public void FiltrarPortatiles(string? portatilNombre, string? portatilMarca, string? portatilRam, string? portatilProcesador, int? portatilPrecioMin, int? portatilStockMin)
+        public void FiltrarPortatiles(string? portatilNombre, string? portatilMarca, string? portatilRam, string? portatilProcesador, string? portatilPrecioMin, string? portatilStockMin)
         {
             SelectElement selectElement;
 
@@ -44,43 +44,29 @@ namespace OneHope.UIT.CUComprarPortatil
             // El método se le pasa el Id, no la referencia.
 
             WaitForBeingVisible(_nombrePortatilBy);
-            WaitForBeingVisible(_marcaPortatilBy);
-            WaitForBeingVisible(_ramPortatilBy);
-            WaitForBeingVisible(_procesadorPortatilBy);
-            WaitForBeingVisible(_precioMinPortatilBy);
-            WaitForBeingVisible(_stockMinPortatilBy);
-
             // Se simula que se escribe en la cuadro de texto el filtro del nombre del artículo.
             _driver.FindElement(_nombrePortatilBy).SendKeys(portatilNombre);
-            _driver.FindElement(_marcaPortatilBy).SendKeys(portatilMarca);
-            _driver.FindElement(_ramPortatilBy).SendKeys(portatilRam);
-            _driver.FindElement(_procesadorPortatilBy).SendKeys(portatilProcesador);
-            _driver.FindElement(_precioMinPortatilBy).SendKeys(portatilPrecioMin.ToString());
-            _driver.FindElement(_stockMinPortatilBy).SendKeys(portatilStockMin.ToString());
 
-            // Si no se ha seleccionado ningún color, entonces debe seleccionarse "Todos".
-            if (portatilNombre == "") portatilNombre = "Todos";
-
-            WaitForBeingVisible(_nombrePortatilBy);
-            // Se crea la lista desplegable.
-            selectElement = new SelectElement(_nombrePortatil());
-            // Selecciona la opción que se ha indicado en el parámetro para el filtro.
-            selectElement.SelectByText(portatilNombre);
-
-            if (portatilMarca == "") portatilMarca = "Todos";
             WaitForBeingVisible(_marcaPortatilBy);
+            if (portatilMarca == "") portatilMarca = "Todos";
             selectElement = new SelectElement(_marcaPortatil());
             selectElement.SelectByText(portatilMarca);
 
+            WaitForBeingVisible(_ramPortatilBy);
             if (portatilRam == "") portatilRam = "Todos";
             WaitForBeingVisible(_ramPortatilBy);
             selectElement = new SelectElement(_ramPortatil());
             selectElement.SelectByText(portatilRam);
-
+            WaitForBeingVisible(_procesadorPortatilBy);
             if (portatilProcesador == "") portatilProcesador = "Todos";
             WaitForBeingVisible(_procesadorPortatilBy);
             selectElement = new SelectElement(_procesadorPortatil());
             selectElement.SelectByText(portatilProcesador);
+            WaitForBeingVisible(_precioMinPortatilBy);
+            _driver.FindElement(_precioMinPortatilBy).SendKeys(portatilPrecioMin.ToString());
+            WaitForBeingVisible(_stockMinPortatilBy);
+            _driver.FindElement(_stockMinPortatilBy).SendKeys(portatilStockMin.ToString());
+
 
             _botonBuscar().Click();
             // Se espera 2000 milisegundos para esperar a que la tabla se recargue.
@@ -95,7 +81,7 @@ namespace OneHope.UIT.CUComprarPortatil
         }
 
         // Devuelve si el botón Comprar está activo o no.
-        public bool isEnabledPedir()
+        public bool isEnabledComprar()
         {
             IWebElement botonComprar = _botonComprar();
 
@@ -109,8 +95,8 @@ namespace OneHope.UIT.CUComprarPortatil
             //we wait for till the movies are available to be selected 
             foreach (var portatilId in portatilsIds)
             {
-                WaitForBeingVisible(By.Id($"portatilPedido_{portatilId}"));
-                _driver.FindElement(By.Id($"portatilPedido_{portatilId}")).Click();
+                WaitForBeingVisible(By.Id($"portatilParaComprar_{portatilId}"));
+                _driver.FindElement(By.Id($"portatilParaComprar_{portatilId}")).Click();
             }
         }
 
@@ -122,8 +108,8 @@ namespace OneHope.UIT.CUComprarPortatil
             //we wait for till the movies are available to be selected 
             foreach (var portatilId in portatilsIds)
             {
-                WaitForBeingVisible(By.Id($"portatilPedido_{portatilId}"));
-                string value = _driver.FindElement(By.Id($"portatilPedido_{portatilId}")).GetAttribute("checked");
+                WaitForBeingVisible(By.Id($"portatilParaComprar_{portatilId}"));
+                string value = _driver.FindElement(By.Id($"portatilParaComprar_{portatilId}")).GetAttribute("checked");
                 if (value.Equals("false")) return false;
             }
 
