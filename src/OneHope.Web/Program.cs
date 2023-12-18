@@ -30,6 +30,10 @@ builder.Services.AddHttpClient<swaggerClient>();
 //https://learn.microsoft.com/en-us/aspnet/core/blazor/state-management?view=aspnetcore-6.0&pivots=server#in-memory-state-container-service-server
 builder.Services.AddScoped<ReabastecerPortatilStateContainer>();
 
+//adding an In-memory state container services
+//https://learn.microsoft.com/en-us/aspnet/core/blazor/state-management?view=aspnetcore-6.0&pivots=server#in-memory-state-container-service-server
+builder.Services.AddScoped<ComprarPortatilStateContainer>();
+
 //the environment variable is defined in Properties\launchsettings.json
 builder.Services.AddScoped<swaggerClient>(sp =>
         new swaggerClient(Environment.GetEnvironmentVariable("swaggerClient_API"), new HttpClient())

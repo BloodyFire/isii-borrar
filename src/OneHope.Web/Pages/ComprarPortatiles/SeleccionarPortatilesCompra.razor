@@ -1,0 +1,248 @@
+﻿@using PortatilesAPI;
+
+@inject swaggerClient swaggerClient;
+
+@* Especifica la ruta en la que se mostrará esta página. *@
+@page "/portatiles/comprar"
+@inject swaggerClient swaggerClient;
+@inject NavigationManager Navigation;
+@inject ComprarPortatilStateContainer estadoCompra;
+
+<h3>Comprar Portátiles</h3>
+
+<div class="input-group">
+    @* Etiqueta que aparece para el filtro. *@
+    @* Filtro de texto para nombre. *@
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Nombre</span>
+    </div>
+    <input type="text" class="form-control" @bind="portatilNombre" id="portatilNombre">
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Marca</span>
+    </div>
+    <select class="form-select" aria-label="Default select" @bind="portatilMarcaSeleccionada" id="SeleccionarMarca">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string nombreMarca in nombresMarcas)
+        {
+            <option value="@nombreMarca" @onclick="@BuscarPortatiles"
+                    id="portatilMarca_@nombreMarca">@nombreMarca</option>
+        }
+    </select>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Ram</span>
+    </div>
+    <select class="form-select" aria-label="Default select" @bind="portatilRamSeleccionada" id="SeleccionarRam">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string tipoRam in tiposRams)
+        {
+            <option value="@tipoRam" @onclick="@BuscarPortatiles"
+                    id="portatilRam_@tipoRam">@tipoRam</option>
+        }
+    </select>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Procesador</span>
+    </div>
+    <select class="form-select" aria-label="Default select" @bind="portatilProcesadorSeleccionado" id="SeleccionarProcesador">
+        <option value="Todos" selected>Todos</option>
+        @foreach (string nombreProcesador in nombresProcesadores)
+        {
+            <option value="@nombreProcesador" @onclick="@BuscarPortatiles"
+                    id="portatilMarca_@nombreProcesador">@nombreProcesador</option>
+        }
+    </select>
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Precio Mínimo</span>
+    </div>
+    <input type="number" step="0.01" class="form-control" @bind="portatilPrecioCompra" id="portatilPrecioCompra">
+
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="">Stock Mínimo</span>
+    </div>
+    <input type="number" class="form-control" @bind="portatilStock" id="portatilStock">
+
+
+    @*<input type="text" class="form-control" @bind="@articuloColor" id="articuloColor">*@
+
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" id="buscarPortatiles" @onclick="@BuscarPortatiles">Buscar</button>
+    </div>
+</div>
+<p></p>
+
+<!-- FIN INPUT-GROUP -->
+
+<!-- TABLA CON LA LISTA DE ARTÍCULOS -->
+@* Flujo alternativo cuando no hay elementos que mostrar. *@
+@if (Portatiles == null || Portatiles.Count() == 0)
+{
+    <br />
+    <p><em>No hay portátiles que cumplan los criterios seleccionados.</em></p>
+}
+else
+{  @* Flujo básico y alternativo cuando se filtra. *@
+    <div class="mh-100 table-responsive">
+        <table class="table table-condensed table-hover" id="TablaDePortatiles">
+            <thead>
+                <tr>
+                    <th>Marca</th>
+                    <th>Nombre</th>
+                    <th>Modelo</th>
+                    <th>Ram</th>
+                    <th>Procesador</th>
+                    <th>PrecioCompra</th>
+                    <th>Stock</th>
+                    <th align="center">Seleccionado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var portatil in Portatiles)
+                {
+                    <tr id="PortatilData_@portatil.Nombre">
+                        <td>@portatil.Marca</td>
+                        <td>@portatil.Nombre</td>
+                        <td>@portatil.Modelo</td>
+                        <td>@portatil.Ram</td>
+                        <td>@portatil.Procesador</td>
+                        <td>@portatil.PrecioCompra</td>
+                        <td>@portatil.Stock</td>
+                        <td align="center">
+                            <input type="checkbox" id="portatilParaComprar_@portatil.Id"
+                                checked="@(estadoCompra.includes(portatil.Id))"
+                                @onchange="@((value)=>ToggleArticulo(portatil, value))" />
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5" align="right">
+                        @* Botón para navegar introducción de datos. *@
+                        <div class="col-md">
+                            <div class="form-floating">
+                                @*this button will be disabled if there are no movies in the shopping cart*@
+                                <button class="btn btn-primary" type="submit" id="Submit" disabled="@comprarButtonDisable" @onclick="@(()=>NavegarCreateCompra())">
+                                    Comprar
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- FIN TABLA CON LA LISTA DE ARTÍCULOS -->
+}
+
+@code {
+
+    private string portatilNombre;
+    private string portatilModelo;
+    private string portatilMarca;
+    private double portatilPrecioCompra;
+    private string portatilRam;
+    private string portatilProcesador;
+    private int portatilStock;
+
+    private string portatilMarcaSeleccionada;
+    private string portatilRamSeleccionada;
+    private string portatilProcesadorSeleccionado;
+
+    private string error;
+
+    private bool comprarButtonDisable = true;
+
+    @* Para la lista de artículo que se muestra en la tabla. *@
+    private ICollection<PortatilParaComprarDTO> Portatiles { get; set; } = new List<PortatilParaComprarDTO>();
+    private ICollection<string>? nombresMarcas { get; set; } = new List<string>();
+    private ICollection<string>? tiposRams { get; set; } = new List<string>();
+    private ICollection<string>? nombresProcesadores { get; set; } = new List<string>();
+
+    //private string portatilSeleccionado;
+
+    // Se ejecutará al cargarse la página.
+    protected override async Task OnInitializedAsync()
+    {
+
+        @* Cargar los datos de los portatiles. *@
+        BuscarPortatiles();
+
+        @* Cargar los datos de los tipo enumerado *@
+        nombresMarcas = await swaggerClient.GetMarcaAsync(null);
+        tiposRams = await swaggerClient.GetRamAsync(null);
+        nombresProcesadores = await swaggerClient.GetProcesadorAsync(null);
+        
+        comprarButtonDisable = estadoCompra.isEmpty();
+    }
+
+    @* Navegar a la página pedir los datos. *@
+    private void NavegarCreateCompra()
+    {
+        Navigation.NavigateTo($"/portatiles/comprar/crearcompra");
+    }
+
+    @* Añade/elimina el artículo al carrito al pulsar en la casilla. *@
+    private void ToggleArticulo(PortatilParaComprarDTO portatil, ChangeEventArgs args)
+    {
+        bool _checked = (bool)args.Value;
+        if (_checked)
+            AddPortatilACompra(portatil);
+        else
+            RemovePortatilACompra(portatil);
+    }
+
+    public void AddPortatilACompra(PortatilParaComprarDTO portatil)
+    {
+        // Se comprueba que ese artículo no se ha añadido ya al carrito.
+        var _portatil = new PortatilParaComprarDTO();
+        _portatil.Id = portatil.Id;
+        _portatil.Marca = portatil.Marca;
+        _portatil.Procesador = portatil.Procesador;
+        _portatil.Ram = portatil.Ram;
+        _portatil.Nombre = portatil.Nombre;
+        _portatil.PrecioCompra = portatil.PrecioCompra;
+
+        estadoCompra.AddPortatilACompra(_portatil, 1);
+
+        comprarButtonDisable = false;
+    }
+
+    @* Elimina un artículo del carrito. *@
+    private void RemovePortatilACompra(PortatilParaComprarDTO portatil)
+    {
+        estadoCompra.RemovePortatilACompra(portatil.Id);
+
+        if (estadoCompra.isEmpty()) comprarButtonDisable = true;
+    }
+
+    protected async void BuscarPortatiles()
+    {
+        try
+        {
+            portatilMarca = portatilMarcaSeleccionada == "Todo" ? null : portatilMarcaSeleccionada;
+            portatilRam = portatilRamSeleccionada == "Todo" ? null : portatilRamSeleccionada;
+            portatilProcesador = portatilProcesadorSeleccionado == "Todo" ? null : portatilProcesadorSeleccionado;
+
+            Portatiles = await swaggerClient.GetPortatilesParaComprarAsync(portatilNombre, portatilModelo,
+            portatilMarca, portatilProcesador, portatilRam, portatilPrecioCompra, portatilStock);
+
+        }
+        catch (ApiException e)
+        {
+            if (e.StatusCode == 204) Portatiles = new List<PortatilParaComprarDTO>();
+        }
+
+        if (Portatiles == null)
+        {
+            error = "No se puede conectar con el API.";
+        }
+
+
+        @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
+        StateHasChanged();
+    }
+}

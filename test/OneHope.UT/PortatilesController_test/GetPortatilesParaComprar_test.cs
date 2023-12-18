@@ -76,6 +76,7 @@ namespace OneHope.UT.PortatilesController_test
             var portatilDTOsTC3 = new List<PortatilParaComprarDTO>() { portatilDTOs[2] };
             var portatilDTOsTC4 = new List<PortatilParaComprarDTO>() { portatilDTOs[3] };
             var portatilDTOsTC5 = new List<PortatilParaComprarDTO>() { portatilDTOs[1] };
+            var portatilDTOsTC6 = new List<PortatilParaComprarDTO>() { portatilDTOs[0], portatilDTOs[1], portatilDTOs[3]};
 
             var allTests = new List<object[]>
             {
@@ -85,7 +86,7 @@ namespace OneHope.UT.PortatilesController_test
                 new object[] { null, null, "1", null, null, null, null, portatilDTOsTC3, },
                 new object[] { null, null, null, "128Mb", null, null, null, portatilDTOsTC4, },
                 new object[] { null, null, null, null, "Intel-Core i7", null, null, portatilDTOsTC5, },
-                new object[] { null, null, null, null, null, 248.36, null, portatilDTOsTC2, },
+                new object[] { null, null, null, null, null, 240.00, null, portatilDTOsTC6, },
                 new object[] { null, null, null, null, null, null, 76, portatilDTOsTC4, }
 
             };
