@@ -339,6 +339,81 @@ namespace OneHope.UIT.CUComprarPortatil
             Assert.True(_driver.PageSource.Contains(expectedErrorTitleText));
         }
 
+        [Fact]
+        public void CU1_15_Modificar_Carrito_Compra()
+        {
+            // Arrange
+            var seleccionarPortatiles_PO = new SeleccionarPortatilesCompra_PO(_driver, _output);
+            var crearCompra_PO = new CrearCompra_PO(_driver, _output);
+            var detalleCompra_PO = new DetalleCompra_PO(_driver, _output);
+
+            string expectedNombre = "Jose";
+            string expectedApellidos = "García Molina";
+            string expectedDireccion = "C/San Francisco";
+            string expectedMetodoPago = "<b>Método de Pago: </b> TarjetaCredito";
+            string expectedFecha = "<b>Fecha de compra: </b> " + DateTime.Now.ToString("dd-MMM-yyyy").ToUpper();
+
+            var expectedPortatiles = new List<string[]>();
+            expectedPortatiles.Add(new string[] { "ASUS", "ASUS PRO STATION 3000", "16Gb", "Intel I7 13700", "4" });
+
+            var expectedTotal = new List<string[]>();
+            expectedTotal.Add(new string[] { "Precio Total", "9199,8" });
+
+
+            // Act
+            // Si has usado autenticación tendrás hacer login, en mi ejemplo no se usa.
+            Inicio();
+            // Navegar hasta la página de Comprar Artículos.
+            Ir_A_ComprarArticulos();
+            // Seleccionar los artículos 3 y 5.
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "3" });
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "1" });
+            // Pulsar el botón de comprar.
+            seleccionarPortatiles_PO.Comprar();
+
+            //Seleccionar nombre
+            crearCompra_PO.setNombre("Jose");
+            //Seleccionar apellidos
+            crearCompra_PO.setApellidos("García Molina");
+            //Seleccionar dirección
+            crearCompra_PO.setDireccion("C/San Francisco");
+            // Seleccionar como método de pago PayPal.
+            crearCompra_PO.setMetodoPago("TarjetaCredito");
+            // Poner las cantidades.
+            crearCompra_PO.setCantidad("3", "4");
+
+            crearCompra_PO.Volver();
+
+            seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "1" });
+
+            seleccionarPortatiles_PO.Comprar();
+
+            //Seleccionar nombre
+            crearCompra_PO.setNombre("Jose");
+            //Seleccionar apellidos
+            crearCompra_PO.setApellidos("García Molina");
+            //Seleccionar dirección
+            crearCompra_PO.setDireccion("C/San Francisco");
+            // Seleccionar como método de pago PayPal.
+            crearCompra_PO.setMetodoPago("TarjetaCredito");
+            // Pulsar comprar para finalizar la compra.
+            crearCompra_PO.Comprar();
+            // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
+
+            UtilitiesUIT.WaitForBeingVisible(_driver, By.Id("Submit"));
+
+            // Assert
+            Assert.True(_driver.PageSource.Contains(expectedNombre));
+            Assert.True(_driver.PageSource.Contains(expectedApellidos));
+            Assert.True(_driver.PageSource.Contains(expectedDireccion));
+            Assert.True(_driver.PageSource.Contains(expectedMetodoPago));
+            Assert.True(_driver.PageSource.Contains(expectedFecha));
+
+            Assert.True(detalleCompra_PO.CompruebaListaPortatiles(expectedPortatiles));
+            Assert.True(detalleCompra_PO.CompruebaTotal(expectedTotal));
+
+        }
+
         private void Ir_A_ComprarArticulos()
         {
             // Esperar a que se cargue la página.
