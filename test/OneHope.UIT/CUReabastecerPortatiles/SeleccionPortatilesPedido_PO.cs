@@ -95,8 +95,8 @@ namespace OneHope.UIT.Shared
             }
 
             _botonBuscar().Click();
-            // Se espera 2000 milisegundos para esperar a que la tabla se recargue.
-            System.Threading.Thread.Sleep(2000);
+            // Se espera 3000 milisegundos para esperar a que la tabla se recargue.
+            System.Threading.Thread.Sleep(3000);
         }
 
 
@@ -148,7 +148,7 @@ namespace OneHope.UIT.Shared
         public void Pedir()
         {
             _botonPedir().Click();
-            System.Threading.Thread.Sleep(200); // Si no añado este retardo no funcionan las pruebas.
+            System.Threading.Thread.Sleep(1000);
         }
     }
 }

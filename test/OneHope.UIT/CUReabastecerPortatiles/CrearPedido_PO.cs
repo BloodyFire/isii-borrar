@@ -29,13 +29,13 @@ namespace OneHope.UIT.Shared {
         // Pulsar el botón volver.
         public void Volver() {
             _botonVolver().Click();
-            System.Threading.Thread.Sleep(300);
+            System.Threading.Thread.Sleep(1000);
         }
 
         // Pulsar el botón realizar pedido.
         public void Pedir() {
             _botonPedir().Click();
-            System.Threading.Thread.Sleep(300);
+            System.Threading.Thread.Sleep(3000);
         }
 
         // Fija la cantidad que se desea pedir para el portátil cuyo id es Id.

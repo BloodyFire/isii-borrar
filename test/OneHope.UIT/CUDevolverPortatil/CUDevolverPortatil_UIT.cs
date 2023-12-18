@@ -214,7 +214,7 @@ namespace OneHope.UIT.CUDevolverPortatil
             seleccionarPortatiles_PO.Devolver();
 
             crearDevolucion_PO.setMotivoDevolucion("Quiero mas capacidad");
-            // Pulsar Realizar pedido para intentar finalizar la pedido.
+            // Pulsar Realizar pedido para intentar finalizar el pedido.
             crearDevolucion_PO.Devolver();
             // Assert
             Assert.Contains(expectedError, _driver.PageSource);
@@ -238,7 +238,7 @@ namespace OneHope.UIT.CUDevolverPortatil
             seleccionarPortatiles_PO.Devolver();
 
             crearDevolucion_PO.setDireccionRecogida("Calle Rosario 12");
-            // Pulsar Realizar pedido para intentar finalizar la pedido.
+            // Pulsar Realizar pedido para intentar finalizar el pedido.
             crearDevolucion_PO.Devolver();
             // Assert
             Assert.Contains(expectedError, _driver.PageSource);
@@ -265,7 +265,7 @@ namespace OneHope.UIT.CUDevolverPortatil
             crearDevolucion_PO.setMotivoDevolucion("Quiero mas capacidad");
             crearDevolucion_PO.setNotaRepartidor("Estaré sobre las 5 en casa");
             crearDevolucion_PO.setCantidad("17", "5");
-            // Pulsar Realizar pedido para intentar finalizar la pedido.
+            // Pulsar Realizar pedido para intentar finalizar el pedido.
             crearDevolucion_PO.Devolver();
             // Assert
             Assert.Contains(expectedError, _driver.PageSource);

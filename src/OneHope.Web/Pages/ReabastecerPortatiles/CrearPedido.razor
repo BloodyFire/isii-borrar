@@ -5,7 +5,7 @@
 @* Especifica la ruta en la que se mostrará esta página. *@
 @page "/portatiles/reabastecer/crearpedido"
 
-@* Inyectar el servicio que gestiona el estado de la pedido (debe ser añadido en Program.cs). *@
+@* Inyectar el servicio que gestiona el estado del pedido (debe ser añadido en Program.cs). *@
 @inject ReabastecerPortatilStateContainer estadoPedido;
 @* Se inyecta el servicio que gestiona la navegación entre páginas (debe ser añadido en Program.cs). *@
 @inject NavigationManager Navigation;
@@ -168,7 +168,7 @@ else
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
     {
-        @* Cargar los datos de los portátiles que incluye la pedido. *@
+        @* Cargar los datos de los portátiles que incluye el pedido. *@
         BuscarPortatiles();
         bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
         if (parsed) estadoPedido.Pedido.TipoMetodoPago = metodoPago;
@@ -176,7 +176,7 @@ else
         estadoPedido.SetCodigoEmpleado(codEmpleado);
     }
 
-    @* Cada vez que se seleciona un método de pago en el desplegable se actualiza la pedido. *@
+    @* Cada vez que se seleciona un método de pago en el desplegable se actualiza el pedido. *@
     private void ActualizarMetodoPago()
     {
         bool parsed = Enum.TryParse(metodoPagoSeleccionado, out TipoMetodoPago metodoPago);
@@ -193,17 +193,17 @@ else
         StateHasChanged();
     }
 
-    @* Crear la pedido y navegar a detalles. *@
+    @* Crear el pedido y navegar a detalles. *@
     private async Task CreatePedido()
     {
 
 
         @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
-        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear la pedido
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear el pedido
            no son posibles porque lo evitamos en la vista. *@
         try
         {
-            @* Primero guardo la pedido llamando al método create del controlador. *@
+            @* Primero guardo el pedido llamando al método create del controlador. *@
             details = await swaggerClient.CreatePedidoAsync(estadoPedido.Pedido);
             @* Borrar el carrito *@
             estadoPedido.FinalizarPedido();
@@ -235,7 +235,7 @@ else
         }
     }
 
-    @* Volver a la pantalla anterior conservando los datos para poder modificar la pedido. *@
+    @* Volver a la pantalla anterior conservando los datos para poder modificar el pedido. *@
     private void Volver()
     {
         Navigation.NavigateTo("/portatiles/reabastecer");
@@ -249,7 +249,7 @@ else
         if (cantidad != null)
             estadoPedido.UpdateCarrito(id, cantidad);
 
-        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
+        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar el pedido. *@
         completarButtonDisabled = (estadoPedido.Pedido.LineasPedido.Any(li => li.Cantidad == 0) ? true : false);
     }
 
