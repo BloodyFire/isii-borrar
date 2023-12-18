@@ -72,7 +72,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             var crearPedido_PO = new CrearPedido_PO(_driver, _output);
             var detallePedido_PO = new DetallePedido_PO(_driver, _output);
 
-            string expectedCabecera = "Resumen de la Pedido";
+            string expectedCabecera = "Resumen del Pedido";
             string expectedCodigoEmpleado = "<b>Codigo de empleado:</b> Daniel.Tomas";
             string expectedMetodoPago = "<b>Método de Pago:</b> TarjetaCredito";
             string expectedFecha = "<b>Fecha de pedido:</b> ";
@@ -106,7 +106,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             // Poner las cantidades.
             crearPedido_PO.setCantidad("4", "4");
             crearPedido_PO.setCantidad("10", "2");
-            // Pulsar Realizar pedido para finalizar la pedido.
+            // Pulsar Realizar pedido para finalizar el pedido.
             expectedFecha += DateTime.Now.ToString("dd-MM-yyyy HH:mm").ToUpper();
             crearPedido_PO.Pedir();
             // Ahora se debe haber mostrado la página de detalle y puedo comprobar si todo ha ido bien.
@@ -131,7 +131,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             var crearPedido_PO = new CrearPedido_PO(_driver, _output);
             var detallePedido_PO = new DetallePedido_PO(_driver, _output);
 
-            string expectedCabecera = "Resumen de la Pedido";
+            string expectedCabecera = "Resumen del Pedido";
             string expectedCodigoEmpleado = "<b>Codigo de empleado:</b> Daniel.Tomas";
             string expectedMetodoPago = "<b>Método de Pago:</b> TarjetaCredito";
             string expectedFecha = "<b>Fecha de pedido:</b> ";
@@ -167,7 +167,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             // Poner las cantidades.
             crearPedido_PO.setCantidad("4", "4");
             crearPedido_PO.setCantidad("10", "2");
-            // Pulsar pedir para finalizar la pedido.
+            // Pulsar pedir para finalizar el pedido.
             expectedFecha += DateTime.Now.ToString("dd-MM-yyyy HH:mm").ToUpper();
             crearPedido_PO.Pedir();
 
@@ -340,7 +340,7 @@ namespace OneHope.UIT.CUReabastecerPortatiles
             seleccionarPortatiles_PO.SeleccionarPortatiles(new List<string>() { "9" });
             // Pulsar el botón de pedir.
             seleccionarPortatiles_PO.Pedir();
-            // Pulsar Realizar pedido para intentar finalizar la pedido.
+            // Pulsar Realizar pedido para intentar finalizar el pedido.
             crearPedido_PO.Pedir();
 
             // Assert

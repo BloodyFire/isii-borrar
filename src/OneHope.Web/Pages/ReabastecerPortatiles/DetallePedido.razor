@@ -25,7 +25,7 @@
     }
 </style>
 
-<h3>Resumen de la Pedido</h3>
+<h3>Resumen del Pedido</h3>
 
 @if (!mensajeError.Equals("")) {
     <div class="card-header">
@@ -108,7 +108,7 @@
 
 
 @code {
-    @* Este es id de la pedido a mostrar que se pasa en el parámetro que se le pasa a la página. *@
+    @* Este es id del pedido a mostrar que se pasa en el parámetro que se le pasa a la página. *@
     [Parameter]
     [SupplyParameterFromQuery]
     public int PedidoId { get; set; }
@@ -137,7 +137,7 @@
         Portatiles = pedido.LineasPedido;
         } catch (ApiException<ValidationProblemDetails> apiexceptionvalidation) {
             @* Este es el título de la sección de errores que deseamos. *@
-            tituloError = "Error: no se pueden mostrar los detalles de la pedido.";
+            tituloError = "Error: no se pueden mostrar los detalles del pedido.";
 
             if (apiexceptionvalidation.Result.Errors.Values != null) {
                 mensajeError = "";
@@ -150,7 +150,7 @@
         } catch (ApiException apiexception) {
             @* Este es el título de la sección de errores que deseamos. *@
             tituloError = "Error";
-            mensajeError = $"No se pueden mostrar los detalles de la pedido cuyo id es: {PedidoId}.";
+            mensajeError = $"No se pueden mostrar los detalles del pedido cuyo id es: {PedidoId}.";
             @* Se indica que los datos han cambiado y por lo tanto la IU se debe actualizar. *@
             StateHasChanged();
         }

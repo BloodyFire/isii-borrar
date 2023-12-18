@@ -130,7 +130,7 @@ else
     // Se ejecutará al cargarse la página.
     protected override async Task OnInitializedAsync()
     {
-        @* Cargar los datos de los portátiles que incluye la pedido. *@
+        @* Cargar los datos de los portátiles que incluye el pedido. *@
         BuscarPortatiles();
     }
    
@@ -144,17 +144,17 @@ else
         StateHasChanged();
     }
 
-    @* Crear la pedido y navegar a detalles. *@
+    @* Crear el pedido y navegar a detalles. *@
     private async Task CreateDevolucion()
     {
 
 
         @* Gestión de errores con try/catch: si no devuelve Ok devolverá una excepción. *@
-        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear la pedido
+        @* Realmente las situaciones que hacen que se devuelve BadRequest al crear el pedido
            no son posibles porque lo evitamos en la vista. *@
         try
         {
-            @* Primero guardo la pedido llamando al método create del controlador. *@
+            @* Primero guardo el pedido llamando al método create del controlador. *@
             details = await swaggerClient.CreateDevolucionAsync(estadoDevolucion.Devolucion);
             @* Borrar el carrito *@
             estadoDevolucion.FinalizarDevolver();
@@ -187,7 +187,7 @@ else
         }
     }
 
-    @* Volver a la pantalla anterior conservando los datos para poder modificar la pedido. *@
+    @* Volver a la pantalla anterior conservando los datos para poder modificar el pedido. *@
     private void Volver()
     {
         Navegation.NavigateTo("/compras/devolver");
@@ -201,7 +201,7 @@ else
         if (cantidad != null)
             estadoDevolucion.UpdateCarrito(id, cantidad);
 
-        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar la pedido. *@
+        @* Si hay algún portátil con cantidad 0 no se activa el botón de finalizar el pedido. *@
         completarButtonDisabled = (estadoDevolucion.Devolucion.LineasDevoluciones.Any(li => li.Cantidad == 0) ? true : false);
     }
 
