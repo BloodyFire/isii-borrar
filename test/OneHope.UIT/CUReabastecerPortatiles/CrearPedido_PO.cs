@@ -29,7 +29,7 @@ namespace OneHope.UIT.Shared {
         // Pulsar el botón volver.
         public void Volver() {
             _botonVolver().Click();
-            System.Threading.Thread.Sleep(300);
+            System.Threading.Thread.Sleep(3000);
         }
 
         // Pulsar el botón realizar pedido.
